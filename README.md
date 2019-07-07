@@ -4,11 +4,11 @@
 
 ## Description
 
-Guest:
+ - Guest:
 -; can see the index page.
 -; can register and login.
 -; 				
--; User-BUYER:
+ - User-BUYER:
 -; have to register a credits account.
 -; should load cash into the account.
 -; then can buy products.
@@ -19,7 +19,7 @@ Guest:
 -; if bought 10 props then will receive 100 points into the account.
 -; if collect 5 "Marvelous collections" will be able to create them.
 -; 
--; User-SELLER:
+ - User-SELLER:
 -; have to register a credit account.
 -; is not required to put cash into the account,but in this case can't buy a products or licences.
 -; started with 10 points,but can't collect more points ,because of the zero cashflow.
@@ -27,7 +27,7 @@ Guest:
 -; can create a props for selling.
 -; if sell 10 props then will receive 100 points into the account.
 -; 
--; Admin:
+ - Admin:
 -; can manage all registered users.
 -; can manage all the props and collections.
 -; can create "Marvelous collections".
