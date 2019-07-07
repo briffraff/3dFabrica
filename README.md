@@ -1,6 +1,6 @@
-﻿# Project - 3dFabrica
+﻿# Project - "3dFabrica"
 
-## Type - Retail Store
+## Type - Retail Store for 3d props
 
 ## Description
 
