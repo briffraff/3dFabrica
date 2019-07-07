@@ -5,32 +5,32 @@
 ## Description
 
 Guest:
-can see the index page.
-can register and login.
-				
-User-BUYER:
-have to register a credits account.
-should load cash into the account.
-then can buy products.
-each purchase gives you points. // fresh users received 10 start points
-can use collected points to get a "Marvelous collections".
-in case of insufficient availability of points can buy a licence.
-can create a props for selling.
-if bought 10 props then will receive 100 points into the account.
-if collect 5 "Marvelous collections" will be able to create them.
-
-User-SELLER:
-have to register a credit account.
-is not required to put cash into the account,but in this case can't buy a products or licences.
-started with 10 points,but can't collect more points ,because of the zero cashflow.
-can't get any "Marvelous collections".
-can create a props for selling.
-if sell 10 props then will receive 100 points into the account.
-
-Admin:
-can manage all registered users.
-can manage all the props and collections.
-can create "Marvelous collections".
+-; can see the index page.
+-; can register and login.
+-; 				
+-; User-BUYER:
+-; have to register a credits account.
+-; should load cash into the account.
+-; then can buy products.
+-; each purchase gives you points. // fresh users received 10 start points
+-; can use collected points to get a "Marvelous collections".
+-; in case of insufficient availability of points can buy a licence.
+-; can create a props for selling.
+-; if bought 10 props then will receive 100 points into the account.
+-; if collect 5 "Marvelous collections" will be able to create them.
+-; 
+-; User-SELLER:
+-; have to register a credit account.
+-; is not required to put cash into the account,but in this case can't buy a products or licences.
+-; started with 10 points,but can't collect more points ,because of the zero cashflow.
+-; can't get any "Marvelous collections".
+-; can create a props for selling.
+-; if sell 10 props then will receive 100 points into the account.
+-; 
+-; Admin:
+-; can manage all registered users.
+-; can manage all the props and collections.
+-; can create "Marvelous collections".
 
 ## Entities
 
@@ -83,7 +83,7 @@ can create "Marvelous collections".
 	- registered users can sell products. //if having a credit account registered
 	- registered users can buy products. //if having a credit account registered and cash deposit in it
 	- registered users can get a "Marvelous Collection". //if having enough points.
-	
+
 ### Credit account
 	- register a credit card. //(required if a user wants to buy/sell)
 	- load а cash deposit. //user needs a cash if he want to buy props.
