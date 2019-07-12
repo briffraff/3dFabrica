@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
     <meta name="Retail store for 3d props" content="">
     <meta name="Borislav Borisov" content="">
@@ -38,71 +39,82 @@
                     <li class="nav-item mx-0 mx-lg-1">
                         <a class="nav-create py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/home/index">/Home</a>
                     </li>
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-create py-3 px-5 px-lg-3 rounded js-scroll-trigger" href="/Prop/CreateMarv">/Create MarvelousProp</a>
+                    </li>
                 </ul>
             </div>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-create py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/identity/account/login">/Login</a>
+                <li class="mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-2 btn btn-outline-light btn-social mx-1" href="/user/shoppingBag">
+                        <i class="fas fa-fw fa-shopping-cart"></i>
+                    </a>
+                </li>
+                <li class="mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-2 rounded js-scroll-trigger" href="/identity/account/profile">[riffraff]</a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-create py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/identity/account/register">/Register</a>
+                    <a class="nav-create py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/identity/account/signout">/Signout</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<!--Content-->
+
 <main class="mt-3">
     <header class="masthead bg-primary text-white text-center">
-        <h1 class="masthead-heading text-uppercase text-center text-secondary">Register</h1>
-        <div class="container w-25 align-items-md-center flex-column">
-            <form class="mx-auto half-width" method="post">
-                <div class="form-group">
-                    <label for="Input.FullName"></label>
-                    <input type="text" class="form-control" for="Input.FullName" placeholder="Full Name...">
-                </div>
-                <div class="form-group">
-                    <label for="Input.Username"></label>
-                    <input type="text" class="form-control" for="Input.Username" placeholder="Username...">
-                </div>
-                <div class="form-group">
-                    <label for="Input.Email"></label>
-                    <input type="email" class="form-control" for="Input.Email" placeholder="Email...">
-                </div>
-                <div class="form-group">
-                    <label for="Input.Gender"></label>
-                    <select class="form-control" for="Input.Gender" placeholder="Gender...">
-                        <option disabled selected value="genderValue">Select a gender...</option>
-                        <option>Male</option>
-                        <option>Female</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="Input.Password"></label>
-                    <input type="password" class="form-control" for="Input.Password" placeholder="Password...">
-                </div>
-                <div class="form-group">
-                    <label for="Input.ConfirmPassword"></label>
-                    <input type="password" class="form-control" for="Input.ConfirmPassword" placeholder="Confirm Password...">
-                </div>
-                <div class="button-holder d-flex justify-content-center">
-                    <button type="submit" class="btn btn-outline-light">Register</button>
-                </div>
-                <br>
-                <div>
-                    <h3 class="masthead-subheading text-uppercase mb-0">Already have an account? <a
-                            class="btn-outline-secondary" href="/Identity/Account/Login">/Login</a>.</h3>
-                </div>
-            </form>
+        <div class="row" style="margin-right: 0px">
 
-            <!-- Icon Divider -->
-            <div class="divider-custom divider-light">
-                <div class="divider-custom-line"></div>
-                <div class="divider-custom-icon">
-                    <i class="fas fa-star"></i>
+            <div class="column">
+                <i class="masthead-subheading fas fa-user-circle text-white-50" aria-hidden="true">&ensp;</i>
+                <h1 class="masthead-subheading text-uppercase text-md-center text-secondary">riffraff ,</h1>
+                <img class="masthead-avatar mb-5" src="img/avataaars.svg" alt="">
+                <div class="row" style="margin-right: 0px; padding-left: 42%;">
+                    <button class="py-3 px-0 px-lg-2 btn btn-warning btn-outline-light">Add Credit Card</button>
                 </div>
-                <div class="divider-custom-line"></div>
+                <div class="row" style="margin-right: 0px; padding-left: 42%; padding-top: 15px;">
+                    <button class="py-3 px-0 px-lg-2 btn btn-warning btn-outline-light">View All Users</button>
+                </div>
+                <div class="row" style="margin-right: 0px; padding-left: 42%; padding-top: 15px; padding-bottom: 20px">
+                    <button class="py-3 px-0 px-lg-2 btn btn-danger btn-outline-light">DELETE PROFILE</button>
+                </div>
+            </div>
+
+            <div class="column">
+                <h1 class="masthead-heading text-uppercase text-md-center text-secondary">Profile info</h1>
+                <br>
+                <br>
+                <i class="masthead-subheading fas fa-info-circle text-white-50" aria-hidden="true">&ensp;</i>
+                <h5 class="masthead-subheading text-md-center text-uppercase text-white">Administrator</h5>
+                <br>
+                <i class="masthead-subheading fa fa-envelope text-white-50" aria-hidden="true">&ensp;</i>
+                <h5 class="masthead-subheading text-md-center text-uppercase text-white">briffraff@gmail.com</h5>
+                <br>
+                <i class="masthead-subheading fa fa-credit-card text-white-50" aria-hidden="true">&ensp;</i>
+                <h5 class="masthead-subheading text-md-center text-uppercase text-white">2485-4586-3094-9040</h5>
+                <br>
+                <br>
+                <hr>
+                <div class="row" style="margin-right: 0px">
+                    <div class="column">
+                        <button class="py-3 px-0 px-lg-2 btn btn-outline-light">Load cash</button>
+                    </div>
+                    <div class="column" style="padding-left: 28%; padding-top: 10px">
+                        <i class="masthead-subheading fa fa-money-bill-wave text-white-50" aria-hidden="true">&ensp;</i>
+                        <h5 class="masthead-subheading text-md-center text-uppercase text-white">64 $</h5>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-right: 0px">
+                    <div class="column">
+                        <button class="py-3 px-0 px-lg-2 btn btn-outline-light">Get a License</button>
+                    </div>
+                    <div class="column" style="padding-left: 28%; padding-top:0px">
+                        <h5 class="masthead-subheading text-uppercase text-white-50">Points :</h5>
+                        <h5 class="masthead-subheading text-uppercase text-white">1230</h5>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
