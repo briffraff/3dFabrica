@@ -90,8 +90,16 @@ div .prop-item {
     height: auto;
 }
 
-.prop-item .prop-align-right {
+.prop-item .prop-align-right-65 {
     margin-left: 65%;
+}
+
+.prop-item .prop-align-75right{
+    margin-left: 75%;
+}
+
+.prop-item-align-15{
+    padding-left: 15%
 }
 
 .prop-item .prop-icon-dist-5 {
@@ -123,6 +131,11 @@ select option {
 .col-container {
     display: table;
     width: 100%;
+}
+
+div .prop-img{
+    width: 150px;
+    height: 1px;
 }
 
 .col {
