@@ -36,30 +36,42 @@
 
 ### User
   - Id (string)
-  - Username (string)
-  - Password (string)
-  - Email (string)
   - Full Name (string)
+  - Username (string)
+  - Email (string)
+  - Gender (enum) (Male/Female)
+  - Password (string)
+
   
 ### 3DProp
   - Id (string)
   - Name (string)
-  - Type (enum) (Automotive/Home/Fabrics etc . . .)
-  - Price (decimal)
+  - Type (enum) (Pants/Shorts/Tights/Skirt/Dress/ShortSleeve/Longsleeve/Tank/Hoodie/Jacket/Vest/Bra/Equipment)
+  - Price (double)
+  - ImageUrl (string)
+  - Hashtags (string)
+  - Description (string)
+  - 3dPropOwner (User)
 
 ### MarvelousProp
   - Id (string)
   - Name (string)
-  - PointsPrice (int)
+  - Type (enum) (Magicians/Astronauts/Divers/Holiday)
+  - Points (int)
+  - ImageUrl (string)
+  - Hashtags (string)
+  - Description (string)
   - MarvelousOwner (User)
   
 ### Order
   - Id (string)
-  - IssuedOn (dateTime)
+  - Issuer (User)
+  - PurchasedOn (dateTime)
   - Quantity (int)
+  - Status (string)
   - 3DProp (3DProp)
   - MarvelousProp (MarvelousProp)
-  - Issuer (User)
+
 
 ### CreditAccount
   - CardNumber (string)
@@ -72,7 +84,7 @@
 ### License
   - Id (string)
   - IssuedOn (dateTime)
-  - Type (enum) (Basic/Advanced/Expert/Proffesional)
+  - Type (enum) (Basic/Advanced/Expert)
   - CreditAccount creditAccount
   - Order (Order)
   - LicenseOwner (User)
