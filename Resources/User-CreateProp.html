@@ -15,12 +15,19 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
           type="text/css">
 
+
     <!-- Theme CSS -->
     <link href="css/freelancer.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
-    <!-- favicon -->
+
     <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+
+    <!-- Libraries CSS Files -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -82,7 +89,7 @@
                     <form class="mx-auto half-width" method="post">
                         <div class="form-group">
                             <label for="Input.3dPropName"></label>
-                            <input type="text" class="form-control" for="Input.3dPropName"
+                            <input type="text" maxlength="40" class="form-control" for="Input.3dPropName"
                                    placeholder="3d Prop Name...">
                         </div>
                         <div class="form-group">
@@ -91,7 +98,17 @@
                                 <option selected disabled value="valueValue">Select Type...</option>
                                 <option value="valueValue">Pants</option>
                                 <option value="valueValue">Shorts</option>
-                                <option value="valueValue">LS</option>
+                                <option value="valueValue">Tights</option>
+                                <option value="valueValue">Skirt</option>
+                                <option value="valueValue">Dress</option>
+                                <option value="valueValue">Short Sleeve</option>
+                                <option value="valueValue">Long Sleeve</option>
+                                <option value="valueValue">Tank</option>
+                                <option value="valueValue">Hoodie</option>
+                                <option value="valueValue">Jacket</option>
+                                <option value="valueValue">Vest</option>
+                                <option value="valueValue">Bra</option>
+                                <option value="valueValue">Equipment</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -104,11 +121,11 @@
                         </div>
                         <div class="form-group">
                             <label for="Input.Hashtags"></label>
-                            <input type="text" class="form-control" for="Input.Hashtags" placeholder="#Hashtags...">
+                            <input type="text" maxlength="50" class="form-control" for="Input.Hashtags" placeholder="#Hashtags...">
                         </div>
                         <div class="form-group">
                             <label for="Input.Description"></label>
-                            <textarea type="text" class="form-control" for="Input.Description"
+                            <textarea type="text" maxlength="450" class="form-control" for="Input.Description"
                                       placeholder="Description..."></textarea>
                         </div>
                         <div class="button-holder d-flex justify-content-center">
