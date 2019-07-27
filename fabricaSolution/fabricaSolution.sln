@@ -3,13 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28917.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabrica.Data", "Fabrica.Data\Fabrica.Data.csproj", "{85120ECC-6E3F-4E0B-AF3B-55BFBA421895}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fabrica.Data", "Fabrica.Data\Fabrica.Data.csproj", "{85120ECC-6E3F-4E0B-AF3B-55BFBA421895}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabrica.Models", "Fabrica.Models\Fabrica.Models.csproj", "{80DC9459-5A0D-4623-B6FB-131B082F8970}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fabrica.Models", "Fabrica.Models\Fabrica.Models.csproj", "{80DC9459-5A0D-4623-B6FB-131B082F8970}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabrica.Infrastructure", "Fabrica.Infrastructure\Fabrica.Infrastructure.csproj", "{9463EA8A-D193-4127-910D-D54AD279235A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fabrica.Infrastructure", "Fabrica.Infrastructure\Fabrica.Infrastructure.csproj", "{9463EA8A-D193-4127-910D-D54AD279235A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabrica.Services", "Fabrica.Services\Fabrica.Services.csproj", "{40F5E488-022B-4CC8-88F8-0841365628D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fabrica.Services", "Fabrica.Services\Fabrica.Services.csproj", "{40F5E488-022B-4CC8-88F8-0841365628D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{45972860-C9B0-4075-9243-78235FA363FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabrica.Web", "Fabrica.Web\Fabrica.Web.csproj", "{70EB7628-C640-400F-8A21-9AE0AA32071D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{3280FEF2-55B0-480A-B5FA-4643D64A39E5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{8DB20119-429B-4248-9643-8E6FD821AA73}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{C4DCFE7F-913C-4B5A-A1C3-048848AB4260}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{9525FA54-681A-4D59-B173-E0992006B31B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +45,20 @@ Global
 		{40F5E488-022B-4CC8-88F8-0841365628D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40F5E488-022B-4CC8-88F8-0841365628D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40F5E488-022B-4CC8-88F8-0841365628D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70EB7628-C640-400F-8A21-9AE0AA32071D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70EB7628-C640-400F-8A21-9AE0AA32071D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70EB7628-C640-400F-8A21-9AE0AA32071D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70EB7628-C640-400F-8A21-9AE0AA32071D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{85120ECC-6E3F-4E0B-AF3B-55BFBA421895} = {3280FEF2-55B0-480A-B5FA-4643D64A39E5}
+		{80DC9459-5A0D-4623-B6FB-131B082F8970} = {8DB20119-429B-4248-9643-8E6FD821AA73}
+		{9463EA8A-D193-4127-910D-D54AD279235A} = {9525FA54-681A-4D59-B173-E0992006B31B}
+		{40F5E488-022B-4CC8-88F8-0841365628D4} = {C4DCFE7F-913C-4B5A-A1C3-048848AB4260}
+		{70EB7628-C640-400F-8A21-9AE0AA32071D} = {45972860-C9B0-4075-9243-78235FA363FC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A49856A6-9BBD-4668-8B19-2D0ABAD39EF4}
