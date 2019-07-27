@@ -20,4 +20,10 @@
     <ProjectReference Include="..\Fabrica.Services\Fabrica.Services.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>
