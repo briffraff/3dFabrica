@@ -1,0 +1,17 @@
+https://dl.dropboxusercontent.com/s/een9dlze2wrlgl5/3dfabrica_logo.png?dl=0 - logo
+https://dl.dropboxusercontent.com/s/qzdqf284xzxuo43/favicon.png?dl=0 - favicon
+https://dl.dropboxusercontent.com/s/w0tz0f31nanjged/avtr.svg?dl=0 - avtr
+https://dl.dropboxusercontent.com/s/irvyzwdu5rgk6e7/freelancer.css?dl=0 - freelancer.css
+https://dl.dropboxusercontent.com/s/w08h4dfknatay0r/freelancer.min.css?dl=0 - freelancer.min.css
+https://dl.dropboxusercontent.com/s/5a3bkopg1ezfi0j/style.css?dl=0 - style.css
+https://dl.dropboxusercontent.com/s/din5n5w1mb1bx9s/animate.min.css?dl=0 - animate.min.css
+https://dl.dropboxusercontent.com/s/zm4lyu6udsbewfx/all.css?dl=0 - fontawsome-free/css -> all.css
+https://dl.dropboxusercontent.com/s/0kjsqsqz7b3wn2s/all.min.css?dl=0 - fontawsome-free/css -> all.min.css
+
+https://dl.dropboxusercontent.com/s/63caqyc6vk3tx2o/wow.min.js?dl=0 - wow.min.js
+https://dl.dropboxusercontent.com/s/z4z5zlsbxbbtp3q/main.js?dl=0 - main.js
+https://dl.dropboxusercontent.com/s/jnrwfjboicmqev5/freelancer.min.js?dl=0 - freelancer.min.js
+https://dl.dropboxusercontent.com/s/98m2ksdihh582bq/jqBootstrapValidation.js?dl=0 - jqBootstrapValidation.js
+https://dl.dropboxusercontent.com/s/n0ajtzyz8t3duit/jquery.easing.min.js?dl=0 - jquery.easing.min.js
+https://dl.dropboxusercontent.com/s/o5n47hw9rj25kov/bootstrap.bundle.min.js?dl=0 - bootstrap.bundle.min.js
+https://dl.dropboxusercontent.com/s/s90p7wjc63yh9uq/jquery.min.js?dl=0 - jquery.min.js
