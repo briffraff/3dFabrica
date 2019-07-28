@@ -72,7 +72,7 @@
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl = returnUrl ?? Url.Content(GlobalConstants.RegisterRedirectTo);
             if (this.ModelState.IsValid)
             {
                 var user = new FabricaUser
@@ -87,11 +87,15 @@
 
                 if (result.Succeeded)
                 {
-                    this.logger.LogInformation(GlobalConstants.LogUserConfirm);
+                    this.logger.LogInformation(GlobalConstants.RegisterUserConfirm);
 
                     if (this.userManager.Users.Count() == 1)
                     {
                         await this.userManager.AddToRoleAsync(user, GlobalConstants.AdminRoleName);
+                    }
+                    else
+                    {
+                        await this.userManager.AddToRoleAsync(user, GlobalConstants.UserRoleName);
                     }
 
                     await this.signInManager.SignInAsync(user, isPersistent: false);

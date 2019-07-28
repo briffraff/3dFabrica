@@ -25,11 +25,11 @@ namespace Fabrica.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.Configure<CookiePolicyOptions>(options =>
-            //{
-            //    options.CheckConsentNeeded = context => true;
-            //    options.MinimumSameSitePolicy = SameSiteMode.None;
-            //});
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
 
             services.AddDbContext<FabricaDBContext>(options =>
                 options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
@@ -37,17 +37,17 @@ namespace Fabrica.Web
             services.AddIdentity<FabricaUser, IdentityRole>(options =>
                 {
                     options.Password.RequireDigit = false;
-                    options.Password.RequiredLength = 3;
+                    options.Password.RequiredLength = GlobalConstants.PasswordMin;
                     options.Password.RequireLowercase = false;
-                    options.Password.RequiredUniqueChars = 0;
+                    options.Password.RequiredUniqueChars = GlobalConstants.UniqueChars;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
 
                     options.SignIn.RequireConfirmedEmail = false;
 
-                    options.User.AllowedUserNameCharacters =
-                        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                    options.User.AllowedUserNameCharacters = GlobalConstants.AllowedChars;
                     options.User.RequireUniqueEmail = true;
+
                 })
                 .AddDefaultUI()
                 .AddRoles<IdentityRole>()
@@ -80,6 +80,10 @@ namespace Fabrica.Web
                 {
                     roleManager.CreateAsync(new IdentityRole(GlobalConstants.AdminRoleName)).Wait();
                 }
+                else if (!roleManager.RoleExistsAsync(GlobalConstants.UserRoleName).Result)
+                {
+                    roleManager.CreateAsync(new IdentityRole(GlobalConstants.UserRoleName)).Wait();
+                }
             }
 
             Mapper.Initialize(config => config.AddProfile<AutoMapperProfile>());
@@ -97,7 +101,7 @@ namespace Fabrica.Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            //app.UseCookiePolicy();
+            app.UseCookiePolicy();
 
             app.UseAuthentication();
 
