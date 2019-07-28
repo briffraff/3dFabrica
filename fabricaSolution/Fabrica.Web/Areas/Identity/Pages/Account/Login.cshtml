@@ -1,0 +1,44 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<header class="masthead bg-primary text-white text-center">
+    <h1 class="masthead-heading text-uppercase text-center text-secondary">Login</h1>
+    <div class="container w-25 align-items-md-center flex-column">
+
+        <form class="mx-auto half-width" method="post">
+            <div class="form-group">
+                <label asp-for="Input.Username"></label>
+                <input type="text" class="form-control" asp-for="Input.Username" placeholder="Username...">
+                <span asp-validation-for="Input.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input type="password" class="form-control" asp-for="Input.Password" placeholder="Password...">
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="button-holder d-flex justify-content-center">
+                <button type="submit" class="btn btn-outline-light">Login</button>
+            </div>
+            <br>
+            <div>
+                <h3 class="masthead-subheading text-uppercase mb-0">
+                    Don't have an account? <a class="btn-outline-secondary" href="/Identity/Account/Register">/Register</a>.
+                </h3>
+            </div>
+        </form>
+
+        <!-- Icon Divider -->
+        <div class="divider-custom divider-light">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="divider-custom-line"></div>
+        </div>
+    </div>
+
+</header>

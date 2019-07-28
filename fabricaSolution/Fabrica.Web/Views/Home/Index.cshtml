@@ -1,34 +1,68 @@
-﻿@{
+﻿@using Fabrica.Infrastructure
+@{
     ViewData["Title"] = "3dFabrica";
 }
 
-<!--Content-->
-<header class="masthead bg-primary text-white text-center">    
+@if (this.User.Identity.IsAuthenticated == false)
+{
+    <!--Content-->
+    <header class="masthead bg-primary text-white text-center">
 
-    <p><h1></h1></p>
+        <p><h1></h1></p>
 
-    <div class="container d-flex align-items-center flex-column">
+        <div class="container d-flex align-items-center flex-column">
 
-        <img class="masthead-avatar mb-5" src="https://dl.dropboxusercontent.com/s/w0tz0f31nanjged/avtr.svg?dl=0" alt=""/>
+            <img class="masthead-avatar mb-5" src="https://dl.dropboxusercontent.com/s/w0tz0f31nanjged/avtr.svg?dl=0" alt="" />
 
-        <h1 class="masthead-subheading text-uppercase mb-0">
-            Here you are !
+            <h1 class="masthead-subheading text-uppercase mb-0">
+                Here you are !
+                <br>
+                Please <a class="btn-outline-secondary" href="/Identity/Account/Register">/register</a> if you don't have an account !
+            </h1>
             <br>
-            Please <a class="btn-outline-secondary" href="/Identity/Account/Register">/register</a> if you don't have an account !
-        </h1>
-        <br>
-        <br>
+            <br>
 
-        <!-- Icon Divider -->
-        <div class="divider-custom divider-light">
-            <div class="divider-custom-line"></div>
-            <div class="divider-custom-icon">
-                <i class="fas fa-star"></i>
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="divider-custom-line"></div>
             </div>
-            <div class="divider-custom-line"></div>
-        </div>
 
-    </div>
-</header>
+        </div>
+    </header>
+}
+else
+{
+    <!--Content-->
+    <header class="masthead bg-primary text-white text-center">
+        <p><h1></h1></p>
+
+        <div class="container d-flex align-items-center flex-column">
+
+            <img class="masthead-avatar mb-5" src="https://dl.dropboxusercontent.com/s/w0tz0f31nanjged/avtr.svg?dl=" alt="">
+
+            @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
+            {
+                <h1 class="masthead-heading text-uppercase mb-0">Welcome , Riff Raff - Administrator!</h1>
+            }
+            else
+            {
+                <h1 class="masthead-heading text-uppercase mb-0">Welcome , to the home of fabrics!</h1>
+            }
+
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="divider-custom-line"></div>
+            </div>
+        </div>
+    </header>
+
+}
+
 
 

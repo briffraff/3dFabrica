@@ -1,0 +1,66 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<header class="masthead bg-primary text-white text-center">
+    <h1 class="masthead-heading text-uppercase text-center text-secondary">Register</h1>
+    <div class="container w-25 align-items-md-center flex-column">
+        <form class="mx-auto half-width" method="post">
+
+            <div class="form-group">
+                <label asp-for="Input.FullName"></label>
+                <input type="text" class="form-control" asp-for="Input.FullName" placeholder="Full Name...">
+                <span asp-validation-for="Input.FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Username"></label>
+                <input type="text" class="form-control" asp-for="Input.Username" placeholder="Username...">
+                <span asp-validation-for="Input.Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input class="form-control" asp-for="Input.Email" placeholder="Email...">
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Gender"></label>
+                <select class="form-control" asp-for="Input.Gender" placeholder="Gender...">
+                    <option disabled selected value="genderValue">Select a gender...</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                </select>
+                <span asp-validation-for="Input.Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input type="password" class="form-control" asp-for="Input.Password" placeholder="Password...">
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input type="password" class="form-control" asp-for="Input.ConfirmPassword" placeholder="Confirm Password...">
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="button-holder d-flex justify-content-center">
+                <button type="submit" class="btn btn-outline-light">Register</button>
+            </div>
+            <br>
+            <div>
+                <h3 class="masthead-subheading text-uppercase mb-0">
+                    Already have an account? <a class="btn-outline-secondary" href="~/Identity/Account/Login">/Login</a>.
+                </h3>
+            </div>
+        </form>
+
+        <!-- Icon Divider -->
+        <div class="divider-custom divider-light">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="divider-custom-line"></div>
+        </div>
+    </div>
+</header>

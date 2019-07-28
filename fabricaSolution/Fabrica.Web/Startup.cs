@@ -76,11 +76,10 @@ namespace Fabrica.Web
 
                 var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
 
-                //TODO Add identity user
-                //if (!roleManager.RoleExistsAsync(GlobalConstants.AdminRoleName).Result)
-                //{
-                //    roleManager.CreateAsync(new IdentityRole(GlobalConstants.AdminRoleName)).Wait();
-                //}
+                if (!roleManager.RoleExistsAsync(GlobalConstants.AdminRoleName).Result)
+                {
+                    roleManager.CreateAsync(new IdentityRole(GlobalConstants.AdminRoleName)).Wait();
+                }
             }
 
             Mapper.Initialize(config => config.AddProfile<AutoMapperProfile>());

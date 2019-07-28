@@ -8,7 +8,8 @@ namespace Fabrica.Web.Controllers
     {
         public async Task<IActionResult> Index()
         {
-            return View();
+            return this.View();
         }
+
     }
 }
