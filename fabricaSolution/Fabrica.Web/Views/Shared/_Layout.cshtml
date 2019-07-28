@@ -29,88 +29,88 @@
 </head>
 
 <body id="page-top">
+    <header>
+        <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+            <div class="container-fluid">
+                <a class="js-scroll-trigger navbar-brand" href="#page-top"><img src="https://dl.dropboxusercontent.com/s/een9dlze2wrlgl5/3dfabrica_logo.png?dl=0" /></a>
+                <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded"
+                        type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
 
-    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
-        <div class="container-fluid">
-            <a class="js-scroll-trigger navbar-brand" href="#page-top"><img src="https://dl.dropboxusercontent.com/s/een9dlze2wrlgl5/3dfabrica_logo.png?dl=0" /></a>
-            <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded"
-                    type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-
-                @if (this.User.Identity.IsAuthenticated == false)
-                {
-                    <div class="container align-items-left">
+                    @if (this.User.Identity.IsAuthenticated == false)
+                    {
+                        <div class="container align-items-left">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item mx-0 mx-lg-1">
+                                    <a class="nav-create py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-controller="Home" asp-action="Index">/Home</a>
+                                </li>
+                            </ul>
+                        </div>
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item mx-0 mx-lg-1">
-                                <a class="nav-create py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-controller="Home" asp-action="Index">/Home</a>
+                                <a class="nav-create py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-area="Identity" asp-page="/Account/Login">/Login</a>
+                            </li>
+                            <li class="nav-item mx-0 mx-lg-1">
+                                <a class="nav-create py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-area="Identity" asp-page="/Account/Register">/Register</a>
                             </li>
                         </ul>
-                    </div>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item mx-0 mx-lg-1">
-                            <a class="nav-create py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-area="Identity" asp-page="/Account/Login">/Login</a>
-                        </li>
-                        <li class="nav-item mx-0 mx-lg-1">
-                            <a class="nav-create py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-area="Identity" asp-page="/Account/Register">/Register</a>
-                        </li>
-                    </ul>
-                }
-                else
-                {
-                    <div class="container align-items-left">
+                    }
+                    else
+                    {
+                        <div class="container align-items-left">
+                            <ul class="navbar-nav ml-auto">
+
+                                <li class="nav-item mx-0 mx-lg-1">
+                                    <a class="nav-create py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-controller="Home" asp-action="Index">/Home</a>
+                                </li>
+
+                                @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
+                                {
+                                    <li class="nav-item mx-0 mx-lg-1">
+                                        <a class="nav-create py-3 px-5 px-lg-3 rounded js-scroll-trigger" asp-controller="MarvProps" asp-action="CreateMarvelousProp">
+                                            /Create
+                                            MarvelousProp
+                                        </a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="nav-item mx-0 mx-lg-1">
+                                        <a class="nav-create py-3 px-5 px-lg-3 rounded js-scroll-trigger" asp-controller="Props" asp-action="CreateProp">
+                                            /Create
+                                            3DProp
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+
                         <ul class="navbar-nav ml-auto">
-
-                            <li class="nav-item mx-0 mx-lg-1">
-                                <a class="nav-create py-3 px-0 px-lg-3 rounded js-scroll-trigger" asp-controller="Home" asp-action="Index">/Home</a>
+                            <li class="mx-0 mx-lg-1">
+                                <a class="nav-link py-3 px-0 px-lg-2 btn btn-outline-light btn-social mx-1" asp-controller="Users" asp-action="ShoppingBag">
+                                    <i class="fas fa-fw fa-shopping-cart"></i>
+                                </a>
+                            </li>
+                            <li class="mx-0 mx-lg-1">
+                                <a class="nav-link py-3 px-0 px-lg-2 rounded js-scroll-trigger" asp-controller="Users" asp-action="Profile">[riffraff]</a>
                             </li>
 
-                            @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
-                            {
+                            <form asp-area="Identity" asp-page="/Account/Logout" method="post" id="logoutForm">
                                 <li class="nav-item mx-0 mx-lg-1">
-                                    <a class="nav-create py-3 px-5 px-lg-3 rounded js-scroll-trigger" asp-controller="MarvProps" asp-action="CreateMarvelousProp">
-                                        /Create
-                                        MarvelousProp
-                                    </a>
+                                    <a class="nav-create py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="javascript:document.getElementById('logoutForm').submit()">/Logout</a>
                                 </li>
-                            }
-                            else
-                            {
-                                <li class="nav-item mx-0 mx-lg-1">
-                                    <a class="nav-create py-3 px-5 px-lg-3 rounded js-scroll-trigger" asp-controller="Props" asp-action="CreateProp">
-                                        /Create
-                                        3DProp
-                                    </a>
-                                </li>
-                            }
-
+                            </form>
                         </ul>
-                    </div>
-
-                    <ul class="navbar-nav ml-auto">
-                        <li class="mx-0 mx-lg-1">
-                            <a class="nav-link py-3 px-0 px-lg-2 btn btn-outline-light btn-social mx-1" asp-controller="Users" asp-action="ShoppingBag">
-                                <i class="fas fa-fw fa-shopping-cart"></i>
-                            </a>
-                        </li>
-                        <li class="mx-0 mx-lg-1">
-                            <a class="nav-link py-3 px-0 px-lg-2 rounded js-scroll-trigger" asp-controller="Users" asp-action="Profile">[riffraff]</a>
-                        </li>
-
-                        <form asp-area="Identity" asp-page="/Account/Logout" method="post" id="logoutForm">
-                            <li class="nav-item mx-0 mx-lg-1">
-                                <a class="nav-create py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="javascript:document.getElementById('logoutForm').submit()">/Logout</a>
-                            </li>
-                        </form>
-                    </ul>
-                }
+                    }
+                </div>
             </div>
-        </div>
-    </nav>
-    
+        </nav>
+    </header>
 
     <main class="mt-3">
         @RenderBody();

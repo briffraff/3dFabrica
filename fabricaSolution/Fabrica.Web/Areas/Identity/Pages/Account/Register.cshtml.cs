@@ -79,6 +79,7 @@
                 {
                     UserName = this.Input.Username,
                     Email = this.Input.Email,
+                    Gender = this.Input.Gender,
                     FullName = this.Input.FullName
                 };
 
