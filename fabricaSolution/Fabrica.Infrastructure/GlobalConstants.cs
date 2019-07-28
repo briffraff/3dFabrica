@@ -14,6 +14,24 @@
         public const string ConfirmPasswordEr = "The password and confirmation password do not match.";
 
         //Logger
-        public const string LogUserConfirm = "User created a new account with password.";
+        public const string RegisterUserConfirm = "User created a new account with password.";
+        public const string LogoutUserConfirm = "User created a new account with password.";
+
+        //Register,Login,Logout
+        public const string RegisterRedirectTo = "~/";
+        public const string LoginRedirectTo = "~/";
+        public const string LogoutRedirectTo = "~/Identity/Account/Logout";
+
+        //Identity options
+        public const string AllowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+        public const int UniqueChars = 0;
+
+        //External files TODO
+        //// DROPBOX
+        //// FONTAWSOME
+        ///
+
+
+
     }
 }
