@@ -1,18 +1,20 @@
 namespace Fabrica.Web
 {
+    using AutoMapper;
+    using Data;
+    using Fabrica.Models;
+    using Services;
+    using Services.Contracts;
+    using Infrastructure;
+    using Infrastructure.Mapping;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.EntityFrameworkCore;
-    using AutoMapper;
-    using Infrastructure;
-    using Infrastructure.Mapping;
-    using Data;
-    using Models;
 
     public class Startup
     {
@@ -32,7 +34,7 @@ namespace Fabrica.Web
             });
 
             services.AddDbContext<FabricaDBContext>(options =>
-                options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(this.Configuration.GetConnectionString(GlobalConstants.connectionName)));
 
             services.AddIdentity<FabricaUser, IdentityRole>(options =>
                 {
@@ -56,7 +58,7 @@ namespace Fabrica.Web
                 .AddEntityFrameworkStores<FabricaDBContext>();
 
             //TODO Register services
-            //services.AddTransient<IPropsService, PropsService>();
+            services.AddTransient<IPropsService, PropsService>();
             //services.AddTransient<IMarvelousPropsService, MarvelousPropsService>();
             //services.AddTransient<IOrdersService, OrdersService>();
 
@@ -95,7 +97,7 @@ namespace Fabrica.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler(GlobalConstants.exceptionHandlerPath);
                 app.UseHsts();
             }
 
@@ -108,8 +110,8 @@ namespace Fabrica.Web
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    name: GlobalConstants.mvcMapRouteName,
+                    template: GlobalConstants.mvcMapRouteTemplate);
             });
         }
     }

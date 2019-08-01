@@ -1,6 +1,6 @@
 ﻿@using Fabrica.Infrastructure
 @{
-    ViewData["Title"] = "3dFabrica";
+    ViewData["Title"] = @GlobalConstants.ProjectName;
 }
 
 @if (this.User.Identity.IsAuthenticated == false)
@@ -12,7 +12,7 @@
 
         <div class="container d-flex align-items-center flex-column">
 
-            <img class="masthead-avatar mb-5" src="https://dl.dropboxusercontent.com/s/w0tz0f31nanjged/avtr.svg?dl=0" alt="" />
+            <img class="masthead-avatar mb-5" src="@GlobalConstants.avtr" alt="" />
 
             <h1 class="masthead-subheading text-uppercase mb-0">
                 Here you are !
@@ -41,7 +41,7 @@ else
 
         <div class="container d-flex align-items-center flex-column">
 
-            <img class="masthead-avatar mb-5" src="https://dl.dropboxusercontent.com/s/w0tz0f31nanjged/avtr.svg?dl=" alt="">
+            <img class="masthead-avatar mb-5" src="@GlobalConstants.avtr" alt="">
 
             @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
             {

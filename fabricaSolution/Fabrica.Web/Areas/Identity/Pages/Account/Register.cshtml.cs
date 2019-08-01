@@ -1,8 +1,8 @@
 ﻿namespace Fabrica.Web.Areas.Identity.Pages.Account
 {
+    using Fabrica.Models;
+    using Fabrica.Models.enums;
     using Infrastructure;
-    using Models;
-    using Models.enums;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;

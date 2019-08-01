@@ -1,4 +1,6 @@
-﻿namespace Fabrica.Web.Areas.Identity.Pages.Account
+﻿using Fabrica.Models;
+
+namespace Fabrica.Web.Areas.Identity.Pages.Account
 {
     using Infrastructure;
     using Models;
