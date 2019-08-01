@@ -45,7 +45,7 @@ else
 
             @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
             {
-                <h1 class="masthead-heading text-uppercase mb-0">Welcome , Riff Raff - Administrator!</h1>
+                <h1 class="masthead-heading text-uppercase mb-0">Welcome , @this.User.Identity.Name - Administrator!</h1>
             }
             else
             {

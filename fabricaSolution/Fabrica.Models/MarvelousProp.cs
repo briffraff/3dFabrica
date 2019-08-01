@@ -1,6 +1,8 @@
 ﻿namespace Fabrica.Models
 {
     using enums;
+    using System.Collections;
+    using System.Collections.Generic;
 
     public class MarvelousProp
     {
@@ -18,6 +20,11 @@
 
         public string Description { get; set; }
 
+        public bool IsDeleted { get; set; }
+
+        public string MarvelousOwnerId { get; set; }
         public FabricaUser MarvelousOwner { get; set; }
+
+        public ICollection<Order> Orders { get; set; }
     }
 }

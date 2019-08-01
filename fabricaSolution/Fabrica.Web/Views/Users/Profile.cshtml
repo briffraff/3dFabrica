@@ -1,0 +1,78 @@
+﻿@using Fabrica.Infrastructure
+
+@{
+    ViewData["Title"] = "MyProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<header class="masthead bg-primary text-white text-center">
+    <div class="row" style="margin-right: 0px">
+
+        @if (User.Identity.IsAuthenticated)
+        {
+
+            <div class="column">
+                <i class="masthead-subheading fas fa-user-circle text-white-50" aria-hidden="true">&ensp;</i>
+                <h1 class="masthead-subheading text-uppercase text-md-center text-secondary">@this.User.Identity.Name ,</h1>
+                <img class="masthead-avatar mb-5" src="@GlobalConstants.avtr" alt="">
+                <div class="row" style="margin-right: 0px; padding-left: 42%;">
+                    <a class="py-3 px-0 px-lg-2 btn btn-warning btn-outline-light" asp-controller="Users" asp-action="AddCreditCard">Add Credit Card</a>
+                </div>
+
+                @if (User.IsInRole(GlobalConstants.AdminRoleName))
+                {
+                    <div class="row" style="margin-right: 0px; padding-left: 42%; padding-top: 15px;">
+                        <a class="py-3 px-0 px-lg-2 btn btn-warning btn-outline-light" asp-controller="Users" asp-action="All">View All Users</a>
+                    </div>
+                }
+
+                <div class="row" style="margin-right: 0px; padding-left: 42%; padding-top: 15px; padding-bottom: 20px">
+                    <a class="py-3 px-0 px-lg-2 btn btn-danger btn-outline-light">DELETE PROFILE</a>
+                </div>
+            </div>
+
+            <div class="column">
+                <h1 class="masthead-heading text-uppercase text-md-center text-secondary">Profile info</h1>
+                <br>
+                <br>
+
+                @if (User.IsInRole(GlobalConstants.AdminRoleName))
+                {
+                    <i class="masthead-subheading fas fa-info-circle text-white-50" aria-hidden="true">&ensp;</i>
+                    <h5 class="masthead-subheading text-md-center text-uppercase text-white">Administrator</h5>
+                    <br>
+                }
+
+                <i class="masthead-subheading fa fa-envelope text-white-50" aria-hidden="true">&ensp;</i>
+                <h5 class="masthead-subheading text-md-center text-uppercase text-white">briffraff@gmail.com</h5>
+                <br>
+                <i class="masthead-subheading fa fa-credit-card text-white-50" aria-hidden="true">&ensp;</i>
+                <h5 class="masthead-subheading text-md-center text-uppercase text-white">2485-4586-3094-9040</h5>
+                <br>
+                <br>
+                <hr>
+                <div class="row" style="margin-right: 0px">
+                    <div class="column">
+                        <a class="py-3 px-0 px-lg-2 btn btn-outline-light" asp-controller="Users" asp-action="LoadCash">Load cash</a>
+                    </div>
+                    <div class="column" style="padding-left: 28%; padding-top: 10px">
+                        <i class="masthead-subheading fa fa-money-bill-wave text-white-50" aria-hidden="true">&ensp;</i>
+                        <h5 class="masthead-subheading text-md-center text-uppercase text-white">64 $</h5>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-right: 0px">
+                    <div class="column">
+                        <a class="py-3 px-0 px-lg-2 btn btn-outline-light" asp-controller="Users" asp-action="GetLicense">Get a License</a>
+                    </div>
+                    <div class="column" style="padding-left: 28%; padding-top:0px">
+                        <h5 class="masthead-subheading text-uppercase text-white-50">Points :</h5>
+                        <h5 class="masthead-subheading text-uppercase text-white">1230</h5>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</header>
+

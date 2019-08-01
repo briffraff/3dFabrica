@@ -1,5 +1,4 @@
-﻿
-namespace Fabrica.Web.Controllers
+﻿namespace Fabrica.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;

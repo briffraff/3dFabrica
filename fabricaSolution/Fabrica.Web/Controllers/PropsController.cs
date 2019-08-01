@@ -1,24 +1,27 @@
-﻿using System;
-using System.Threading.Tasks;
-using Fabrica.Infrastructure;
-using Fabrica.Models.enums;
-using Fabrica.Services.Models;
-using Fabrica.Web.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Fabrica.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Fabrica.Web.Controllers
 {
+    using System;
+    using System.Threading.Tasks;
+    using Fabrica.Infrastructure;
+    using Fabrica.Models.enums;
+    using Fabrica.Services.Models;
+    using Fabrica.Web.Models;
+    using Microsoft.AspNetCore.Authorization;
     using Services.Contracts;
     using Microsoft.AspNetCore.Mvc;
 
     public class PropsController : Controller
     {
         private readonly IPropsService propsService;
-
+        
         public PropsController(IPropsService propsService)
         {
             this.propsService = propsService;
         }
+
 
         [Authorize(Roles = GlobalConstants.UserRoleName)]
         public IActionResult Create()
@@ -34,7 +37,7 @@ namespace Fabrica.Web.Controllers
             {
                 return this.View();
             }
-
+            
             PropServiceModel prop = new PropServiceModel()
             {
                 Name = model.Name,
@@ -42,12 +45,13 @@ namespace Fabrica.Web.Controllers
                 Price = model.Price,
                 ImageUrl = model.ImageUrl,
                 Hashtags = model.Hashtags,
-                Description = model.Description,
+                Description = model.Description
             };
 
             await this.propsService.Create(prop);
 
             return this.RedirectToAction("Index", "Home");
         }
+
     }
 }

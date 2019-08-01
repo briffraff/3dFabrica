@@ -59,7 +59,7 @@ namespace Fabrica.Web
 
             //TODO Register services
             services.AddTransient<IPropsService, PropsService>();
-            //services.AddTransient<IMarvelousPropsService, MarvelousPropsService>();
+            services.AddTransient<IMarvelousPropsService, MarvelousPropsService>();
             //services.AddTransient<IOrdersService, OrdersService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

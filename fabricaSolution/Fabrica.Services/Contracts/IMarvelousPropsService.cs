@@ -3,9 +3,9 @@
     using Models;
     using System.Threading.Tasks;
 
-    public interface IPropsService
+    public interface IMarvelousPropsService
     {
-        Task Create(PropServiceModel model);
+        Task Create(MarvelousPropServiceModel model);
 
         //Task<PropServiceModel> Get(string id);
 

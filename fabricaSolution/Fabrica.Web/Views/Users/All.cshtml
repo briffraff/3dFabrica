@@ -1,0 +1,77 @@
+﻿@using Fabrica.Infrastructure
+
+@{
+    ViewData["Title"] = "All";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (this.User.Identity.IsAuthenticated)
+{
+    @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
+    {
+        <header class="masthead bg-primary text-white text-center">
+
+            <h1 class="masthead-heading text-uppercase text-center text-secondary">All users&ensp;:</h1>
+            <br>
+            <br>
+
+            <div class="row" style="padding-left: 15px; margin-right: 0px;">
+
+                <div class="col-md-12">
+                    <table class="container">
+                        <tr class="masthead-subheading bg-secondary text-uppercase text-md-center text-white">
+                            <th>#</th>
+                            <th>Username</th>
+                            <th>Full name</th>
+                            <th>E-mail</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Gosho</td>
+                            <td>Georgi Georgiev</td>
+                            <td>gosho@gosheto.com</td>
+                            <td class="text-danger">Deleted</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Boraka</td>
+                            <td>Boraka Boraka</td>
+                            <td>boraka@gmail.com</td>
+                            <td>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Joe</td>
+                            <td>Joe Woker</td>
+                            <td>Joe@gosheto.com</td>
+                            <td class="text-danger">Deleted</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Sando</td>
+                            <td>Sasheto Sashko</td>
+                            <td>sasho@gosheto.com</td>
+                            <td>
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+
+            <!-- Icon Divider -->
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="divider-custom-line"></div>
+            </div>
+        </header>
+
+    }
+}

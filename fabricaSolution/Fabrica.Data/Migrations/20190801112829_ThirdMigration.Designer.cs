@@ -4,14 +4,16 @@ using Fabrica.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Fabrica.Data.Migrations
 {
     [DbContext(typeof(FabricaDBContext))]
-    partial class FabricaDBContextModelSnapshot : ModelSnapshot
+    [Migration("20190801112829_ThirdMigration")]
+    partial class ThirdMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,8 +87,6 @@ namespace Fabrica.Data.Migrations
 
                     b.Property<string>("ImageUrl");
 
-                    b.Property<bool>("IsDeleted");
-
                     b.Property<string>("MarvelousOwnerId");
 
                     b.Property<string>("Name");
@@ -100,30 +100,6 @@ namespace Fabrica.Data.Migrations
                     b.HasIndex("MarvelousOwnerId");
 
                     b.ToTable("MarvelousProps");
-                });
-
-            modelBuilder.Entity("Fabrica.Models.Order", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ClientId");
-
-                    b.Property<string>("MarvelousPropId");
-
-                    b.Property<DateTime>("OrderedOn");
-
-                    b.Property<string>("PropId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("MarvelousPropId");
-
-                    b.HasIndex("PropId");
-
-                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("Fabrica.Models.Prop", b =>
@@ -269,21 +245,6 @@ namespace Fabrica.Data.Migrations
                     b.HasOne("Fabrica.Models.FabricaUser", "MarvelousOwner")
                         .WithMany()
                         .HasForeignKey("MarvelousOwnerId");
-                });
-
-            modelBuilder.Entity("Fabrica.Models.Order", b =>
-                {
-                    b.HasOne("Fabrica.Models.FabricaUser", "Client")
-                        .WithMany("Orders")
-                        .HasForeignKey("ClientId");
-
-                    b.HasOne("Fabrica.Models.MarvelousProp", "MarvelousProp")
-                        .WithMany("Orders")
-                        .HasForeignKey("MarvelousPropId");
-
-                    b.HasOne("Fabrica.Models.Prop", "Prop")
-                        .WithMany("Orders")
-                        .HasForeignKey("PropId");
                 });
 
             modelBuilder.Entity("Fabrica.Models.Prop", b =>

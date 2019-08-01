@@ -7,7 +7,7 @@
     using Data;
     using Contracts;
 
-    public class PropsService : DataService,IPropsService
+    public class PropsService : DataService, IPropsService
     {
         public PropsService(FabricaDBContext context) : base(context)
         {
@@ -20,5 +20,6 @@
             await this.context.Props.AddAsync(prop);
             await this.context.SaveChangesAsync();
         }
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace Fabrica.Models
 {
     using enums;
+    using System.Collections.Generic;
 
     public class Prop
     {
@@ -20,8 +21,9 @@
 
         public bool IsDeleted { get; set; }
 
+        public string PropOwnerId { get; set; }
         public FabricaUser PropOwner { get; set; }
 
-        //TODO Add Orders
+        public ICollection<Order> Orders { get; set; }
     }
 }
