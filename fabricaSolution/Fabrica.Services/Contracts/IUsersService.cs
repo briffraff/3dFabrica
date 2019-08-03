@@ -1,10 +1,13 @@
-﻿namespace Fabrica.Services.Contracts
+﻿
+namespace Fabrica.Services.Contracts
 {
-    using System;
+    using System.Threading.Tasks;
+    using Fabrica.Models;
     using System.Collections.Generic;
-    using System.Text;
 
     public interface IUsersService
     {
+        Task<List<FabricaUser>> GetAllUsers();
+        Task<FabricaUser> GetUser(string username);
     }
 }

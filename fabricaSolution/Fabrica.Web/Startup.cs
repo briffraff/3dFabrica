@@ -58,6 +58,7 @@ namespace Fabrica.Web
                 .AddEntityFrameworkStores<FabricaDBContext>();
 
             //TODO Register services
+            services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IPropsService, PropsService>();
             services.AddTransient<IMarvelousPropsService, MarvelousPropsService>();
             //services.AddTransient<IOrdersService, OrdersService>();
@@ -82,7 +83,8 @@ namespace Fabrica.Web
                 {
                     roleManager.CreateAsync(new IdentityRole(GlobalConstants.AdminRoleName)).Wait();
                 }
-                else if (!roleManager.RoleExistsAsync(GlobalConstants.UserRoleName).Result)
+
+                if (!roleManager.RoleExistsAsync(GlobalConstants.UserRoleName).Result)
                 {
                     roleManager.CreateAsync(new IdentityRole(GlobalConstants.UserRoleName)).Wait();
                 }

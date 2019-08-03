@@ -1,4 +1,13 @@
 ﻿@using Fabrica.Infrastructure
+@using Fabrica.Models
+@using Fabrica.Models.enums
+@using Fabrica.Services.Models;
+@model FabricaUserServiceModel;
+
+@{
+    var user = ((Task<FabricaUser>)ViewData["CurrentUser"]).Result;
+}
+
 @{
     ViewData["Title"] = @GlobalConstants.ProjectName;
 }
@@ -12,7 +21,7 @@
 
         <div class="container d-flex align-items-center flex-column">
 
-            <img class="masthead-avatar mb-5" src="@GlobalConstants.avtr" alt="" />
+            <img class="masthead-avatar mb-5" src="@GlobalConstants.adminAvatar" alt="" />
 
             <h1 class="masthead-subheading text-uppercase mb-0">
                 Here you are !
@@ -41,7 +50,22 @@ else
 
         <div class="container d-flex align-items-center flex-column">
 
-            <img class="masthead-avatar mb-5" src="@GlobalConstants.avtr" alt="">
+            @if (this.User.IsInRole(GlobalConstants.UserRoleName))
+            {
+                @if (user.Gender == GenderType.Male)
+                {
+                    <img class="masthead-avatar mb-5" src="@GlobalConstants.maleAvatar" alt="">
+                }
+                else if (user.Gender == GenderType.Female)
+                {
+                    <img class="masthead-avatar mb-5" src="@GlobalConstants.femaleAvatar" alt="">
+                }
+            }
+
+            @if(this.User.IsInRole(GlobalConstants.AdminRoleName))
+            {
+                <img class="masthead-avatar mb-5" src="@GlobalConstants.adminAvatar" alt="">
+            }
 
             @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
             {

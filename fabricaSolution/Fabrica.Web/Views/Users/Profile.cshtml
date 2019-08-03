@@ -1,4 +1,12 @@
 ﻿@using Fabrica.Infrastructure
+@using Fabrica.Models
+@using Fabrica.Models.enums
+@using Fabrica.Services.Models;
+@model FabricaUserServiceModel;
+
+@{
+    var user = ((Task<FabricaUser>)ViewData["CurrentUser"]).Result;
+}
 
 @{
     ViewData["Title"] = "MyProfile";
@@ -8,13 +16,29 @@
 <header class="masthead bg-primary text-white text-center">
     <div class="row" style="margin-right: 0px">
 
-        @if (User.Identity.IsAuthenticated)
+        @if (this.User.Identity.IsAuthenticated)
         {
 
             <div class="column">
                 <i class="masthead-subheading fas fa-user-circle text-white-50" aria-hidden="true">&ensp;</i>
-                <h1 class="masthead-subheading text-uppercase text-md-center text-secondary">@this.User.Identity.Name ,</h1>
-                <img class="masthead-avatar mb-5" src="@GlobalConstants.avtr" alt="">
+                <h1 class="masthead-subheading text-uppercase text-md-center text-secondary">@user.UserName ,</h1>
+                @if (this.User.IsInRole(GlobalConstants.UserRoleName))
+                {
+                    @if (user.Gender == GenderType.Male)
+                     {
+                         <img class="masthead-avatar mb-5" src="@GlobalConstants.maleAvatar" alt="">
+                     }
+                     else if (user.Gender == GenderType.Female)
+                     {
+                         <img class="masthead-avatar mb-5" src="@GlobalConstants.femaleAvatar" alt="">
+                     }
+                }
+
+                @if(this.User.IsInRole(GlobalConstants.AdminRoleName))
+                {
+                    <img class="masthead-avatar mb-5" src="@GlobalConstants.adminAvatar" alt="">
+                }
+
                 <div class="row" style="margin-right: 0px; padding-left: 42%;">
                     <a class="py-3 px-0 px-lg-2 btn btn-warning btn-outline-light" asp-controller="Users" asp-action="AddCreditCard">Add Credit Card</a>
                 </div>
@@ -44,7 +68,7 @@
                 }
 
                 <i class="masthead-subheading fa fa-envelope text-white-50" aria-hidden="true">&ensp;</i>
-                <h5 class="masthead-subheading text-md-center text-uppercase text-white">briffraff@gmail.com</h5>
+                <h5 class="masthead-subheading text-md-center text-uppercase text-white">@user.Email</h5>
                 <br>
                 <i class="masthead-subheading fa fa-credit-card text-white-50" aria-hidden="true">&ensp;</i>
                 <h5 class="masthead-subheading text-md-center text-uppercase text-white">2485-4586-3094-9040</h5>

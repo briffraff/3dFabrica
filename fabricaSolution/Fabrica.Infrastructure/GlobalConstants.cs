@@ -48,7 +48,7 @@
         //// DROPBOX
         public const string fabricaLogo = "https://dl.dropboxusercontent.com/s/een9dlze2wrlgl5/3dfabrica_logo.png?dl=0";              
         public const string favicon = "https://dl.dropboxusercontent.com/s/qzdqf284xzxuo43/favicon.png?dl=0";
-        public const string avtr = "https://dl.dropboxusercontent.com/s/w0tz0f31nanjged/avtr.svg?dl=0";
+        public const string adminAvatar = "https://dl.dropboxusercontent.com/s/w0tz0f31nanjged/avtr.svg?dl=0";
         public const string freelancerCss ="https://dl.dropboxusercontent.com/s/irvyzwdu5rgk6e7/freelancer.css?dl=0";
         public const string freelancerMinCss = "https://dl.dropboxusercontent.com/s/w08h4dfknatay0r/freelancer.min.css?dl=0";
         public const string styleCss = "https://dl.dropboxusercontent.com/s/5a3bkopg1ezfi0j/style.css?dl=0";
@@ -62,6 +62,8 @@
         public const string jqueryEasingMinJs = "https://dl.dropboxusercontent.com/s/n0ajtzyz8t3duit/jquery.easing.min.js?dl=0";
         public const string bootstrapBundleMinJs = "https://dl.dropboxusercontent.com/s/o5n47hw9rj25kov/bootstrap.bundle.min.js?dl=0";
         public const string jqueryMinJs = "https://dl.dropboxusercontent.com/s/s90p7wjc63yh9uq/jquery.min.js?dl=0";
+        public const string maleAvatar = "https://dl.dropboxusercontent.com/s/xh84knveha88l3a/man.svg?dl=0";
+        public const string femaleAvatar = "https://dl.dropboxusercontent.com/s/kho5ys54vhtlqmb/women.svg?dl=0";
 
         //// FONTAWSOME
         ///

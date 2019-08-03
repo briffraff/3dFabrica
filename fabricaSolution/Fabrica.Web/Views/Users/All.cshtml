@@ -1,4 +1,12 @@
 ﻿@using Fabrica.Infrastructure
+@using Fabrica.Models
+@using Fabrica.Web.Models
+@model AllUsersViewModel
+
+@{
+    var counter = 1;
+    var users = (Task<List<FabricaUser>>)ViewData["AllUsers"];
+}
 
 @{
     ViewData["Title"] = "All";
@@ -25,39 +33,24 @@
                             <th>Full name</th>
                             <th>E-mail</th>
                             <th>Status</th>
+                            <th></th>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Gosho</td>
-                            <td>Georgi Georgiev</td>
-                            <td>gosho@gosheto.com</td>
-                            <td class="text-danger">Deleted</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Boraka</td>
-                            <td>Boraka Boraka</td>
-                            <td>boraka@gmail.com</td>
-                            <td>
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Joe</td>
-                            <td>Joe Woker</td>
-                            <td>Joe@gosheto.com</td>
-                            <td class="text-danger">Deleted</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Sando</td>
-                            <td>Sasheto Sashko</td>
-                            <td>sasho@gosheto.com</td>
-                            <td>
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </td>
-                        </tr>
+
+                        @foreach (var user in users.Result)
+                        {
+                            <tr>
+                                <td>@counter</td>
+                                <td>@user.UserName</td>
+                                <td>@user.FullName</td>
+                                <td>@user.Email</td>
+                                <td class="text-info">OK</td>
+                                <td>
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+                            counter++;
+                        }
+
                     </table>
                 </div>
 
