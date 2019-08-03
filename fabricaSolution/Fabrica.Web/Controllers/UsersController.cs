@@ -29,6 +29,24 @@
             return this.View();
         }
 
+        [Authorize]
+        public IActionResult BuyLicense()
+        {
+            return this.View();
+        }
+
+        [Authorize]
+        public IActionResult LoadCash()
+        {
+            return this.View();
+        }
+
+        [Authorize]
+        public IActionResult AddCreditCard()
+        {
+            return this.View();
+        }
+
 
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace Fabrica.Services.Models
 {
-    using Infrastructure.Mapping;
     using Fabrica.Models;
     using Fabrica.Models.enums;
+    using Infrastructure.Mapping;
     using System.Collections.Generic;
 
     public class PropServiceModel : IMapWith<Prop>
@@ -23,8 +23,8 @@
         
         public bool IsDeleted { get; set; }
 
-        public string PropOwnerId { get; set; }
-        public FabricaUser PropOwner { get; set; }
+        public string PropCreatorId { get; set; }
+        public FabricaUser PropCreator { get; set; }
 
         public ICollection<Order> Orders { get; set; }
     }

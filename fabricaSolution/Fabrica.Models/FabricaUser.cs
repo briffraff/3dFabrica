@@ -12,6 +12,6 @@
         public GenderType Gender { get; set; }
 
         public ICollection<Order> Orders { get; set; }
-
+        
     }
 }

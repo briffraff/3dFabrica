@@ -13,10 +13,12 @@
     public class MarvelousPropsController : Controller
     {
         private readonly IMarvelousPropsService marvelousPropsService;
+        private readonly IUsersService usersService;
 
-        public MarvelousPropsController(IMarvelousPropsService marvelousPropsService)
+        public MarvelousPropsController(IMarvelousPropsService marvelousPropsService, IUsersService usersService)
         {
             this.marvelousPropsService = marvelousPropsService;
+            this.usersService = usersService;
         }
 
         [Authorize(Roles = GlobalConstants.AdminRoleName)]
@@ -43,6 +45,8 @@
                 Hashtags = model.Hashtags,
                 Description = model.Description,
             };
+
+            marvelousProp.MarvelousCreator = await this.usersService.GetUser(this.User.Identity.Name);
 
             await this.marvelousPropsService.Create(marvelousProp);
 

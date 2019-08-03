@@ -30,7 +30,7 @@
                 .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Prop.Price))
                 .ForMember(dest => dest.Points, opt => opt.MapFrom(src => src.MarvelousProp.Points))
                 .ForMember(dest => dest.PropOwner, opt => opt.MapFrom(src => src.Client.UserName))
-                .ForMember(dest => dest.MarvelousOwner, opt => opt.MapFrom(src => src.Client.FullName));
+                .ForMember(dest => dest.MarvelousOwner, opt => opt.MapFrom(src => src.Client.UserName));
         }
     }
 }

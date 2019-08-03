@@ -1,25 +1,24 @@
-﻿using Fabrica.Models;
-using Microsoft.AspNetCore.Identity;
-
-namespace Fabrica.Web.Controllers
+﻿namespace Fabrica.Web.Controllers
 {
-    using System;
-    using System.Threading.Tasks;
     using Fabrica.Infrastructure;
     using Fabrica.Models.enums;
     using Fabrica.Services.Models;
     using Fabrica.Web.Models;
     using Microsoft.AspNetCore.Authorization;
-    using Services.Contracts;
     using Microsoft.AspNetCore.Mvc;
+    using Services.Contracts;
+    using System;
+    using System.Threading.Tasks;
 
     public class PropsController : Controller
     {
         private readonly IPropsService propsService;
+        private readonly IUsersService usersService;
         
-        public PropsController(IPropsService propsService)
+        public PropsController(IPropsService propsService,IUsersService usersService)
         {
             this.propsService = propsService;
+            this.usersService = usersService;
         }
 
 
@@ -47,6 +46,9 @@ namespace Fabrica.Web.Controllers
                 Hashtags = model.Hashtags,
                 Description = model.Description
             };
+
+            prop.PropCreator = await this.usersService.GetUser(this.User.Identity.Name);
+
 
             await this.propsService.Create(prop);
 

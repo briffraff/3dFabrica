@@ -29,7 +29,7 @@
         //}
 
         //[Authorize(Roles = GlobalConstants.UserRoleName)]
-        public IActionResult All()
+        public IActionResult My()
         {
             return this.View();
         }

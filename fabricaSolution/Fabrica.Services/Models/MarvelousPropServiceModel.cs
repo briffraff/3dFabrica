@@ -23,8 +23,8 @@
 
         public bool IsDeleted { get; set; }
 
-        public string MarvelousOwnerId { get; set; }
-        public FabricaUser MarvelousOwner { get; set; }
+        public string MarvelousCreatorId { get; set; }
+        public FabricaUser MarvelousCreator { get; set; }
 
         public ICollection<Order> Orders { get; set; }
     }
