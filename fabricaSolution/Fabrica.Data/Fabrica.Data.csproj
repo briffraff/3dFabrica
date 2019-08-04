@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Fabrica.Infrastructure\Fabrica.Infrastructure.csproj" />
     <ProjectReference Include="..\Fabrica.Models\Fabrica.Models.csproj" />
   </ItemGroup>
 

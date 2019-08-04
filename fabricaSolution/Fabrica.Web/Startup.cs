@@ -7,6 +7,7 @@ namespace Fabrica.Web
     using Services.Contracts;
     using Infrastructure;
     using Infrastructure.Mapping;
+    using Fabrica.Data.Seed;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -58,6 +59,7 @@ namespace Fabrica.Web
                 .AddEntityFrameworkStores<FabricaDBContext>();
 
             //TODO Register services
+            services.AddTransient<FabricaDbSeedData>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IPropsService, PropsService>();
             services.AddTransient<IMarvelousPropsService, MarvelousPropsService>();
@@ -66,29 +68,11 @@ namespace Fabrica.Web
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, FabricaDBContext context)
         {
-            using (var serviceScope = app.ApplicationServices.CreateScope())
-            {
-                var dbContext = serviceScope.ServiceProvider.GetRequiredService<FabricaDBContext>();
-
-                if (env.IsDevelopment())
-                {
-                    dbContext.Database.Migrate();
-                }
-
-                var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
-
-                if (!roleManager.RoleExistsAsync(GlobalConstants.AdminRoleName).Result)
-                {
-                    roleManager.CreateAsync(new IdentityRole(GlobalConstants.AdminRoleName)).Wait();
-                }
-
-                if (!roleManager.RoleExistsAsync(GlobalConstants.UserRoleName).Result)
-                {
-                    roleManager.CreateAsync(new IdentityRole(GlobalConstants.UserRoleName)).Wait();
-                }
-            }
+            //seed database,roles,admins,users,props,marvelousprops
+            FabricaDbSeedData seeder = new FabricaDbSeedData(context,app,env);
+            seeder.SeedAllData().Wait();
 
             Mapper.Initialize(config => config.AddProfile<AutoMapperProfile>());
 
