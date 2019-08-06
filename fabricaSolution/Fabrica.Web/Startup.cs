@@ -7,7 +7,7 @@ namespace Fabrica.Web
     using Services.Contracts;
     using Infrastructure;
     using Infrastructure.Mapping;
-    using Fabrica.Data.Seed;
+    using Fabrica.Data.Seeds;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -59,7 +59,7 @@ namespace Fabrica.Web
                 .AddEntityFrameworkStores<FabricaDBContext>();
 
             //TODO Register services
-            services.AddTransient<FabricaDbSeedData>();
+            //services.AddTransient<FabricaDbSeedData>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IPropsService, PropsService>();
             services.AddTransient<IMarvelousPropsService, MarvelousPropsService>();

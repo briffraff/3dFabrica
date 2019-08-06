@@ -64,6 +64,13 @@
         public const string jqueryMinJs = "https://dl.dropboxusercontent.com/s/s90p7wjc63yh9uq/jquery.min.js?dl=0";
         public const string maleAvatar = "https://dl.dropboxusercontent.com/s/xh84knveha88l3a/man.svg?dl=0";
         public const string femaleAvatar = "https://dl.dropboxusercontent.com/s/kho5ys54vhtlqmb/women.svg?dl=0";
+        public const string Bra = "https://dl.dropboxusercontent.com/s/2vzqxgbhc0ba2rh/Brax.png?dl=0";
+        public const string Hoodie = "https://dl.dropboxusercontent.com/s/rrwwjmsarqn9hy8/HoodieFP.png?dl=0";
+        public const string LSCrewneck = "https://dl.dropboxusercontent.com/s/nq57kxhnt1x789q/LSCrewneck.png?dl=0";
+        public const string SSCrewneck = "https://dl.dropboxusercontent.com/s/x7dswvs37s9c2m1/SSCrewneck.png?dl=0";
+        public const string Vest = "https://dl.dropboxusercontent.com/s/mil67s9b05yd7m1/Vest.png?dl=0";
+        public const string winterPants = "https://dl.dropboxusercontent.com/s/87t5g5gjy7pk30r/WinerJoggingPants.png?dl=0";
+        public const string noimage = "https://dl.dropboxusercontent.com/s/l7sd1o3kt4ujqp3/noImage.png?dl=0";
 
         //// FONTAWSOME
         ///
