@@ -1,7 +1,7 @@
 ﻿namespace Fabrica.Web.Controllers
 {
     using Fabrica.Infrastructure;
-    using Fabrica.Models.enums;
+    using Fabrica.Models.Enums;
     using Fabrica.Services.Contracts;
     using Fabrica.Services.Models;
     using Fabrica.Web.Models;

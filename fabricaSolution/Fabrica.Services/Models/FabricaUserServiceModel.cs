@@ -6,7 +6,7 @@
     using Fabrica.Infrastructure.Mapping;
     using Fabrica.Models;
     using Microsoft.AspNetCore.Identity;
-    using Fabrica.Models.enums;
+    using Fabrica.Models.Enums;
 
     public class FabricaUserServiceModel : IdentityUser, IMapWith<FabricaUser>
     {

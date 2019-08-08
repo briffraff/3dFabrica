@@ -1,7 +1,10 @@
-﻿namespace Fabrica.Web.Controllers
+﻿using Fabrica.Models;
+using Microsoft.AspNetCore.Identity;
+
+namespace Fabrica.Web.Controllers
 {
     using Fabrica.Infrastructure;
-    using Fabrica.Models.enums;
+    using Fabrica.Models.Enums;
     using Fabrica.Services.Models;
     using Fabrica.Web.Models;
     using Microsoft.AspNetCore.Authorization;
@@ -14,11 +17,13 @@
     {
         private readonly IPropsService propsService;
         private readonly IUsersService usersService;
-        
-        public PropsController(IPropsService propsService,IUsersService usersService)
+        private readonly UserManager<FabricaUser> userManager;
+
+        public PropsController(IPropsService propsService,IUsersService usersService,UserManager<FabricaUser> userManager)
         {
             this.propsService = propsService;
             this.usersService = usersService;
+            this.userManager = userManager;
         }
 
 
@@ -49,11 +54,24 @@
 
             prop.PropCreator = await this.usersService.GetUser(this.User.Identity.Name);
 
-
             await this.propsService.Create(prop);
 
             return this.RedirectToAction("Index", "Home");
         }
+
+        [Authorize]
+        public async Task<IActionResult> GetProps()
+        {
+            var userId = this.userManager.GetUserId(this.User);
+            var props = await this.propsService.GetUserProps<PropEditViewModel>(userId) ;
+            return this.RedirectToAction("Index","Home",props);
+        }
+
+        //[Authorize]
+        //public IActionResult Details()
+        //{
+        //    return this.View();
+        //}
 
     }
 }

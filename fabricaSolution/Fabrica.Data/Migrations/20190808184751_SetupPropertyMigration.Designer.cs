@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fabrica.Data.Migrations
 {
     [DbContext(typeof(FabricaDBContext))]
-    [Migration("20190731163352_SecondMigration")]
-    partial class SecondMigration
+    [Migration("20190808184751_SetupPropertyMigration")]
+    partial class SetupPropertyMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,23 @@ namespace Fabrica.Data.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Fabrica.Models.CreditAccount", b =>
+                {
+                    b.Property<string>("Id");
+
+                    b.Property<string>("AccountOwnerId");
+
+                    b.Property<string>("CardNumber");
+
+                    b.Property<double>("Cash");
+
+                    b.Property<int>("Points");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CreditAccount");
+                });
 
             modelBuilder.Entity("Fabrica.Models.FabricaUser", b =>
                 {
@@ -30,6 +47,8 @@ namespace Fabrica.Data.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
+
+                    b.Property<string>("CreditAccountId");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -76,6 +95,67 @@ namespace Fabrica.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Fabrica.Models.MarvelousProp", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Hashtags");
+
+                    b.Property<string>("ImageUrl");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("MarvelousCreatorId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("Points");
+
+                    b.Property<int>("Type");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MarvelousCreatorId");
+
+                    b.ToTable("MarvelousProps");
+                });
+
+            modelBuilder.Entity("Fabrica.Models.MarvelousPropOrder", b =>
+                {
+                    b.Property<string>("MarvelousPropId");
+
+                    b.Property<string>("OrderId");
+
+                    b.HasKey("MarvelousPropId", "OrderId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("MarvelousPropOrder");
+                });
+
+            modelBuilder.Entity("Fabrica.Models.Order", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ClientId");
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<DateTime>("OrderedOn");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("Fabrica.Models.Prop", b =>
                 {
                     b.Property<string>("Id")
@@ -93,15 +173,28 @@ namespace Fabrica.Data.Migrations
 
                     b.Property<double>("Price");
 
-                    b.Property<string>("PropOwnerId");
+                    b.Property<string>("PropCreatorId");
 
                     b.Property<int>("Type");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PropOwnerId");
+                    b.HasIndex("PropCreatorId");
 
                     b.ToTable("Props");
+                });
+
+            modelBuilder.Entity("Fabrica.Models.PropOrder", b =>
+                {
+                    b.Property<string>("PropId");
+
+                    b.Property<string>("OrderId");
+
+                    b.HasKey("PropId", "OrderId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("PropOrder");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -214,11 +307,59 @@ namespace Fabrica.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Fabrica.Models.CreditAccount", b =>
+                {
+                    b.HasOne("Fabrica.Models.FabricaUser", "AccountOwner")
+                        .WithOne("CreditAccount")
+                        .HasForeignKey("Fabrica.Models.CreditAccount", "Id")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Fabrica.Models.MarvelousProp", b =>
+                {
+                    b.HasOne("Fabrica.Models.FabricaUser", "MarvelousCreator")
+                        .WithMany("MarvelousProps")
+                        .HasForeignKey("MarvelousCreatorId");
+                });
+
+            modelBuilder.Entity("Fabrica.Models.MarvelousPropOrder", b =>
+                {
+                    b.HasOne("Fabrica.Models.MarvelousProp", "MarvelousProp")
+                        .WithMany("Orders")
+                        .HasForeignKey("MarvelousPropId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Fabrica.Models.Order", "Order")
+                        .WithMany("MarvelousProps")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Fabrica.Models.Order", b =>
+                {
+                    b.HasOne("Fabrica.Models.FabricaUser", "Client")
+                        .WithMany("Orders")
+                        .HasForeignKey("ClientId");
+                });
+
             modelBuilder.Entity("Fabrica.Models.Prop", b =>
                 {
-                    b.HasOne("Fabrica.Models.FabricaUser", "PropOwner")
-                        .WithMany()
-                        .HasForeignKey("PropOwnerId");
+                    b.HasOne("Fabrica.Models.FabricaUser", "PropCreator")
+                        .WithMany("CreatedProps")
+                        .HasForeignKey("PropCreatorId");
+                });
+
+            modelBuilder.Entity("Fabrica.Models.PropOrder", b =>
+                {
+                    b.HasOne("Fabrica.Models.Order", "Order")
+                        .WithMany("Props")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Fabrica.Models.Prop", "Prop")
+                        .WithMany("Orders")
+                        .HasForeignKey("PropId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

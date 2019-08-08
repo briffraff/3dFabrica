@@ -1,10 +1,15 @@
 ﻿namespace Fabrica.Models
 {
-    using enums;
+    using Enums;
     using System.Collections.Generic;
 
     public class Prop
     {
+        public Prop()
+        {
+            this.Orders = new List<PropOrder>();
+        }
+
         public string  Id { get; set; }
 
         public string Name { get; set; }
@@ -24,6 +29,6 @@
         public string PropCreatorId { get; set; }
         public FabricaUser PropCreator { get; set; }
 
-        public ICollection<Order> Orders { get; set; }
+        public ICollection<PropOrder> Orders { get; set; }
     }
 }

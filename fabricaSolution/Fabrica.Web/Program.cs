@@ -1,4 +1,6 @@
-﻿namespace Fabrica.Web
+﻿using Fabrica.Models;
+
+namespace Fabrica.Web
 {
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
@@ -13,5 +15,6 @@
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>();
+
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Fabrica.Models.enums
+﻿namespace Fabrica.Models.Enums
 {
     public enum MarvelousType
     {

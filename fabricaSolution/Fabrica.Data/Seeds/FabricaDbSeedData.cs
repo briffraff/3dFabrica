@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using Fabrica.Models;
     using Fabrica.Infrastructure;
-    using Fabrica.Models.enums;
+    using Fabrica.Models.Enums;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -44,6 +44,8 @@
         //  roles
         private async void SeedRoles()
         {
+            if (this.context.Roles.Any()) return;
+
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
                 var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
@@ -57,7 +59,6 @@
                 {
                     await roleManager.CreateAsync(new IdentityRole(GlobalConstants.UserRoleName));
                 }
-
             }
         }
 
@@ -80,7 +81,14 @@
                     SecurityStamp = Guid.NewGuid().ToString(),
                     LockoutEnabled = true,
                     FullName = "Owner owner",
-                    Gender = GenderType.Male
+                    Gender = GenderType.Male,
+                    //CreditAccount = new CreditAccount()
+                    //{
+                    //    CardNumber = null,
+                    //    Points = 1500,
+                    //    Cash = 12
+                    //}
+
                 },
                 new FabricaUser
                 {
@@ -92,7 +100,13 @@
                     SecurityStamp = Guid.NewGuid().ToString(),
                     LockoutEnabled = true,
                     FullName = "Admin Adminchev",
-                    Gender = GenderType.Male
+                    Gender = GenderType.Male,
+                    //CreditAccount =new CreditAccount()
+                    //{
+                    //CardNumber = null,
+                    //Points = 3000,
+                    //Cash = 45
+                    // }
                 },
                 new FabricaUser
                 {
@@ -104,7 +118,13 @@
                     SecurityStamp = Guid.NewGuid().ToString(),
                     LockoutEnabled = true,
                     FullName = "Boraka",
-                    Gender = GenderType.Male
+                    Gender = GenderType.Male,
+                    //CreditAccount = new CreditAccount()
+                    //{
+                    //    CardNumber = null,
+                    //    Points = 400,
+                    //    Cash = 50
+                    //}
                 }
             };
 
@@ -132,7 +152,13 @@
                     SecurityStamp = Guid.NewGuid().ToString(),
                     LockoutEnabled = true,
                     FullName = "a a",
-                    Gender = GenderType.Female
+                    Gender = GenderType.Female,
+                    //CreditAccount = new CreditAccount()
+                    //{
+                    //    CardNumber = null,
+                    //    Points = 300,
+                    //    Cash = 450
+                    //}
                 },
                 new FabricaUser
                 {
@@ -144,7 +170,13 @@
                     SecurityStamp = Guid.NewGuid().ToString(),
                     LockoutEnabled = true,
                     FullName = "Sashoto Sashev",
-                    Gender = GenderType.Male
+                    Gender = GenderType.Male,
+                    //CreditAccount = new CreditAccount()
+                    //{
+                    //    CardNumber = null,
+                    //    Points = 30,
+                    //    Cash = 456
+                    //}
                 },
                 new FabricaUser
                 {
@@ -156,7 +188,13 @@
                     SecurityStamp = Guid.NewGuid().ToString(),
                     LockoutEnabled = true,
                     FullName = "Stavreto Stavrito",
-                    Gender = GenderType.Male
+                    Gender = GenderType.Male,
+                    //CreditAccount = new CreditAccount()
+                    //{
+                    //    CardNumber = null,
+                    //    Points = 100,
+                    //    Cash = 52
+                    //}
                 },
             };
 
@@ -168,6 +206,8 @@
         //  Props
         private void SeedProps()
         {
+            if (this.context.Props.Any()) return;
+
             var props = new List<Prop>()
             {
                 new Prop()
@@ -239,6 +279,8 @@
         //  MarvelousProps
         private void SeedMarvelousProps()
         {
+            if (this.context.MarvelousProps.Any()) return;
+
             var marvelousProps = new List<MarvelousProp>()
             {
                 new MarvelousProp()

@@ -1,11 +1,16 @@
 ﻿namespace Fabrica.Models
 {
-    using enums;
+    using Enums;
     using System.Collections;
     using System.Collections.Generic;
 
     public class MarvelousProp
     {
+        public MarvelousProp()
+        {
+            this.Orders = new HashSet<MarvelousPropOrder>();
+        }
+
         public string Id { get; set; }
 
         public string Name { get; set; }
@@ -25,6 +30,6 @@
         public string MarvelousCreatorId { get; set; }
         public FabricaUser MarvelousCreator { get; set; }
 
-        public ICollection<Order> Orders { get; set; }
+        public ICollection<MarvelousPropOrder> Orders { get; set; }
     }
 }

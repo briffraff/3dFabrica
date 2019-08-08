@@ -1,20 +1,22 @@
-﻿namespace Fabrica.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Fabrica.Models
 {
     using System;
 
     public class CreditAccount
     {
+
         public string Id { get; set; }
 
         public string CardNumber { get; set; }
-
-        public DateTime ActiveSince { get; set; }
-
+        
         public int Points { get; set; }
 
         public double Cash { get; set; }
 
-        public FabricaUser AccountOwner { get; set; }
+        public string AccountOwnerId { get; set; }
+        public virtual FabricaUser AccountOwner { get; set; }
 
     }
 }

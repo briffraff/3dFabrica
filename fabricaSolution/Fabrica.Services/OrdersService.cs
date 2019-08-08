@@ -42,7 +42,8 @@
         //    await this.context.SaveChangesAsync();
         //}
 
-        //public async Task<IEnumerable<OrderServiceModel>> GetAll()
+        //TODO
+        //public async Task<IEnumerable<OrderServiceModel>> GetMyOrders()
         //{
         //    var orders = await this.context.Orders
         //        .ProjectTo<OrderServiceModel>()

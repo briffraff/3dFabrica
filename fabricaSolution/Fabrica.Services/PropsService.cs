@@ -1,5 +1,10 @@
-﻿namespace Fabrica.Services
+﻿
+using System.Collections.Generic;
+using AutoMapper.QueryableExtensions;
+
+namespace Fabrica.Services
 {
+    using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
     using Fabrica.Models;
@@ -19,6 +24,12 @@
 
             await this.context.Props.AddAsync(prop);
             await this.context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetUserProps<T>(string id)
+        {
+            var props = this.context.Props.Where(u => u.PropCreatorId == id).ProjectTo<T>();
+            return props;
         }
 
     }

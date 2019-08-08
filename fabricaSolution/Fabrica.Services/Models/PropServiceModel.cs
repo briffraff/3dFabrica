@@ -1,7 +1,7 @@
 ﻿namespace Fabrica.Services.Models
 {
     using Fabrica.Models;
-    using Fabrica.Models.enums;
+    using Fabrica.Models.Enums;
     using Infrastructure.Mapping;
     using System.Collections.Generic;
 

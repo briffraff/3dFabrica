@@ -1,10 +1,12 @@
-﻿namespace Fabrica.Web.Models
+﻿using Fabrica.Models;
+
+namespace Fabrica.Web.Models
 {
     using Fabrica.Infrastructure.Mapping;
     using Fabrica.Services.Models;
     using System.ComponentModel.DataAnnotations;
 
-    public class PropEditViewModel : IMapWith<PropServiceModel>
+    public class PropEditViewModel : IMapWith<Prop>
     {
         [Required]
         public string Name { get; set; }

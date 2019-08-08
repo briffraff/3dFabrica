@@ -1,12 +1,15 @@
-﻿namespace Fabrica.Services.Models
+﻿using AutoMapper;
+
+namespace Fabrica.Services.Models
 {
     using Fabrica.Infrastructure.Mapping;
     using Fabrica.Models;
-    using Fabrica.Models.enums;
+    using Fabrica.Models.Enums;
     using System.Collections.Generic;
 
     public class MarvelousPropServiceModel : IMapWith<MarvelousProp>
     {
+
         public string Id { get; set; }
 
         public string Name { get; set; }
