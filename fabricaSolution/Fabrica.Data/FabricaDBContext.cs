@@ -12,6 +12,7 @@
         public DbSet<MarvelousPropOrder> MarvelousPropOrders { get; set; }
         public DbSet<PropOrder> PropOrders { get; set; }
         public DbSet<CreditAccount> CreditAccounts { get; set; }
+        public DbSet<Licenze> Licenzes { get; set; }
 
         public FabricaDBContext(DbContextOptions<FabricaDBContext> options) : base(options)
         {
@@ -30,7 +31,7 @@
             builder.Entity<FabricaUser>()
                 .HasOne(user => user.CreditAccount)
                 .WithOne(account => account.AccountOwner)
-                .HasForeignKey<CreditAccount>(account => account.AccountId);
+                .HasForeignKey<CreditAccount>(account => account.AccountOwnerId);
 
             //MarvelousProps Orders
             builder.Entity<MarvelousPropOrder>()

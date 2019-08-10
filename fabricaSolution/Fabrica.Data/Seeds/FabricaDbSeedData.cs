@@ -94,12 +94,6 @@
                     LockoutEnabled = true,
                     FullName = "Admin Adminchev",
                     Gender = GenderType.Male,
-                    //CreditAccount =new CreditAccount()
-                    //{
-                    //    CardNumber = null,
-                    //    Points = 3000,
-                    //    Cash = 45
-                    //}
                 },
                 new FabricaUser
                 {
@@ -112,12 +106,6 @@
                     LockoutEnabled = true,
                     FullName = "Boraka",
                     Gender = GenderType.Male,
-                    //CreditAccount = new CreditAccount()
-                    //{
-                    //    CardNumber = null,
-                    //    Points = 400,
-                    //    Cash = 50
-                    //}
                 }
             };
 
@@ -146,12 +134,6 @@
                     LockoutEnabled = true,
                     FullName = "a a",
                     Gender = GenderType.Female,
-                    //CreditAccount = new CreditAccount()
-                    //{
-                    //    CardNumber = null,
-                    //    Points = 300,
-                    //    Cash = 450
-                    //}
                 },
                 new FabricaUser
                 {
@@ -164,12 +146,6 @@
                     LockoutEnabled = true,
                     FullName = "Sashoto Sashev",
                     Gender = GenderType.Male,
-                    //CreditAccount = new CreditAccount()
-                    //{
-                    //    CardNumber = null,
-                    //    Points = 30,
-                    //    Cash = 456
-                    //}
                 },
                 new FabricaUser
                 {
@@ -182,12 +158,6 @@
                     LockoutEnabled = true,
                     FullName = "Stavreto Stavrito",
                     Gender = GenderType.Male,
-                    //CreditAccount = new CreditAccount()
-                    //{
-                    //    CardNumber = null,
-                    //    Points = 100,
-                    //    Cash = 52
-                    //}
                 },
             };
 
@@ -220,6 +190,40 @@
             };
 
             this.context.CreditAccounts.AddRange(accounts);
+            this.context.SaveChanges();
+        }
+
+        private void SeedLicenzes()
+        {
+            if(this.context.Licenzes.Any()) return;
+
+            var licenzes = new List<Licenze>()
+            {
+                new Licenze()
+                {
+                    Name = "Basic",
+                    Type = LicenzeType.Basic,
+                    Price = 30,
+                    bonusPoints = 75,
+                },
+                new Licenze()
+                {
+                    Name = "Advanced",
+                    Type = LicenzeType.Advanced,
+                    Price = 100,
+                    bonusPoints = 250,
+                },
+                new Licenze()
+                {
+                    Name = "Expert",
+                    Type = LicenzeType.Expert,
+                    Price = 500,
+                    bonusPoints = 1250,
+                },
+
+            };
+
+            this.context.Licenzes.AddRange(licenzes);
             this.context.SaveChanges();
         }
 
@@ -357,6 +361,7 @@
             Task.Run(SeedAdmins).Wait();
             Task.Run(SeedUsers).Wait();
             //Task.Run(SeedAccounts).Wait();
+            Task.Run(SeedLicenzes).Wait();
             Task.Run(SeedProps).Wait();
             Task.Run(SeedMarvelousProps).Wait();
         }

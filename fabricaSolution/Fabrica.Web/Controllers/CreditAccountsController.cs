@@ -2,12 +2,14 @@
 {
     using Fabrica.Infrastructure;
     using Fabrica.Models;
+    using Fabrica.Models.Enums;
     using Fabrica.Services.Contracts;
     using Fabrica.Services.Models;
     using Fabrica.Web.Models;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using System;
     using System.Threading.Tasks;
 
     public class CreditAccountsController : Controller
@@ -53,7 +55,7 @@
             var currentUser = this.userManager.GetUserName(this.User);
             var currentUserId = this.userManager.GetUserId(this.User);
 
-            var user = this.usersService.GetUser(currentUser).Result;
+            //var user = this.usersService.GetUser(currentUser).Result;
 
             //transfer credit account id to user
             await this.usersService.GetAccountIdAndSetToUser(currentUser, currentUserId);
@@ -85,8 +87,8 @@
             var currentUserId = this.userManager.GetUserId(this.User);
             var cashToLoad = creditCard.Cash;
 
-            await accountService.LoadCash(currentUserId,cashToLoad);
-            
+            await accountService.LoadCash(currentUserId, cashToLoad);
+
             return this.RedirectToAction("Profile", "Users");
         }
 
@@ -96,7 +98,27 @@
             return this.View();
         }
 
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> BuyLicense(LicenzeViewModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View();
+            }
 
+            LicenzeServiceModel licenze = new LicenzeServiceModel()
+            {
+                Type = Enum.Parse<LicenzeType>(model.Type)
+            };
+
+            var licenzeType = licenze.Type.ToString();
+
+            var currentUserId = this.userManager.GetUserId(this.User);
+            await accountService.BuyLicense(currentUserId, licenzeType);
+
+            return this.RedirectToAction("Profile", "Users");
+        }
 
     }
 }

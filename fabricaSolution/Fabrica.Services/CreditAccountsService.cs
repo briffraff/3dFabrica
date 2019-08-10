@@ -1,4 +1,6 @@
-﻿namespace Fabrica.Services
+﻿using System.Linq;
+
+namespace Fabrica.Services
 {
     using AutoMapper;
     using Fabrica.Data;
@@ -18,6 +20,8 @@
         {
             var account = Mapper.Map<CreditAccount>(model);
 
+            if(this.context.CreditAccounts.Any()) return;
+
             await this.context.CreditAccounts.AddAsync(account);
 
             await this.context.SaveChangesAsync();
@@ -33,6 +37,30 @@
             }
 
             account.Cash += cash;
+
+            this.context.CreditAccounts.Update(account);
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task BuyLicense(string id, string licenseType)
+        {
+            var account = await this.context.CreditAccounts.FirstOrDefaultAsync(a => a.AccountOwnerId == id);
+
+            if (account == null)
+            {
+                return;
+            }
+
+            var chosenLicenze = await this.context.Licenzes.FirstOrDefaultAsync(l => l.Type.ToString() == licenseType);
+
+            var minusCash = chosenLicenze.Price;
+            var plusPoints = chosenLicenze.bonusPoints;
+
+            if (account.Cash >= minusCash)
+            {
+                account.Cash -= minusCash;
+                account.Points += plusPoints;
+            }
 
             this.context.CreditAccounts.Update(account);
             await this.context.SaveChangesAsync();
