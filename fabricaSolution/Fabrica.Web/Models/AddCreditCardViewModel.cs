@@ -1,17 +1,20 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
-namespace Fabrica.Models
+﻿namespace Fabrica.Web.Models
 {
-    public class CreditAccount
+    using System.ComponentModel.DataAnnotations;
+    using Fabrica.Infrastructure.Mapping;
+    using Fabrica.Models;
+
+    public class AddCreditCardViewModel : IMapWith<CreditAccount>
     {
-        [Key]
+
         public string AccountId { get; set; }
 
+        [Required]
         public string CardNumber { get; set; }
-        
+
         public int Points { get; set; }
 
+        [Required]
         public double Cash { get; set; }
 
         public string AccountOwnerId { get; set; }

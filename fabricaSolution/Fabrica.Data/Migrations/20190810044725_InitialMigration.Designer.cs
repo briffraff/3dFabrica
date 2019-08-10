@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fabrica.Data.Migrations
 {
     [DbContext(typeof(FabricaDBContext))]
-    [Migration("20190808184751_SetupPropertyMigration")]
-    partial class SetupPropertyMigration
+    [Migration("20190810044725_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,8 @@ namespace Fabrica.Data.Migrations
 
             modelBuilder.Entity("Fabrica.Models.CreditAccount", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("AccountId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("AccountOwnerId");
 
@@ -33,9 +34,13 @@ namespace Fabrica.Data.Migrations
 
                     b.Property<int>("Points");
 
-                    b.HasKey("Id");
+                    b.HasKey("AccountId");
 
-                    b.ToTable("CreditAccount");
+                    b.HasIndex("AccountOwnerId")
+                        .IsUnique()
+                        .HasFilter("[AccountOwnerId] IS NOT NULL");
+
+                    b.ToTable("CreditAccounts");
                 });
 
             modelBuilder.Entity("Fabrica.Models.FabricaUser", b =>
@@ -133,7 +138,7 @@ namespace Fabrica.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("MarvelousPropOrder");
+                    b.ToTable("MarvelousPropOrders");
                 });
 
             modelBuilder.Entity("Fabrica.Models.Order", b =>
@@ -194,7 +199,7 @@ namespace Fabrica.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("PropOrder");
+                    b.ToTable("PropOrders");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -311,8 +316,7 @@ namespace Fabrica.Data.Migrations
                 {
                     b.HasOne("Fabrica.Models.FabricaUser", "AccountOwner")
                         .WithOne("CreditAccount")
-                        .HasForeignKey("Fabrica.Models.CreditAccount", "Id")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("Fabrica.Models.CreditAccount", "AccountOwnerId");
                 });
 
             modelBuilder.Entity("Fabrica.Models.MarvelousProp", b =>

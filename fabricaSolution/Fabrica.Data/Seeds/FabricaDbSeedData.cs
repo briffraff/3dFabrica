@@ -1,18 +1,18 @@
 ﻿namespace Fabrica.Data.Seeds
 {
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Fabrica.Models;
     using Fabrica.Infrastructure;
+    using Fabrica.Models;
     using Fabrica.Models.Enums;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     public class FabricaDbSeedData
     {
@@ -82,13 +82,6 @@
                     LockoutEnabled = true,
                     FullName = "Owner owner",
                     Gender = GenderType.Male,
-                    //CreditAccount = new CreditAccount()
-                    //{
-                    //    CardNumber = null,
-                    //    Points = 1500,
-                    //    Cash = 12
-                    //}
-
                 },
                 new FabricaUser
                 {
@@ -103,10 +96,10 @@
                     Gender = GenderType.Male,
                     //CreditAccount =new CreditAccount()
                     //{
-                    //CardNumber = null,
-                    //Points = 3000,
-                    //Cash = 45
-                    // }
+                    //    CardNumber = null,
+                    //    Points = 3000,
+                    //    Cash = 45
+                    //}
                 },
                 new FabricaUser
                 {
@@ -200,6 +193,33 @@
 
             HashPaswword(usersToDb, usersFromDb);
             CreateUserAddRole(usersToDb, usersFromDb, userRole).Wait();
+            this.context.SaveChanges();
+        }
+
+        //Credit Accounts
+        private void SeedAccounts()
+        {
+            if (this.context.CreditAccounts.Any()) return;
+
+            var accounts = new List<CreditAccount>()
+            {
+                new CreditAccount()
+                {
+                    CardNumber = "2334-3344-3345-2333",
+                    Points = 1700,
+                    Cash = 102,
+                    AccountOwner = this.context.Users.FirstOrDefault(u=>u.UserName == "owner")
+                },
+                new CreditAccount()
+                {
+                    CardNumber = "4444-5555-6666-7777",
+                    Points = 1500,
+                    Cash = 245,
+                    AccountOwner = this.context.Users.FirstOrDefault(u=>u.UserName == "bb")
+                }
+            };
+
+            this.context.CreditAccounts.AddRange(accounts);
             this.context.SaveChanges();
         }
 
@@ -336,6 +356,7 @@
             Task.Run(SeedRoles).Wait();
             Task.Run(SeedAdmins).Wait();
             Task.Run(SeedUsers).Wait();
+            //Task.Run(SeedAccounts).Wait();
             Task.Run(SeedProps).Wait();
             Task.Run(SeedMarvelousProps).Wait();
         }

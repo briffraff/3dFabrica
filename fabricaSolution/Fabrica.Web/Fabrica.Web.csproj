@@ -5,6 +5,11 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Models\CreditAccountVieModel.cs~RF741a5ad.TMP" />
+    <None Remove="Models\CreditAccountViewModel.cs~RF7860075.TMP" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.1.1" />

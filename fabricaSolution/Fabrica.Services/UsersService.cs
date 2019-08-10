@@ -27,5 +27,32 @@
 
             return currentUser;
         }
+
+        public async Task GetAccountIdAndSetToUser(string username,string id)
+        {
+            var account = await this.context.CreditAccounts.FirstOrDefaultAsync(a=>a.AccountOwnerId == id);
+
+            if (account == null)
+            {
+                return;
+            }
+
+            var user = this.GetUser(username);
+
+            user.Result.CreditAccountId = account.AccountId;
+
+            this.context.Users.Update(await user);
+            await this.context.SaveChangesAsync();
+        }
+
+        public async Task<CreditAccount> GetAccountOfTheCurrentUser(string id)
+        {
+            var account = await this.context.CreditAccounts.FirstOrDefaultAsync(a => a.AccountOwnerId == id);
+
+            return account;
+        }
+
+
+
     }
 }

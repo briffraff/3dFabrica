@@ -1,8 +1,4 @@
-﻿
-using System.Collections.Generic;
-using AutoMapper.QueryableExtensions;
-
-namespace Fabrica.Services
+﻿namespace Fabrica.Services
 {
     using System.Linq;
     using System.Threading.Tasks;
@@ -11,6 +7,8 @@ namespace Fabrica.Services
     using Models;
     using Data;
     using Contracts;
+    using System.Collections.Generic;
+    using AutoMapper.QueryableExtensions;
 
     public class PropsService : DataService, IPropsService
     {

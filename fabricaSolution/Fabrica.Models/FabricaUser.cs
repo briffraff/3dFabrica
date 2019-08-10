@@ -7,7 +7,6 @@
 
     public class FabricaUser : IdentityUser
     {
-        
         public FabricaUser()
         {
             this.Orders = new HashSet<Order>();

@@ -1,8 +1,7 @@
-﻿using Fabrica.Models;
-using Microsoft.AspNetCore.Identity;
-
-namespace Fabrica.Web.Controllers
+﻿namespace Fabrica.Web.Controllers
 {
+    using Fabrica.Models;
+    using Microsoft.AspNetCore.Identity;
     using Fabrica.Infrastructure;
     using Fabrica.Models.Enums;
     using Fabrica.Services.Models;

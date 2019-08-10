@@ -21,7 +21,8 @@ namespace Fabrica.Data.Migrations
 
             modelBuilder.Entity("Fabrica.Models.CreditAccount", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("AccountId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("AccountOwnerId");
 
@@ -31,9 +32,13 @@ namespace Fabrica.Data.Migrations
 
                     b.Property<int>("Points");
 
-                    b.HasKey("Id");
+                    b.HasKey("AccountId");
 
-                    b.ToTable("CreditAccount");
+                    b.HasIndex("AccountOwnerId")
+                        .IsUnique()
+                        .HasFilter("[AccountOwnerId] IS NOT NULL");
+
+                    b.ToTable("CreditAccounts");
                 });
 
             modelBuilder.Entity("Fabrica.Models.FabricaUser", b =>
@@ -131,7 +136,7 @@ namespace Fabrica.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("MarvelousPropOrder");
+                    b.ToTable("MarvelousPropOrders");
                 });
 
             modelBuilder.Entity("Fabrica.Models.Order", b =>
@@ -192,7 +197,7 @@ namespace Fabrica.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("PropOrder");
+                    b.ToTable("PropOrders");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -309,8 +314,7 @@ namespace Fabrica.Data.Migrations
                 {
                     b.HasOne("Fabrica.Models.FabricaUser", "AccountOwner")
                         .WithOne("CreditAccount")
-                        .HasForeignKey("Fabrica.Models.CreditAccount", "Id")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("Fabrica.Models.CreditAccount", "AccountOwnerId");
                 });
 
             modelBuilder.Entity("Fabrica.Models.MarvelousProp", b =>

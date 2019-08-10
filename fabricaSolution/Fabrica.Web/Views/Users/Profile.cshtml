@@ -2,8 +2,8 @@
 @using Fabrica.Models
 @using Fabrica.Models.Enums
 @using Fabrica.Services.Models;
-@model FabricaUserServiceModel;
-
+@using Fabrica.Web.Models
+@model CreditAccountViewModel
 @{
     var user = ((Task<FabricaUser>)ViewData["CurrentUser"]).Result;
 }
@@ -40,7 +40,7 @@
                 }
 
                 <div class="row" style="margin-right: 0px; padding-left: 42%;">
-                    <a class="py-3 px-0 px-lg-2 btn btn-warning btn-outline-light" asp-controller="Users" asp-action="AddCreditCard">Add Credit Card</a>
+                    <a class="py-3 px-0 px-lg-2 btn btn-warning btn-outline-light" asp-controller="CreditAccounts" asp-action="AddCreditCard">Add Credit Card</a>
                 </div>
 
                 @if (User.IsInRole(GlobalConstants.AdminRoleName))
@@ -71,27 +71,27 @@
                 <h5 class="masthead-subheading text-md-center text-uppercase text-white">@user.Email</h5>
                 <br>
                 <i class="masthead-subheading fa fa-credit-card text-white-50" aria-hidden="true">&ensp;</i>
-                <h5 class="masthead-subheading text-md-center text-uppercase text-white">2485-4586-3094-9040</h5>
+                <h5 class="masthead-subheading text-md-center text-uppercase text-white">@*@Model.AccountOwner.CreditAccount.CardNumber*@</h5>
                 <br>
                 <br>
                 <hr>
                 <div class="row" style="margin-right: 0px">
                     <div class="column">
-                        <a class="py-3 px-0 px-lg-2 btn btn-outline-light" asp-controller="Users" asp-action="LoadCash">Load cash</a>
+                        <a class="py-3 px-0 px-lg-2 btn btn-outline-light" asp-controller="CreditAccounts" asp-action="LoadCash">Load cash</a>
                     </div>
                     <div class="column" style="padding-left: 28%; padding-top: 10px">
                         <i class="masthead-subheading fa fa-money-bill-wave text-white-50" aria-hidden="true">&ensp;</i>
-                        <h5 class="masthead-subheading text-md-center text-uppercase text-white">64 $</h5>
+                        <h5 class="masthead-subheading text-md-center text-uppercase text-white">@*@Model.AccountOwner.CreditAccount.Cash*@ $</h5>
                     </div>
                 </div>
 
                 <div class="row" style="margin-right: 0px">
                     <div class="column">
-                        <a class="py-3 px-0 px-lg-2 btn btn-outline-light" asp-controller="Users" asp-action="BuyLicense">Get a License</a>
+                        <a class="py-3 px-0 px-lg-2 btn btn-outline-light" asp-controller="CreditAccounts" asp-action="BuyLicense">Get a License</a>
                     </div>
                     <div class="column" style="padding-left: 28%; padding-top:0px">
                         <h5 class="masthead-subheading text-uppercase text-white-50">Points :</h5>
-                        <h5 class="masthead-subheading text-uppercase text-white">1230</h5>
+                        <h5 class="masthead-subheading text-uppercase text-white">@*@Model.AccountOwner.CreditAccount.Points*@</h5>
                     </div>
                 </div>
             </div>

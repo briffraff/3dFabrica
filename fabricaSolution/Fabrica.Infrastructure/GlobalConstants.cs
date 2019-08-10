@@ -27,9 +27,14 @@
         public const string LoginRedirectTo = "~/";
         public const string LogoutRedirectTo = "~/Identity/Account/Logout";
 
+        //Register credit account
+        public const int firstBonusPointsWhenRegisterAccount = 30;
+
         //Identity options
         public const string AllowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
         public const int UniqueChars = 0;
+
+        
 
         //ConfigureServices
         public const string connectionName = "DefaultConnection";

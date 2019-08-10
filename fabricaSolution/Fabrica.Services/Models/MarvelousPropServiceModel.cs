@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-
+﻿
 namespace Fabrica.Services.Models
 {
+    using AutoMapper;
     using Fabrica.Infrastructure.Mapping;
     using Fabrica.Models;
     using Fabrica.Models.Enums;

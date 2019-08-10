@@ -2,7 +2,6 @@
 @using Fabrica.Models
 @using Fabrica.Models.Enums
 @using Fabrica.Services.Models;
-@model IEnumerable<Fabrica.Web.Models.PropEditViewModel>
 
 @{
     var user = ((Task<FabricaUser>)ViewData["CurrentUser"]).Result;

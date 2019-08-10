@@ -1,12 +1,11 @@
-﻿namespace Fabrica.Services.Models
+﻿
+namespace Fabrica.Services.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
+    using Fabrica.Models.Enums;
     using Fabrica.Infrastructure.Mapping;
     using Fabrica.Models;
     using Microsoft.AspNetCore.Identity;
-    using Fabrica.Models.Enums;
+    using System.Collections.Generic;
 
     public class FabricaUserServiceModel : IdentityUser, IMapWith<FabricaUser>
     {
@@ -14,7 +13,13 @@
 
         public GenderType Gender { get; set; }
 
-        public ICollection<OrderServiceModel> Orders { get; set; }
+        public ICollection<Order> Orders { get; set; }
+
+        public ICollection<Prop> CreatedProps { get; set; }
+        public ICollection<MarvelousProp> MarvelousProps { get; set; }
+
+        public string CreditAccountId { get; set; }
+        public virtual CreditAccount CreditAccount { get; set; }
 
     }
 }

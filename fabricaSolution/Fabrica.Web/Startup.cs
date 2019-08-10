@@ -63,6 +63,7 @@ namespace Fabrica.Web
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IPropsService, PropsService>();
             services.AddTransient<IMarvelousPropsService, MarvelousPropsService>();
+            services.AddTransient<ICreditAccountsService, CreditAccountsService>();
             //services.AddTransient<IOrdersService, OrdersService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

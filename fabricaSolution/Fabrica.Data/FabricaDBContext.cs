@@ -18,41 +18,47 @@
                 
         }
 
+        public FabricaDBContext()
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
+            //User Account
             builder.Entity<FabricaUser>()
                 .HasOne(user => user.CreditAccount)
                 .WithOne(account => account.AccountOwner)
-                .HasForeignKey<CreditAccount>(account => account.Id);
+                .HasForeignKey<CreditAccount>(account => account.AccountId);
+
+            //MarvelousProps Orders
+            builder.Entity<MarvelousPropOrder>()
+                .HasKey(order => new { order.MarvelousPropId, order.OrderId});
 
             builder.Entity<MarvelousPropOrder>()
-                .HasKey(mpo => new { mpo.MarvelousPropId, mpo.OrderId});
+                .HasOne(o => o.MarvelousProp)
+                .WithMany(m => m.Orders)
+                .HasForeignKey(o=>o.MarvelousPropId);
 
             builder.Entity<MarvelousPropOrder>()
-                .HasOne(x => x.MarvelousProp)
-                .WithMany(p => p.Orders)
-                .HasForeignKey(x=>x.MarvelousPropId);
-
-            builder.Entity<MarvelousPropOrder>()
-                .HasOne(pt => pt.Order)
-                .WithMany(t => t.MarvelousProps)
-                .HasForeignKey(pt => pt.OrderId);
+                .HasOne(m => m.Order)
+                .WithMany(o => o.MarvelousProps)
+                .HasForeignKey(m => m.OrderId);
             
+            //Prop Orders
+            builder.Entity<PropOrder>()
+                .HasKey(order => new { order.PropId, order.OrderId });
 
             builder.Entity<PropOrder>()
-                .HasKey(mpo => new { mpo.PropId, mpo.OrderId });
-
-            builder.Entity<PropOrder>()
-                .HasOne(x => x.Prop)
+                .HasOne(o => o.Prop)
                 .WithMany(p => p.Orders)
-                .HasForeignKey(x => x.PropId);
+                .HasForeignKey(o => o.PropId);
 
             builder.Entity<PropOrder>()
-                .HasOne(pt => pt.Order)
-                .WithMany(t => t.Props)
-                .HasForeignKey(pt => pt.OrderId);
+                .HasOne(p => p.Order)
+                .WithMany(o => o.Props)
+                .HasForeignKey(p => p.OrderId);
         }
 
     }

@@ -1,9 +1,7 @@
-﻿using Fabrica.Models;
-
-namespace Fabrica.Web.Models
+﻿namespace Fabrica.Web.Models
 {
     using Fabrica.Infrastructure.Mapping;
-    using Fabrica.Services.Models;
+    using Fabrica.Models;
     using System.ComponentModel.DataAnnotations;
 
     public class PropEditViewModel : IMapWith<Prop>

@@ -1,4 +1,9 @@
-﻿namespace Fabrica.Web.Controllers
+﻿using AutoMapper;
+using Fabrica.Models;
+using Fabrica.Web.Models;
+using Microsoft.AspNetCore.Identity;
+
+namespace Fabrica.Web.Controllers
 {
     using Fabrica.Infrastructure;
     using Fabrica.Services.Contracts;
@@ -8,17 +13,25 @@
     public class UsersController : Controller
     {
         private readonly IUsersService usersService;
+        private readonly UserManager<FabricaUser> userManager;
 
-        public UsersController(IUsersService usersService)
+        public UsersController(IUsersService usersService, UserManager<FabricaUser> userManager)
         {
             this.usersService = usersService;
+            this.userManager = userManager;
         }
 
         [Authorize]
         public IActionResult Profile()
         {
-           this.ViewData["CurrentUser"] =  this.usersService.GetUser(this.User.Identity.Name);
-            return this.View();
+            this.ViewData["CurrentUser"] =  this.usersService.GetUser(this.User.Identity.Name);
+
+            //var currentUserId = this.userManager.GetUserId(this.User);
+            //var currentAccount = this.usersService.GetAccountOfTheCurrentUser(currentUserId);
+
+            //var account = Mapper.Map<CreditAccountViewModel>(currentAccount);
+
+            return this.View(/*account*/);
         }
 
         [Authorize(Roles = GlobalConstants.AdminRoleName)]
@@ -28,25 +41,6 @@
 
             return this.View();
         }
-
-        [Authorize]
-        public IActionResult BuyLicense()
-        {
-            return this.View();
-        }
-
-        [Authorize]
-        public IActionResult LoadCash()
-        {
-            return this.View();
-        }
-
-        [Authorize]
-        public IActionResult AddCreditCard()
-        {
-            return this.View();
-        }
-
 
     }
 }

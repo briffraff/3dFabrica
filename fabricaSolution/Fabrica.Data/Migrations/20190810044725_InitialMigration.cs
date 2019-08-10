@@ -42,7 +42,8 @@ namespace Fabrica.Data.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     FullName = table.Column<string>(nullable: true),
-                    Gender = table.Column<int>(nullable: false)
+                    Gender = table.Column<int>(nullable: false),
+                    CreditAccountId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -156,6 +157,27 @@ namespace Fabrica.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CreditAccounts",
+                columns: table => new
+                {
+                    AccountId = table.Column<string>(nullable: false),
+                    CardNumber = table.Column<string>(nullable: true),
+                    Points = table.Column<int>(nullable: false),
+                    Cash = table.Column<double>(nullable: false),
+                    AccountOwnerId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CreditAccounts", x => x.AccountId);
+                    table.ForeignKey(
+                        name: "FK_CreditAccounts_AspNetUsers_AccountOwnerId",
+                        column: x => x.AccountOwnerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MarvelousProps",
                 columns: table => new
                 {
@@ -175,6 +197,27 @@ namespace Fabrica.Data.Migrations
                     table.ForeignKey(
                         name: "FK_MarvelousProps_AspNetUsers_MarvelousCreatorId",
                         column: x => x.MarvelousCreatorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    ClientId = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
+                    OrderedOn = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_ClientId",
+                        column: x => x.ClientId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -206,36 +249,51 @@ namespace Fabrica.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "MarvelousPropOrders",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    PropId = table.Column<string>(nullable: true),
-                    MarvelousPropId = table.Column<string>(nullable: true),
-                    ClientId = table.Column<string>(nullable: true),
-                    OrderedOn = table.Column<DateTime>(nullable: false)
+                    MarvelousPropId = table.Column<string>(nullable: false),
+                    OrderId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.PrimaryKey("PK_MarvelousPropOrders", x => new { x.MarvelousPropId, x.OrderId });
                     table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Orders_MarvelousProps_MarvelousPropId",
+                        name: "FK_MarvelousPropOrders_MarvelousProps_MarvelousPropId",
                         column: x => x.MarvelousPropId,
                         principalTable: "MarvelousProps",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Orders_Props_PropId",
+                        name: "FK_MarvelousPropOrders_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PropOrders",
+                columns: table => new
+                {
+                    PropId = table.Column<string>(nullable: false),
+                    OrderId = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PropOrders", x => new { x.PropId, x.OrderId });
+                    table.ForeignKey(
+                        name: "FK_PropOrders_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PropOrders_Props_PropId",
                         column: x => x.PropId,
                         principalTable: "Props",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -278,6 +336,18 @@ namespace Fabrica.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CreditAccounts_AccountOwnerId",
+                table: "CreditAccounts",
+                column: "AccountOwnerId",
+                unique: true,
+                filter: "[AccountOwnerId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MarvelousPropOrders_OrderId",
+                table: "MarvelousPropOrders",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MarvelousProps_MarvelousCreatorId",
                 table: "MarvelousProps",
                 column: "MarvelousCreatorId");
@@ -288,14 +358,9 @@ namespace Fabrica.Data.Migrations
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_MarvelousPropId",
-                table: "Orders",
-                column: "MarvelousPropId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_PropId",
-                table: "Orders",
-                column: "PropId");
+                name: "IX_PropOrders_OrderId",
+                table: "PropOrders",
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Props_PropCreatorId",
@@ -321,13 +386,22 @@ namespace Fabrica.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "CreditAccounts");
+
+            migrationBuilder.DropTable(
+                name: "MarvelousPropOrders");
+
+            migrationBuilder.DropTable(
+                name: "PropOrders");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "MarvelousProps");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Props");
