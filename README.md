@@ -48,7 +48,7 @@
   - CreditAccount (virtual CreditAccount)
 
   
-### 3DProp
+### Prop
   - Id (string)
   - Name (string)
   - Type (enum) (Pants/Shorts/Tights/Skirt/Dress/ShortSleeve/Longsleeve/Tank/Hoodie/Jacket/Vest/Bra/Equipment)
@@ -93,7 +93,7 @@
   - AccountOwnerId (string)
   - AccountOwner (virtual FabricaUser)
 
-### License
+### Licenze
   - LicenzeId (string)
   - Name (string)
   - Type (LicenzeType) 
