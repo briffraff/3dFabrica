@@ -25,12 +25,14 @@
             this.userManager = userManager;
         }
 
+        //Add credit card
         [Authorize]
         public IActionResult AddCreditCard()
         {
             return this.View();
         }
 
+        //Add credit card Post
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> AddCreditCard(AddCreditCardViewModel model)
@@ -64,12 +66,14 @@
         }
 
 
+        //Load cash
         [Authorize]
         public IActionResult LoadCash()
         {
             return this.View();
         }
 
+        //Load cash POST
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> LoadCash(LoadCashViewModel model)
@@ -92,12 +96,14 @@
             return this.RedirectToAction("Profile", "Users");
         }
 
+        //Buy license
         [Authorize]
         public IActionResult BuyLicense()
         {
             return this.View();
         }
 
+        //Buy license POST
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> BuyLicense(LicenzeViewModel model)

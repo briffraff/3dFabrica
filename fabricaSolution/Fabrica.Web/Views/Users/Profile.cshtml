@@ -3,7 +3,8 @@
 @using Fabrica.Models.Enums
 @using Fabrica.Services.Models;
 @using Fabrica.Web.Models
-@model CreditAccountViewModel
+@model IEnumerable<CreditAccountViewModel>
+
 @{
     var user = ((Task<FabricaUser>)ViewData["CurrentUser"]).Result;
 }
@@ -25,16 +26,32 @@
                 @if (this.User.IsInRole(GlobalConstants.UserRoleName))
                 {
                     @if (user.Gender == GenderType.Male)
-                     {
-                         <img class="masthead-avatar mb-5" src="@GlobalConstants.maleAvatar" alt="">
-                     }
-                     else if (user.Gender == GenderType.Female)
-                     {
-                         <img class="masthead-avatar mb-5" src="@GlobalConstants.femaleAvatar" alt="">
-                     }
+                    {
+                        <div class="row" style="margin-right: 0px; padding-left: 31%; padding-top: 15px;">
+                            <div class="col-md-6">
+                                <img class="masthead-avatar mb-5" src="@GlobalConstants.maleAvatar" alt="">
+                            </div>
+
+                            <div class="col-md-6">
+                                <a class="py-3 px-0 px-lg-2 btn btn-warning btn-outline-light" asp-controller="Props" asp-action="My">My Props</a>
+                            </div>
+                        </div>
+                    }
+                    else if (user.Gender == GenderType.Female)
+                    {
+                        <div class="row" style="margin-right: 0px; padding-left: 31%; padding-top: 15px;">
+                            <div class="col-md-6">
+                                <img class="masthead-avatar mb-5" src="@GlobalConstants.femaleAvatar" alt="">
+                            </div>
+
+                            <div class="col-md-6">
+                                <a class="py-3 px-0 px-lg-2 btn btn-warning btn-outline-light" asp-controller="Props" asp-action="My">My Props</a>
+                            </div>
+                        </div>
+                    }
                 }
 
-                @if(this.User.IsInRole(GlobalConstants.AdminRoleName))
+                @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
                 {
                     <img class="masthead-avatar mb-5" src="@GlobalConstants.adminAvatar" alt="">
                 }
@@ -53,6 +70,7 @@
                 <div class="row" style="margin-right: 0px; padding-left: 42%; padding-top: 15px; padding-bottom: 20px">
                     <a class="py-3 px-0 px-lg-2 btn btn-danger btn-outline-light">DELETE PROFILE</a>
                 </div>
+
             </div>
 
             <div class="column">
@@ -70,30 +88,34 @@
                 <i class="masthead-subheading fa fa-envelope text-white-50" aria-hidden="true">&ensp;</i>
                 <h5 class="masthead-subheading text-md-center text-uppercase text-white">@user.Email</h5>
                 <br>
-                <i class="masthead-subheading fa fa-credit-card text-white-50" aria-hidden="true">&ensp;</i>
-                <h5 class="masthead-subheading text-md-center text-uppercase text-white">@*@Model.AccountOwner.CreditAccount.CardNumber*@</h5>
-                <br>
-                <br>
-                <hr>
-                <div class="row" style="margin-right: 0px">
-                    <div class="column">
-                        <a class="py-3 px-0 px-lg-2 btn btn-outline-light" asp-controller="CreditAccounts" asp-action="LoadCash">Load cash</a>
-                    </div>
-                    <div class="column" style="padding-left: 28%; padding-top: 10px">
-                        <i class="masthead-subheading fa fa-money-bill-wave text-white-50" aria-hidden="true">&ensp;</i>
-                        <h5 class="masthead-subheading text-md-center text-uppercase text-white">@*@Model.AccountOwner.CreditAccount.Cash*@ $</h5>
-                    </div>
-                </div>
 
-                <div class="row" style="margin-right: 0px">
-                    <div class="column">
-                        <a class="py-3 px-0 px-lg-2 btn btn-outline-light" asp-controller="CreditAccounts" asp-action="BuyLicense">Get a License</a>
+                @foreach (var account in @Model)
+                {
+                    <i class="masthead-subheading fa fa-credit-card text-white-50" aria-hidden="true">&ensp;</i>
+                    <h5 class="masthead-subheading text-md-center text-uppercase text-white">@account.CardNumber</h5>
+                    <br>
+                    <br>
+                    <hr>
+                    <div class="row" style="margin-right: 0px">
+                        <div class="column">
+                            <a class="py-3 px-0 px-lg-2 btn btn-outline-light" asp-controller="CreditAccounts" asp-action="LoadCash">Load cash</a>
+                        </div>
+                        <div class="column" style="padding-left: 28%; padding-top: 10px">
+                            <i class="masthead-subheading fa fa-money-bill-wave text-white-50" aria-hidden="true">&ensp;</i>
+                            <h5 class="masthead-subheading text-md-center text-uppercase text-white">@account.Cash $</h5>
+                        </div>
                     </div>
-                    <div class="column" style="padding-left: 28%; padding-top:0px">
-                        <h5 class="masthead-subheading text-uppercase text-white-50">Points :</h5>
-                        <h5 class="masthead-subheading text-uppercase text-white">@*@Model.AccountOwner.CreditAccount.Points*@</h5>
+
+                    <div class="row" style="margin-right: 0px">
+                        <div class="column">
+                            <a class="py-3 px-0 px-lg-2 btn btn-outline-light" asp-controller="CreditAccounts" asp-action="BuyLicense">Get a License</a>
+                        </div>
+                        <div class="column" style="padding-left: 28%; padding-top:0px">
+                            <h5 class="masthead-subheading text-uppercase text-white-50">Points :</h5>
+                            <h5 class="masthead-subheading text-uppercase text-white">@account.Points</h5>
+                        </div>
                     </div>
-                </div>
+                }
             </div>
         }
 

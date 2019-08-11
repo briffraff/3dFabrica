@@ -25,13 +25,14 @@
             this.userManager = userManager;
         }
 
-
+        //Create
         [Authorize(Roles = GlobalConstants.UserRoleName)]
         public IActionResult Create()
         {
             return this.View();
         }
 
+        //Create Post
         [HttpPost]
         [Authorize(Roles = GlobalConstants.UserRoleName)]
         public async Task<IActionResult> Create(PropEditViewModel model)
@@ -58,6 +59,7 @@
             return this.RedirectToAction("Index", "Home");
         }
 
+        //GetProps
         [Authorize]
         public async Task<IActionResult> GetProps()
         {
@@ -66,11 +68,31 @@
             return this.RedirectToAction("Index","Home",props);
         }
 
-        //[Authorize]
-        //public IActionResult Details()
-        //{
-        //    return this.View();
-        //}
+        //My
+        [Authorize(Roles = GlobalConstants.UserRoleName)]
+        public async Task<IActionResult> My()
+        {
+            this.ViewData["CurrentUser"] = this.usersService.GetUser(this.User.Identity.Name);
+
+            var userId = this.userManager.GetUserId(this.User);
+            var props = await this.propsService.GetUserProps<PropEditViewModel>(userId);
+
+            return this.View(props);
+        }
+
+        //DetailsEdit
+        [Authorize]
+        public IActionResult DetailsEdit()
+        {
+            return this.View();
+        }
+
+        //Details
+        [Authorize]
+        public IActionResult Details()
+        {
+            return this.View();
+        }
 
     }
 }

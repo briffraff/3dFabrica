@@ -45,14 +45,5 @@
             await this.context.SaveChangesAsync();
         }
 
-        public async Task<CreditAccount> GetAccountOfTheCurrentUser(string id)
-        {
-            var account = await this.context.CreditAccounts.FirstOrDefaultAsync(a => a.AccountOwnerId == id);
-
-            return account;
-        }
-
-
-
     }
 }

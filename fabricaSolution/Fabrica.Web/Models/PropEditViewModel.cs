@@ -24,5 +24,7 @@
         [Required]
         public string Description { get; set; }
 
+        public FabricaUser PropCreator { get; set; }
+
     }
 }

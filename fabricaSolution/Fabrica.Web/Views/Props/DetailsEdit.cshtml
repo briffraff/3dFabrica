@@ -1,5 +1,4 @@
-﻿@using Fabrica.Infrastructure
-
+﻿
 @{
     ViewData["Title"] = "Details";
 }
@@ -67,24 +66,17 @@
                                         <a href="#3dProps" style="padding-right: 5px">
                                             <i class="fa fa-share-alt"></i>
                                         </a>
-                                        <a href="#3dProps"><img class="prop-user-thumb" src="@GlobalConstants.adminAvatar" alt=""></a>
-
+                                        <a><img class="prop-user-thumb" src="img/avataaars.svg" alt=""></a>
                                     </div>
                                     <br>
                                     <br>
                                     <div class="row">
                                         <div class="col-md-9" style="padding-left: 18%">
-                                            <button class="py-3 px-0 px-lg-2 btn btn-outline-light bg-primary">
-                                                Add
-                                                to basket
-                                            </button>
                                         </div>
-                                        @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
-                                        {
-                                            <div class="col-md-3">
-                                                <button class="btn btn-outline-light bg-danger">Delete</button>
-                                            </div>
-                                        }
+                                        <div class="col-md-3">
+                                            <button class="btn btn-outline-light bg-secondary">Edit</button>
+                                            <button class="btn btn-outline-light bg-danger">Delete</button>
+                                        </div>
                                     </div>
 
                                 </div>

@@ -11,6 +11,7 @@ namespace Fabrica.Services.Contracts
 
         Task<IEnumerable<T>> GetUserProps<T>(string id);
 
+
         //Task<PropServiceModel> Get(string id);
 
         //Task Edit(PropServiceModel model);

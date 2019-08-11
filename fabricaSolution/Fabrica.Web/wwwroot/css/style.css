@@ -90,6 +90,15 @@ div .prop-item {
     height: auto;
 }
 
+.prop-item .prop-username {
+    font-size: 12px;
+    font-family: Calibri, serif;
+}
+
+.prop-item .prop-left-dist {
+    padding-left: 5px;
+}
+
 .prop-item .prop-align-right-65 {
     margin-left: 65%;
 }

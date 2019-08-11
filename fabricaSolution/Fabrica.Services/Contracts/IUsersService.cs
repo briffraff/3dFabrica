@@ -10,6 +10,5 @@
         Task<List<FabricaUser>> GetAllUsers();
         Task<FabricaUser> GetUser(string username);
         Task GetAccountIdAndSetToUser(string username, string id);
-        Task<CreditAccount> GetAccountOfTheCurrentUser(string id);
     }
 }

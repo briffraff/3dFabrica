@@ -1,15 +1,16 @@
-﻿using System.Linq;
-
-namespace Fabrica.Services
+﻿namespace Fabrica.Services
 {
     using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using Fabrica.Data;
     using Fabrica.Models;
     using Fabrica.Services.Contracts;
     using Fabrica.Services.Models;
     using Microsoft.EntityFrameworkCore;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
-
+    
     public class CreditAccountsService : DataService, ICreditAccountsService
     {
         public CreditAccountsService(FabricaDBContext context) : base(context)
@@ -66,5 +67,10 @@ namespace Fabrica.Services
             await this.context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<T>> GetCurrentAccount<T>(string id)
+        {
+            var account = this.context.CreditAccounts.Where(a => a.AccountOwnerId == id).ProjectTo<T>();
+            return account;
+        }
     }
 }
