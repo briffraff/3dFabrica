@@ -10,6 +10,7 @@
         [Key]
         public string LicenzeId { get; set; }
 
+        [Required]
         public string Type { get; set; }
     }
 }

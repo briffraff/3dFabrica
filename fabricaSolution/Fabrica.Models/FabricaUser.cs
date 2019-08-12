@@ -16,6 +16,8 @@
 
         public string FullName { get; set; }
 
+        public override string SecurityStamp => Guid.NewGuid().ToString();
+
         public GenderType Gender { get; set; }
 
         public ICollection<Order> Orders { get; set; }

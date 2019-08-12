@@ -1,4 +1,7 @@
-﻿namespace Fabrica.Web.Controllers
+﻿using System.Security.Cryptography;
+using System.Text;
+
+namespace Fabrica.Web.Controllers
 {
     using Fabrica.Infrastructure;
     using Fabrica.Models;

@@ -1,4 +1,6 @@
-﻿namespace Fabrica.Web.Models
+﻿using Fabrica.Infrastructure;
+
+namespace Fabrica.Web.Models
 {
     using Fabrica.Infrastructure.Mapping;
     using Fabrica.Models;
@@ -10,6 +12,8 @@
         public string AccountId { get; set; }
 
         public string CardNumber { get; set; }
+
+        public string AuthNumber { get; set; }
 
         public int Points { get; set; }
 

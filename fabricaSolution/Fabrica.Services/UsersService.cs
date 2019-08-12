@@ -11,7 +11,6 @@
     {
         public UsersService(FabricaDBContext context) : base(context)
         {
-            
         }
 
         public async Task<List<FabricaUser>> GetAllUsers()
