@@ -12,7 +12,7 @@
 -; have to register a credits account.
 -; should load cash into the account.
 -; then can buy products.
--; each purchase gives you points. // fresh users received 10 start points
+-; each purchase gives you points. // fresh users received 30 start points
 -; can use collected points to get a "Marvelous collections".
 -; in case of insufficient availability of points can buy a licence.
 -; can create a props for selling.
@@ -41,9 +41,14 @@
   - Email (string)
   - Gender (enum) (Male/Female)
   - Password (string)
+  - ICollection<Order> Orders
+  - ICollection<Prop> CreatedProps 
+  - ICollection<MarvelousProp> MarvelousProps       
+  - CreditAccountId (string)
+  - CreditAccount (virtual CreditAccount)
 
   
-### 3DProp
+### Prop
   - Id (string)
   - Name (string)
   - Type (enum) (Pants/Shorts/Tights/Skirt/Dress/ShortSleeve/Longsleeve/Tank/Hoodie/Jacket/Vest/Bra/Equipment)
@@ -51,7 +56,10 @@
   - ImageUrl (string)
   - Hashtags (string)
   - Description (string)
-  - 3dPropOwner (User)
+  - IsDeleted (bool)
+  - PropCreatorId (string)
+  - PropCreator (FabricaUser)
+  - ICollection<PropOrder> Orders
 
 ### MarvelousProp
   - Id (string)
@@ -61,37 +69,40 @@
   - ImageUrl (string)
   - Hashtags (string)
   - Description (string)
-  - MarvelousOwner (User)
+  - IsDeleted (bool)
+  - MarvelousCreatorId (string
+  - MarvelousCreator (FabricaUser)
+  - ICollection<MarvelousPropOrder> Orders 
   
 ### Order
   - Id (string)
-  - Issuer (User)
-  - PurchasedOn (dateTime)
-  - Quantity (int)
-  - Status (string)
-  - 3DProp (3DProp)
-  - MarvelousProp (MarvelousProp)
+  - ClientId (string)
+  - Client (FabricaUser)
+  - IsDeleted (bool)
+  - IsActive (bool)
+  - OrderedOn (DateTime)
+  - ICollection<MarvelousPropOrder> MarvelousProps 
+  - ICollection<PropOrder> Props
 
 
 ### CreditAccount
+  - AccountId (string)
   - CardNumber (string)
-  - Active Since (dateTime)
   - Points (int)
-  - Cash (decimal)
-  - AccountOwner (User)
-  - Licenses (list of License)
+  - Cash (double)
+  - AccountOwnerId (string)
+  - AccountOwner (virtual FabricaUser)
 
-### License
-  - Id (string)
-  - IssuedOn (dateTime)
-  - Type (enum) (Basic/Advanced/Expert)
-  - CreditAccount creditAccount
-  - Order (Order)
-  - LicenseOwner (User)
+### Licenze
+  - LicenzeId (string)
+  - Name (string)
+  - Type (LicenzeType) 
+  - Price (double)
+  - bonusPoints (int)
   
 ## MoreAccurateDescription :
 ### User
-	- first time logged user. //can see every prop after login. He receives 10 startpoints
+	- first time logged user. //can see every prop after login. He receives 30 startpoints
 	- registered users can sell products. //if having a credit account registered
 	- registered users can buy products. //if having a credit account registered and cash deposit in it
 	- registered users can get a "Marvelous Collection". //if having enough points.
@@ -109,8 +120,7 @@
 		-- basic licence - cost 30 cash ,receive 75 points in your credit account.
 		-- advanced licence - cost 100 cash, receive 250 points.
 		-- expert licence - cost 500 cash , receive 1250 points.
-		-- proffesional licence - cost 2000 cash.
-			--- this licence gives you access to each prop or "Marvelous collection" for a year.
+
 	- The licence gives points to a user that he can use to buy only "Marvelous collections" of props.
 	
 ### 3D Prop(product) 
