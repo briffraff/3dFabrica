@@ -17,7 +17,9 @@
         public const int PasswordMax = 50;
         public const string PasswordEr = "The {0} must be at least {2} and at max {1} characters long.";
         public const string ConfirmPasswordEr = "The password and confirmation password do not match.";
-
+        public const string activationPass = "#Activate123{0}{1}";
+        public const string deactivationPass = "#Deactivate{0}";
+        
         //Logger
         public const string RegisterUserConfirm = "User created a new account with password.";
         public const string LogoutUserConfirm = "User created a new account with password.";

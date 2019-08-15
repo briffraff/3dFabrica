@@ -1,4 +1,5 @@
-﻿using Fabrica.Models;
+﻿using System.Security.Cryptography.X509Certificates;
+using Fabrica.Models;
 
 namespace Fabrica.Web.Areas.Identity.Pages.Account
 {
@@ -68,6 +69,7 @@ namespace Fabrica.Web.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var result = await this.signInManager.PasswordSignInAsync(Input.Username, Input.Password,true, lockoutOnFailure: true);
+
                 if (result.Succeeded)
                 {
                     this.logger.LogInformation("User logged in.");

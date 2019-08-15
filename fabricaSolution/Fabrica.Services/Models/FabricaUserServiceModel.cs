@@ -21,5 +21,8 @@ namespace Fabrica.Services.Models
         public string CreditAccountId { get; set; }
         public virtual CreditAccount CreditAccount { get; set; }
 
+        public bool IsDeleted { get; set; }
+
+
     }
 }

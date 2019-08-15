@@ -1,11 +1,9 @@
 ﻿@using Fabrica.Infrastructure
-@using Fabrica.Models
 @using Fabrica.Web.Models
-@model AllUsersViewModel
+@model AllUsersViewModel[]
 
 @{
     var counter = 1;
-    var users = (Task<List<FabricaUser>>)ViewData["AllUsers"];
 }
 
 @{
@@ -36,17 +34,28 @@
                             <th></th>
                         </tr>
 
-                        @foreach (var user in users.Result)
+                        @foreach (var user in @Model)
                         {
                             <tr>
                                 <td>@counter</td>
                                 <td>@user.UserName</td>
                                 <td>@user.FullName</td>
                                 <td>@user.Email</td>
-                                <td class="text-info">OK</td>
-                                <td>
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </td>
+
+                                @if (user.IsDeleted == true)
+                                {
+                                    <td class="text-info text-muted">Deactivated</td>
+                                    <td>
+                                        <a asp-controller="Users" asp-action="Activate" asp-route-id="@user.Id" class="btn btn-primary">Activate</a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="text-info">OK - Active</td>
+                                    <td>
+                                        <a asp-controller="Users" asp-action="Deactivate" asp-route-id="@user.Id" class="btn btn-danger">Delete</a>
+                                    </td>
+                                }
                             </tr>
                             counter++;
                         }

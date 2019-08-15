@@ -25,8 +25,10 @@
         public ICollection<Prop> CreatedProps { get; set; }
         public ICollection<MarvelousProp> MarvelousProps { get; set; }
         
-
         public string CreditAccountId { get; set; }
         public virtual CreditAccount CreditAccount { get; set; }
+
+        public bool IsDeleted { get; set; }
+
     }
 }

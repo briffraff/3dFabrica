@@ -82,6 +82,7 @@
                     LockoutEnabled = true,
                     FullName = "Owner owner",
                     Gender = GenderType.Male,
+                    IsDeleted = false
                 },
                 new FabricaUser
                 {
@@ -94,6 +95,7 @@
                     LockoutEnabled = true,
                     FullName = "Admin Adminchev",
                     Gender = GenderType.Male,
+                    IsDeleted = false
                 },
                 new FabricaUser
                 {
@@ -106,6 +108,7 @@
                     LockoutEnabled = true,
                     FullName = "Boraka",
                     Gender = GenderType.Male,
+                    IsDeleted = false
                 }
             };
 
@@ -134,6 +137,7 @@
                     LockoutEnabled = true,
                     FullName = "a a",
                     Gender = GenderType.Female,
+                    IsDeleted = false
                 },
                 new FabricaUser
                 {
@@ -146,6 +150,7 @@
                     LockoutEnabled = true,
                     FullName = "Sashoto Sashev",
                     Gender = GenderType.Male,
+                    IsDeleted = false
                 },
                 new FabricaUser
                 {
@@ -158,6 +163,7 @@
                     LockoutEnabled = true,
                     FullName = "Stavreto Stavrito",
                     Gender = GenderType.Male,
+                    IsDeleted = false
                 },
             };
 
