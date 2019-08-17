@@ -61,46 +61,6 @@
             return this.RedirectToAction("Index", "Home");
         }
 
-        //GetProps
-        [Authorize]
-        public async Task<IActionResult> GetProps()
-        {
-            var userId = this.userManager.GetUserId(this.User);
-            var props = await this.propsService.GetUserProps<PropEditViewModel>(userId);
-            return this.RedirectToAction("Index", "Home", props);
-        }
-
-        //My
-        [Authorize(Roles = GlobalConstants.UserRoleName)]
-        public async Task<IActionResult> My()
-        {
-            this.ViewData["CurrentUser"] = this.usersService.GetUser(this.User.Identity.Name);
-
-            var userId = this.userManager.GetUserId(this.User);
-            var props = await this.propsService.GetUserProps<PropEditViewModel>(userId);
-
-            return this.View(props);
-        }
-
-        //DetailsEdit
-        [Authorize]
-        [Authorize(Roles = GlobalConstants.UserRoleName)]
-        public async Task<IActionResult> DetailsEdit(string id)
-        {
-            this.ViewData["CurrentUser"] = this.usersService.GetUser(this.User.Identity.Name);
-
-            var prop = await this.propsService.GetProp(id);
-
-            return this.View(prop);
-        }
-
-        //Details
-        [Authorize]
-        public IActionResult Details()
-        {
-            return this.View();
-        }
-
         //Edit
         [Authorize(Roles = GlobalConstants.UserRoleName)]
         public async Task<IActionResult> Edit(string id)
@@ -134,7 +94,9 @@
             return this.RedirectToAction("My", "Props", id);
         }
 
+        //Delete
         [Authorize]
+        [Authorize(Roles = GlobalConstants.UserRoleName)]
         public async Task<IActionResult> Delete(string id)
         {
             this.ViewData["CurrentUser"] = this.usersService.GetUser(this.User.Identity.Name);
@@ -151,14 +113,87 @@
             return this.View(prop);
         }
 
+        // DELETE
         [HttpPost]
         [Authorize]
+        [Authorize(Roles = GlobalConstants.UserRoleName)]
         public async Task<IActionResult> Delete(PropEditViewModel model, string id)
         {
             await this.propsService.Delete(id);
 
             return this.RedirectToAction("My", "Props");
         }
+
+
+        // RESTORE
+        //[HttpPost]
+        [Authorize]
+        [Authorize(Roles = GlobalConstants.UserRoleName)]
+
+        public async Task<IActionResult> Restore(string id)
+        {
+            await this.propsService.Activate(id);
+
+            return this.RedirectToAction("My", "Props");
+        }
+
+        //DetailsEdit
+        [Authorize]
+        [Authorize(Roles = GlobalConstants.UserRoleName)]
+        public async Task<IActionResult> DetailsEdit(string id)
+        {
+            this.ViewData["CurrentUser"] = this.usersService.GetUser(this.User.Identity.Name);
+
+            var prop = await this.propsService.GetProp(id);
+
+            return this.View(prop);
+        }
+
+        //DetailsEdit of deleted props
+        [Authorize]
+        [Authorize(Roles = GlobalConstants.UserRoleName)]
+        public async Task<IActionResult> DeletedDetailsEdit(string id)
+        {
+            this.ViewData["CurrentUser"] = this.usersService.GetUser(this.User.Identity.Name);
+
+            var delProp = await this.propsService.GetDelProp(id);
+
+            return this.View(delProp);
+        }
+
+        //Details
+        [Authorize]
+        public IActionResult Details()
+        {
+            return this.View();
+        }
+
+        //My
+        [Authorize(Roles = GlobalConstants.UserRoleName)]
+        public async Task<IActionResult> My()
+        {
+            this.ViewData["CurrentUser"] = this.usersService.GetUser(this.User.Identity.Name);
+
+            var userId = this.userManager.GetUserId(this.User);
+
+            this.ViewData["DeletedProps"] = this.propsService.GetDeletedProps<PropEditViewModel>(userId);
+
+            var props = await this.propsService.GetUserProps<PropEditViewModel>(userId);
+
+            return this.View(props);
+        }
+
+        //GetProps
+        [Authorize]
+        [Authorize(Roles = GlobalConstants.UserRoleName)]
+        public async Task<IActionResult> GetProps()
+        {
+            var userId = this.userManager.GetUserId(this.User);
+            var props = await this.propsService.GetUserProps<PropEditViewModel>(userId);
+            return this.RedirectToAction("Index", "Home", props);
+        }
+
+  
 
     }
 }

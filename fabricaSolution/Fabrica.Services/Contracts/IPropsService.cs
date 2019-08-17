@@ -11,8 +11,11 @@
         Task Create(PropServiceModel model);
         Task Edit(PropServiceModel model);
         Task Delete(string id);
+        Task Activate(string id);
         Task<IEnumerable<T>> GetUserProps<T>(string id);
         Task<Prop> GetProp(string id);
+        Task<IEnumerable<T>> GetDeletedProps<T>(string id);
+        Task<Prop> GetDelProp(string id);
 
         //Task<FabricaUser> GetPropCreator(string propId);
 

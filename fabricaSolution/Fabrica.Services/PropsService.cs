@@ -1,17 +1,17 @@
-﻿using Fabrica.Models.Enums;
-using Microsoft.EntityFrameworkCore;
-
+﻿
 namespace Fabrica.Services
 {
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
+    using Contracts;
+    using Data;
+    using Fabrica.Models;
+    using Fabrica.Models.Enums;
+    using Microsoft.EntityFrameworkCore;
+    using Models;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using AutoMapper;
-    using Fabrica.Models;
-    using Models;
-    using Data;
-    using Contracts;
-    using System.Collections.Generic;
-    using AutoMapper.QueryableExtensions;
 
     public class PropsService : DataService, IPropsService
     {
@@ -19,6 +19,7 @@ namespace Fabrica.Services
         {
         }
 
+        // CREATE
         public async Task Create(PropServiceModel model)
         {
             var prop = Mapper.Map<Prop>(model);
@@ -27,6 +28,7 @@ namespace Fabrica.Services
             await this.context.SaveChangesAsync();
         }
 
+        // EDIT
         public async Task Edit(PropServiceModel model)
         {
             var prop = await this.context.Props.FirstOrDefaultAsync(p => p.Id == model.Id && !p.IsDeleted);
@@ -47,6 +49,7 @@ namespace Fabrica.Services
             await this.context.SaveChangesAsync();
         }
 
+        // DELETE
         public async Task Delete(string id)
         {
             var product = await this.context.Props.FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
@@ -62,18 +65,54 @@ namespace Fabrica.Services
             await this.context.SaveChangesAsync();
         }
 
+        // ACTIVATE
+        public async Task Activate(string id)
+        {
+            var product = await this.context.Props.FirstOrDefaultAsync(p => p.Id == id && p.IsDeleted == true);
+
+            if (product == null)
+            {
+                return;
+            }
+
+            product.IsDeleted = false;
+
+            this.context.Props.Update(product);
+            await this.context.SaveChangesAsync();
+        }
+
+        // GET USER PROPS
         public async Task<IEnumerable<T>> GetUserProps<T>(string id)
         {
-            var props = this.context.Props.Where(u => u.PropCreatorId == id).ProjectTo<T>();
+            var props = this.context.Props.Where(u => u.PropCreatorId == id && u.IsDeleted == false).ProjectTo<T>();
             return props;
         }
 
+        // GET PROP
         public async Task<Prop> GetProp(string id)
         {
-            var prop = await this.context.Props.FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
+            var prop = await this.context.Props.FirstOrDefaultAsync(p => p.Id == id && p.IsDeleted == false);
 
             return prop;
         }
+
+        // GET USER DELETED PROPS
+        public async Task<IEnumerable<T>> GetDeletedProps<T>(string id)
+        {
+            var props = this.context.Props.Where(u => u.PropCreatorId == id && u.IsDeleted == true).ProjectTo<T>();
+            return props;
+        }
+
+        // GET USER DELETED PROP
+        public async Task<Prop> GetDelProp(string id)
+        {
+            var prop = await this.context.Props.FirstOrDefaultAsync(p => p.Id == id && p.IsDeleted == true);
+
+            return prop;
+        }
+
+
+
 
         //public async Task<FabricaUser> GetPropCreator(string propId)
         //{
