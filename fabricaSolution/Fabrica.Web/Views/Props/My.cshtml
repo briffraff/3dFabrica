@@ -14,13 +14,13 @@
     var avatarImg = "";
 
     @if (user.Gender == GenderType.Male)
-     {
-         avatarImg = GlobalConstants.maleAvatar;
-     }
-     else if (user.Gender == GenderType.Female)
-     {
-         avatarImg = GlobalConstants.femaleAvatar;
-     }
+    {
+        avatarImg = GlobalConstants.maleAvatar;
+    }
+    else if (user.Gender == GenderType.Female)
+    {
+        avatarImg = GlobalConstants.femaleAvatar;
+    }
 }
 <!--3dProps-->
 <section class="props3d wow fadeInUp">
@@ -46,7 +46,7 @@
                             <hr class="hr-2 bg-white">
                             <p>@prop.Hashtags</p>
                             <div class="container-fluid fa fab fas far">
-                                <a asp-controller="Props" asp-action="DetailsEdit" style="padding-right: 18px"><i class="fa fa-edit"></i></a>
+                                <a asp-controller="Props" asp-action="DetailsEdit" asp-route-id="@prop.Id" style="padding-right: 18px"><i class="fa fa-edit"></i></a>
                                 <a><img class="prop-user-thumb" src="@avatarImg" alt=""></a>
                                 <a class="prop-left-dist prop-username text-secondary">creator:</a>
                                 <a class="prop-username text-primary">@prop.PropCreator.UserName.ToUpper()</a>

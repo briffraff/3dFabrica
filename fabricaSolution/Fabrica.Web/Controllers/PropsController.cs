@@ -1,6 +1,8 @@
 ﻿namespace Fabrica.Web.Controllers
 {
     using Fabrica.Models;
+    using AutoMapper;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.AspNetCore.Identity;
     using Fabrica.Infrastructure;
     using Fabrica.Models.Enums;
@@ -18,7 +20,7 @@
         private readonly IUsersService usersService;
         private readonly UserManager<FabricaUser> userManager;
 
-        public PropsController(IPropsService propsService,IUsersService usersService,UserManager<FabricaUser> userManager)
+        public PropsController(IPropsService propsService, IUsersService usersService, UserManager<FabricaUser> userManager)
         {
             this.propsService = propsService;
             this.usersService = usersService;
@@ -41,7 +43,7 @@
             {
                 return this.View();
             }
-            
+
             PropServiceModel prop = new PropServiceModel()
             {
                 Name = model.Name,
@@ -64,8 +66,8 @@
         public async Task<IActionResult> GetProps()
         {
             var userId = this.userManager.GetUserId(this.User);
-            var props = await this.propsService.GetUserProps<PropEditViewModel>(userId) ;
-            return this.RedirectToAction("Index","Home",props);
+            var props = await this.propsService.GetUserProps<PropEditViewModel>(userId);
+            return this.RedirectToAction("Index", "Home", props);
         }
 
         //My
@@ -82,9 +84,14 @@
 
         //DetailsEdit
         [Authorize]
-        public IActionResult DetailsEdit()
+        [Authorize(Roles = GlobalConstants.UserRoleName)]
+        public async Task<IActionResult> DetailsEdit(string id)
         {
-            return this.View();
+            this.ViewData["CurrentUser"] = this.usersService.GetUser(this.User.Identity.Name);
+
+            var prop = await this.propsService.GetProp(id);
+
+            return this.View(prop);
         }
 
         //Details
@@ -92,6 +99,65 @@
         public IActionResult Details()
         {
             return this.View();
+        }
+
+        //Edit
+        [Authorize(Roles = GlobalConstants.UserRoleName)]
+        public async Task<IActionResult> Edit(string id)
+        {
+            this.ViewData["CurrentUser"] = this.usersService.GetUser(this.User.Identity.Name);
+
+            var prop = await this.propsService.GetProp(id);
+
+            if (prop == null)
+            {
+                return this.RedirectToAction("My", "Props");
+            }
+
+            //var viewModel = Mapper.Map<PropEditViewModel>(prop);
+
+            return this.View(prop);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.UserRoleName)]
+        public async Task<IActionResult> Edit(Prop model, string id)
+        {
+            this.ViewData["CurrentUser"] = this.usersService.GetUser(this.User.Identity.Name);
+
+            var serviceModel = Mapper.Map<PropServiceModel>(model);
+
+            serviceModel.Id = id;
+
+            await this.propsService.Edit(serviceModel);
+
+            return this.RedirectToAction("My", "Props", id);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Delete(string id)
+        {
+            this.ViewData["CurrentUser"] = this.usersService.GetUser(this.User.Identity.Name);
+
+            var prop = await this.propsService.GetProp(id);
+
+            if (prop == null)
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            //var viewModel = Mapper.Map<PropEditViewModel>(prop);
+
+            return this.View(prop);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Delete(PropEditViewModel model, string id)
+        {
+            await this.propsService.Delete(id);
+
+            return this.RedirectToAction("My", "Props");
         }
 
     }

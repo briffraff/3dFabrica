@@ -1,14 +1,13 @@
-﻿using Fabrica.Infrastructure;
-using Microsoft.AspNetCore.Identity;
-
-namespace Fabrica.Services
+﻿namespace Fabrica.Services
 {
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
     using Fabrica.Data;
+    using Fabrica.Infrastructure;
     using Fabrica.Models;
     using Fabrica.Services.Contracts;
     using Fabrica.Services.Models;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -74,7 +73,7 @@ namespace Fabrica.Services
 
             //set password = string + last char of the username.toupper
             var deactivationPassword = string.Format
-                ($"{GlobalConstants.deactivationPass}",(user.UserName[user.UserName.Length - 1].ToString().ToUpper()));
+                ($"{GlobalConstants.deactivationPass}", (user.UserName[user.UserName.Length - 1].ToString().ToUpper()));
 
             var password = new PasswordHasher<FabricaUser>().HashPassword(user, deactivationPassword);
 
@@ -96,9 +95,9 @@ namespace Fabrica.Services
 
             //set password = string + first char of the user + last char of the username.toupper
             var activationPassword = string.Format
-            ($"{GlobalConstants.activationPass}",(user.UserName[0]),(user.UserName[user.UserName.Length - 1].ToString().ToUpper()));
+            ($"{GlobalConstants.activationPass}", (user.UserName[0]), (user.UserName[user.UserName.Length - 1].ToString().ToUpper()));
 
-            var password = new PasswordHasher<FabricaUser>().HashPassword(user,activationPassword);
+            var password = new PasswordHasher<FabricaUser>().HashPassword(user, activationPassword);
 
             user.IsDeleted = false;
             user.PasswordHash = password;
