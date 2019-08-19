@@ -39,7 +39,7 @@
             MarvelousPropServiceModel marvelousProp = new MarvelousPropServiceModel()
             {
                 Name = model.Name,
-                Type = Enum.Parse<MarvelousType>(model.Type),
+                propType = Enum.Parse<MarvelousType>(model.propType),
                 Points = model.Points,
                 ImageUrl = model.ImageUrl,
                 Hashtags = model.Hashtags,
@@ -51,6 +51,15 @@
             await this.marvelousPropsService.Create(marvelousProp);
 
             return this.RedirectToAction("Index", "Home");
+        }
+
+        //Details
+        [Authorize]
+        public async Task<IActionResult> Details(string id)
+        {
+            var prop = await this.marvelousPropsService.GetMarvelousProp<MarvelousPropServiceModel>(id);
+
+            return this.View(prop);
         }
     }
 }

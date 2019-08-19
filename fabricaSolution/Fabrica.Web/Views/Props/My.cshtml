@@ -5,10 +5,10 @@
 @model IEnumerable<PropEditViewModel>
 
 @{
+    ViewData["Title"] = "My";
+
     var user = ((Task<FabricaUser>)ViewData["CurrentUser"]).Result;
     var deletedProps = ((Task<IEnumerable<PropEditViewModel>>)ViewData["DeletedProps"]).Result;
-
-    ViewData["Title"] = "My";
 }
 
 @{
@@ -49,6 +49,7 @@
                             <div class="container-fluid fa fab fas far">
                                 <a asp-controller="Props" asp-action="DetailsEdit" asp-route-id="@prop.Id" style="padding-right: 18px"><i class="fa fa-edit"></i></a>
                                 <a><img class="prop-user-thumb" src="@avatarImg" alt=""></a>
+                                <br/>
                                 <a class="prop-left-dist prop-username text-secondary">creator:</a>
                                 <a class="prop-username text-primary">@prop.PropCreator.UserName.ToUpper()</a>
                             </div>
@@ -64,7 +65,7 @@
 
         <div id="myprops" class="container d-flex align-items-center flex-column text-secondary">
             <h2 class="masthead-heading text-uppercase">My deleted props</h2>
-            <p class="masthead-heading text-uppercase">Deleted props of mine next!</p>
+            <p class="masthead-heading text-uppercase">All props deleted by me</p>
             <div class="divider-custom" style="margin-top: 0px">
                 <div class="divider-custom-line"></div>
             </div>
@@ -81,8 +82,9 @@
                             <hr class="hr-2 bg-white">
                             <p>@prop.Hashtags</p>
                             <div class="container-fluid fa fab fas far">
-                                <a asp-controller="Props" asp-action="DeletedDetailsEdit" asp-route-id="@prop.Id" style="padding-right: 18px"><i class="fa fa-edit"></i></a>
+                                <a asp-controller="Props" asp-action="Restore" asp-route-id="@prop.Id" style="padding-right: 18px"><i class="fa fa-edit"></i></a>
                                 <a><img class="prop-user-thumb" src="@avatarImg" alt=""></a>
+                                <br/>
                                 <a class="prop-left-dist prop-username text-secondary">creator:</a>
                                 <a class="prop-username text-primary">@prop.PropCreator.UserName.ToUpper()</a>
                             </div>

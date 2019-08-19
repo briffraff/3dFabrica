@@ -1,6 +1,10 @@
 ﻿namespace Fabrica.Services
 {
     using AutoMapper;
+    using Microsoft.EntityFrameworkCore;
+    using System.Collections.Generic;
+    using System.Linq;
+    using AutoMapper.QueryableExtensions;
     using Data;
     using Fabrica.Models;
     using System.Threading.Tasks;
@@ -19,6 +23,25 @@
 
             await this.context.MarvelousProps.AddAsync(marvelousprop);
             await this.context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetAll<T>(bool isDeleted)
+        {
+            var props = this.context.MarvelousProps.
+                Where(p => p.IsDeleted == isDeleted)
+                .ProjectTo<T>();
+
+            return props;
+        }
+
+        // GET Marvelous PROP
+        public async Task<IEnumerable<T>> GetMarvelousProp<T>(string id)
+        {
+            var prop = this.context.MarvelousProps
+                .Where(p => p.Id == id && p.IsDeleted == false)
+                .ProjectTo<T>();
+
+            return prop;
         }
     }
 }

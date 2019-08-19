@@ -35,7 +35,7 @@
                 <br>
                 <br>
                 <br>
-                <h2 class="masthead-heading text-uppercase">Details</h2>
+                <h2 class="masthead-heading text-uppercase">Restore tool</h2>
                 <p class="masthead-heading text-uppercase">3d prop</p>
                 <div class="divider-custom" style="margin-top: 0px">
                     <div class="divider-custom-line"></div>
@@ -60,7 +60,7 @@
 
                                 <div class="details">
                                     <h3 class="text-primary"><a>@prop.Name</a></h3>
-                                    <h5 class="text-primary "><a>@prop.Type</a></h5>
+                                    <h5 class="text-primary "><a>@prop.propType</a></h5>
                                     <br>
                                     <h6>
                                         @prop.Description
@@ -106,7 +106,7 @@
                                         <div class="col-md-9" style="padding-left: 18%">
                                         </div>
                                         <div class="col-md-3">
-                                            <a asp-controller="Props" asp-action="Restore" asp-route-id="@prop.Id" class="btn btn-outline-light bg-primary">Activate</a>
+                                            <a asp-controller="Props" asp-action="RestoreProp" asp-route-id="@prop.Id" class="btn btn-outline-light bg-primary">RESTORE</a>
                                         </div>
                                     </div>
 

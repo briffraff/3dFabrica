@@ -3,26 +3,48 @@
 @using Fabrica.Models.Enums
 @using Fabrica.Web.Models
 @using Fabrica.Services.Models;
-@model Prop
+@model IEnumerable<PropServiceModel>
 
 @{
     ViewData["Title"] = "Details";
-    var user = ((Task<FabricaUser>)ViewData["CurrentUser"]).Result;
-    var prop = @Model;
+    var propModel = @Model;
 
 }
 
 @{
     var avatarImg = "";
+    var ImageUrl = "";
+    var Name = "";
+    var propType = (PropType)0;
+    var Description = "";
+    double Price = 0;
+    var Hashtags = "";
+    var Id = "";
+    var Creator = "";
+    var Gender = (GenderType)0;
 
-    @if (user.Gender == GenderType.Male)
-    {
-    avatarImg = GlobalConstants.maleAvatar;
-    }
-    else if (user.Gender == GenderType.Female)
-    {
-    avatarImg = GlobalConstants.femaleAvatar;
-    }
+    @foreach (var prop in propModel)
+     {
+         ImageUrl = prop.ImageUrl;
+         Name = prop.Name;
+         propType = (PropType)prop.propType;
+         Description = prop.Description;
+         Price = prop.Price;
+         Hashtags = prop.Hashtags;
+         Id = prop.Id;
+         Creator = prop.PropCreator.UserName;
+         Gender = (GenderType)prop.PropCreator.Gender;
+     }
+
+    @if (Gender == GenderType.Male)
+     {
+         avatarImg = GlobalConstants.maleAvatar;
+     }
+     else if (Gender == GenderType.Female)
+     {
+         avatarImg = GlobalConstants.femaleAvatar;
+     }
+
 }
 
 <section class="props3d wow fadeInUp">
@@ -50,7 +72,7 @@
                         <div class="col-lg-4">
 
                             <div class="prop-item" style="width: 400px; height: auto">
-                                <img src="@Model.ImageUrl" alt="prop-1" class="img-fluid">
+                                <img src="@ImageUrl" alt="prop-1" class="img-fluid">
                             </div>
 
                         </div>
@@ -62,21 +84,21 @@
                                     <div class="details">
 
                                         <div class="form-group">
-                                            <label asp-for="@Model.ImageUrl"></label>
-                                            <input type="url" class="form-control" asp-for="@Model.ImageUrl" placeholder="ImageUrl..." disabled="disabled">
-                                            <span asp-validation-for="@Model.ImageUrl" class="text-danger"></span>
+                                            <label asp-for="@ImageUrl"></label>
+                                            <input type="url" class="form-control" asp-for="@ImageUrl" placeholder="ImageUrl..." disabled="disabled">
+                                            <span asp-validation-for="@ImageUrl" class="text-danger"></span>
                                         </div>
 
                                         <div class="form-group">
-                                            <label asp-for="@Model.Name"></label>
-                                            <input type="text" maxlength="40" class="form-control" asp-for="@Model.Name"
+                                            <label asp-for="@Name"></label>
+                                            <input type="text" maxlength="40" class="form-control" asp-for="@Name"
                                                    placeholder="3d Prop Name..." disabled="disabled">
-                                            <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                                            <span asp-validation-for="@Name" class="text-danger"></span>
                                         </div>
 
                                         <div class="form-group">
-                                            <label asp-for="@Model.Type"></label>
-                                            <select class="form-control" asp-for="@Model.Type" placeholder="Select Type ..." disabled="disabled">
+                                            <label asp-for="@propType"></label>
+                                            <select class="form-control" asp-for="@propType" placeholder="Select Type ..." disabled="disabled">
                                                 <option selected disabled>Select Type...</option>
                                                 <option value="Pants">Pants</option>
                                                 <option value="Shorts">Shorts</option>
@@ -92,21 +114,21 @@
                                                 <option value="Bras">Bra</option>
                                                 <option value="Equipment">Equipment</option>
                                             </select>
-                                            <span asp-validation-for="@Model.Type" class="text-danger"></span>
+                                            <span asp-validation-for="@propType" class="text-danger"></span>
                                         </div>
 
                                         <div class="form-group">
-                                            <label asp-for="@Model.Description"></label>
-                                            <textarea type="text" maxlength="450" class="form-control" asp-for="@Model.Description" placeholder="Description..." disabled="disabled"></textarea>
-                                            <span asp-validation-for="@Model.Description" class="text-danger"></span>
+                                            <label asp-for="@Description"></label>
+                                            <textarea type="text" maxlength="450" class="form-control" asp-for="@Description" placeholder="Description..." disabled="disabled"></textarea>
+                                            <span asp-validation-for="@Description" class="text-danger"></span>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label asp-for="@Model.Price"></label>
-                                                    <input type="number" min="1.0" step="0.1" class="form-control" asp-for="@Model.Price" placeholder="Price..." disabled="disabled">
-                                                    <span asp-validation-for="@Model.Price" class="text-danger"></span>
+                                                    <label asp-for="@Price"></label>
+                                                    <input type="number" min="1.0" step="0.1" class="form-control" asp-for="@Price" placeholder="Price..." disabled="disabled">
+                                                    <span asp-validation-for="@Price" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -114,16 +136,14 @@
                                         <hr class="hr-2 bg-white">
                                         <p>
                                             <div class="form-group">
-                                                <label asp-for="@Model.Hashtags"></label>
-                                                <input type="text" maxlength="50" class="form-control" asp-for="@Model.Hashtags" placeholder="#Hashtags..." disabled="disabled">
-                                                <span asp-validation-for="@Model.Hashtags" class="text-danger"></span>
+                                                <label asp-for="@Hashtags"></label>
+                                                <input type="text" maxlength="50" class="form-control" asp-for="@Hashtags" placeholder="#Hashtags..." disabled="disabled">
+                                                <span asp-validation-for="@Hashtags" class="text-danger"></span>
                                             </div>
                                         </p>
 
                                         <div class="container-fluid fa fab fas far">
-                                            <a href="#3dProps" style="padding-right: 5px">
-                                                <i class="fa fa-share-alt"></i>
-                                            </a>
+                                            <a href="" style="padding-right: 5px"><i class="fa fa-share-alt"></i></a>
                                             <a><img class="prop-user-thumb" src="@avatarImg" alt=""></a>
                                         </div>
                                         <br>

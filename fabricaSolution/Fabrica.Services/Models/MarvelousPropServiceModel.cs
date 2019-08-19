@@ -1,5 +1,4 @@
-﻿
-namespace Fabrica.Services.Models
+﻿namespace Fabrica.Services.Models
 {
     using AutoMapper;
     using Fabrica.Infrastructure.Mapping;
@@ -9,12 +8,11 @@ namespace Fabrica.Services.Models
 
     public class MarvelousPropServiceModel : IMapWith<MarvelousProp>
     {
-
         public string Id { get; set; }
 
         public string Name { get; set; }
 
-        public MarvelousType Type { get; set; }
+        public MarvelousType propType { get; set; }
 
         public int Points { get; set; }
 
@@ -29,6 +27,6 @@ namespace Fabrica.Services.Models
         public string MarvelousCreatorId { get; set; }
         public FabricaUser MarvelousCreator { get; set; }
 
-        public ICollection<Order> Orders { get; set; }
+        public ICollection<MarvelousPropOrder> Orders { get; set; }
     }
 }

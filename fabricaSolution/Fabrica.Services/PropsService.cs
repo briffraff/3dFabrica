@@ -1,5 +1,4 @@
-﻿
-namespace Fabrica.Services
+﻿namespace Fabrica.Services
 {
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
@@ -40,7 +39,7 @@ namespace Fabrica.Services
 
             prop.ImageUrl = model.ImageUrl;
             prop.Name = model.Name;
-            prop.Type = Mapper.Map<PropType>(model.Type);
+            prop.propType = Mapper.Map<PropType>(model.propType);
             prop.Description = model.Description;
             prop.Price = model.Price;
             prop.Hashtags = model.Hashtags;
@@ -66,7 +65,7 @@ namespace Fabrica.Services
         }
 
         // ACTIVATE
-        public async Task Activate(string id)
+        public async Task Restore(string id)
         {
             var product = await this.context.Props.FirstOrDefaultAsync(p => p.Id == id && p.IsDeleted == true);
 
@@ -89,10 +88,11 @@ namespace Fabrica.Services
         }
 
         // GET PROP
-        public async Task<Prop> GetProp(string id)
+        public async Task<IEnumerable<T>> GetProp<T>(string id)
         {
-            var prop = await this.context.Props.FirstOrDefaultAsync(p => p.Id == id && p.IsDeleted == false);
+            var prop = this.context.Props.Where(p => p.Id == id && p.IsDeleted == false).ProjectTo<T>();
 
+            Task.WaitAll();
             return prop;
         }
 
@@ -100,6 +100,7 @@ namespace Fabrica.Services
         public async Task<IEnumerable<T>> GetDeletedProps<T>(string id)
         {
             var props = this.context.Props.Where(u => u.PropCreatorId == id && u.IsDeleted == true).ProjectTo<T>();
+
             return props;
         }
 
@@ -107,21 +108,14 @@ namespace Fabrica.Services
         public async Task<Prop> GetDelProp(string id)
         {
             var prop = await this.context.Props.FirstOrDefaultAsync(p => p.Id == id && p.IsDeleted == true);
-
             return prop;
         }
 
-
-
-
-        //public async Task<FabricaUser> GetPropCreator(string propId)
-        //{
-        //    var user = this.context.Props.Select(x => x.PropCreatorId).Where(c => c.Contains(propId));
-
-        //    var map = Mapper.Map<FabricaUser>(user);
-
-        //    return map;
-        //}
-
+        public async Task<IEnumerable<T>> GetAll<T>(bool isDeleted)
+        {
+            var props = this.context.Props.Where(p => p.IsDeleted == isDeleted).ProjectTo<T>();
+            return props;
+        }
+        
     }
 }

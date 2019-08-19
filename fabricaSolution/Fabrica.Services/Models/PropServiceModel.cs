@@ -11,7 +11,7 @@
 
         public string Name { get; set; }
 
-        public PropType Type { get; set; }
+        public PropType propType { get; set; }
 
         public double Price { get; set; }
 
@@ -20,12 +20,12 @@
         public string Hashtags { get; set; }
 
         public string Description { get; set; }
-        
+
         public bool IsDeleted { get; set; }
 
         public string PropCreatorId { get; set; }
         public FabricaUser PropCreator { get; set; }
 
-        public ICollection<Order> Orders { get; set; }
+        public ICollection<PropOrder> Orders { get; set; }
     }
 }

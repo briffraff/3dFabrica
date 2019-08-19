@@ -19,7 +19,7 @@
         public const string ConfirmPasswordEr = "The password and confirmation password do not match.";
         public const string activationPass = "#Activate123{0}{1}";
         public const string deactivationPass = "#Deactivate{0}";
-        
+
         //Logger
         public const string RegisterUserConfirm = "User created a new account with password.";
         public const string LogoutUserConfirm = "User created a new account with password.";
@@ -43,6 +43,8 @@
         public const string PointsErr = "Points must be between 75 and 2500";
         public const string HashtagErr = "Hashtags must start with '#' and no longer of 50 symbols";
         public const string DescriptionErr = "Description has a limit of 450 symbols";
+        public const bool ShowDeletedItems = true;
+        public const int winPoints = 300;
 
         //Identity options
         public const string AllowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
@@ -55,7 +57,7 @@
         public const string exceptionHandlerPath = "/Home/Error";
         public const string mvcMapRouteName = "default";
         public const string mvcMapRouteTemplate = "{controller=Home}/{action=Index}/{id?}";
-        
+
         //Theme files
         //Custom fonts for this theme
         public const string montserrat = "https://fonts.googleapis.com/css?family=Montserrat:400,700";
@@ -63,19 +65,19 @@
 
         //External files
         //// DROPBOX
-        public const string fabricaLogo = "https://dl.dropboxusercontent.com/s/een9dlze2wrlgl5/3dfabrica_logo.png?dl=0";              
+        public const string fabricaLogo = "https://dl.dropboxusercontent.com/s/een9dlze2wrlgl5/3dfabrica_logo.png?dl=0";
         public const string favicon = "https://dl.dropboxusercontent.com/s/qzdqf284xzxuo43/favicon.png?dl=0";
         public const string adminAvatar = "https://dl.dropboxusercontent.com/s/w0tz0f31nanjged/avtr.svg?dl=0";
-        public const string freelancerCss ="https://dl.dropboxusercontent.com/s/irvyzwdu5rgk6e7/freelancer.css?dl=0";
+        public const string freelancerCss = "https://dl.dropboxusercontent.com/s/irvyzwdu5rgk6e7/freelancer.css?dl=0";
         public const string freelancerMinCss = "https://dl.dropboxusercontent.com/s/w08h4dfknatay0r/freelancer.min.css?dl=0";
         public const string styleCss = "https://dl.dropboxusercontent.com/s/5a3bkopg1ezfi0j/style.css?dl=0";
         public const string animateMinCss = "https://dl.dropboxusercontent.com/s/din5n5w1mb1bx9s/animate.min.css?dl=0";
         public const string fontAwsomeAllCss = "https://dl.dropboxusercontent.com/s/zm4lyu6udsbewfx/all.css?dl=0";
         public const string fontAwsomeAllMinCss = "https://dl.dropboxusercontent.com/s/0kjsqsqz7b3wn2s/all.min.css?dl=0";
         public const string wowMinJs = "https://dl.dropboxusercontent.com/s/63caqyc6vk3tx2o/wow.min.js?dl=0";
-        public const string mainJs = "https://dl.dropboxusercontent.com/s/z4z5zlsbxbbtp3q/main.js?dl=0"; 
-        public const string freelancerMinJs = "https://dl.dropboxusercontent.com/s/jnrwfjboicmqev5/freelancer.min.js?dl=0"; 
-        public const string jqBootstrapValidationJs= "https://dl.dropboxusercontent.com/s/98m2ksdihh582bq/jqBootstrapValidation.js?dl=0"; 
+        public const string mainJs = "https://dl.dropboxusercontent.com/s/z4z5zlsbxbbtp3q/main.js?dl=0";
+        public const string freelancerMinJs = "https://dl.dropboxusercontent.com/s/jnrwfjboicmqev5/freelancer.min.js?dl=0";
+        public const string jqBootstrapValidationJs = "https://dl.dropboxusercontent.com/s/98m2ksdihh582bq/jqBootstrapValidation.js?dl=0";
         public const string jqueryEasingMinJs = "https://dl.dropboxusercontent.com/s/n0ajtzyz8t3duit/jquery.easing.min.js?dl=0";
         public const string bootstrapBundleMinJs = "https://dl.dropboxusercontent.com/s/o5n47hw9rj25kov/bootstrap.bundle.min.js?dl=0";
         public const string jqueryMinJs = "https://dl.dropboxusercontent.com/s/s90p7wjc63yh9uq/jquery.min.js?dl=0";

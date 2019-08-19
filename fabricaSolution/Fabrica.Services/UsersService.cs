@@ -1,4 +1,6 @@
-﻿namespace Fabrica.Services
+﻿using System.Linq;
+
+namespace Fabrica.Services
 {
     using AutoMapper;
     using AutoMapper.QueryableExtensions;

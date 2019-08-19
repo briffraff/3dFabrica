@@ -1,12 +1,12 @@
 ﻿@using Fabrica.Infrastructure
 @using Fabrica.Models
-@using Fabrica.Services.Models
 @using Fabrica.Models.Enums
-@model IEnumerable<PropServiceModel>
+@using Fabrica.Services.Models
+@model IEnumerable<MarvelousPropServiceModel>
 
 @{
     ViewData["Title"] = "Details";
-    var propModel = @Model;
+    var marvelousPropModel = @Model;
 }
 
 @{
@@ -15,33 +15,26 @@
     var Name = "";
     var propType = (PropType)0;
     var Description = "";
-    double Price = 0.0;
+    int Points = 0;
     var Hashtags = "";
     var Id = "";
     var Creator = "";
     var Gender = (GenderType)0;
 
-    @foreach (var prop in propModel)
+    @foreach (var prop in marvelousPropModel)
     {
         ImageUrl = prop.ImageUrl;
         Name = prop.Name;
         propType = (PropType)prop.propType;
         Description = prop.Description;
-        Price = prop.Price;
+        Points = prop.Points;
         Hashtags = prop.Hashtags;
         Id = prop.Id;
-        Creator = prop.PropCreator.UserName;
-        Gender = (GenderType)prop.PropCreator.Gender;
+        Creator = prop.MarvelousCreator.UserName;
+        Gender = (GenderType)prop.MarvelousCreator.Gender;
     }
 
-    @if (Gender == GenderType.Male)
-    {
-        avatarImg = GlobalConstants.maleAvatar;
-    }
-    else if (Gender == GenderType.Female)
-    {
-        avatarImg = GlobalConstants.femaleAvatar;
-    }
+    avatarImg = GlobalConstants.adminAvatar;
 
 }
 
@@ -49,7 +42,7 @@
     <div class="container">
         <div class="row">
 
-            <div id="3dProps" class="container d-flex align-items-center flex-column text-secondary">
+            <div id="MarvProps" class="container d-flex align-items-center flex-column text-secondary">
                 <br>
                 <br>
                 <br>
@@ -57,7 +50,7 @@
                 <br>
                 <br>
                 <h2 class="masthead-heading text-uppercase">Details</h2>
-                <p class="masthead-heading text-uppercase">3d prop</p>
+                <p class="masthead-heading text-uppercase">Marvelous prop</p>
                 <div class="divider-custom" style="margin-top: 0px">
                     <div class="divider-custom-line"></div>
                 </div>
@@ -70,7 +63,7 @@
                         <div class="col-lg-4">
 
                             <div class="prop-item">
-                                <img src="@ImageUrl" alt="prop-1" class="img-fluid">
+                                <img src="@ImageUrl" alt="" class="img-fluid">
                             </div>
 
                         </div>
@@ -90,24 +83,14 @@
 
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h5 class="text-primary">Price : @Price$</h5>
+                                            <h5 class="text-primary">Points : @Points</h5>
                                         </div>
 
                                         <div class="col-lg-6">
                                             @{
-                                                var points = (int)(Price / 2);
-                                                var bonusPoints = 0;
-
-                                                if (Price >= 4)
-                                                {
-                                                    bonusPoints = (int)(((Price / 4) + 1) * 0.50);
-                                                }
-                                                else
-                                                {
-                                                    bonusPoints = 0;
-                                                }
+                                                int winPoints = GlobalConstants.winPoints;
                                             }
-                                            <h5 class="text-primary" style="padding-left: 16%">-> WIN: @points + (@bonusPoints)XP bonus</h5>
+                                            <h5 class="text-primary" style="padding-left: 16%">-> WIN: @winPoints points</h5>
                                         </div>
 
                                     </div>

@@ -2,14 +2,18 @@
 @using Fabrica.Models
 @using Fabrica.Models.Enums
 @using Fabrica.Services.Models;
-
-@{
-    var user = ((Task<FabricaUser>)ViewData["CurrentUser"]).Result;
-}
+@using Microsoft.AspNetCore.Identity
 
 @{
     ViewData["Title"] = @GlobalConstants.ProjectName;
 }
+
+@{
+    var user = ((Task<FabricaUser>)ViewData["CurrentUser"]).Result;
+    var allProps = (IEnumerable<PropServiceModel>)ViewData["AllProps"];
+    var allMarvelousProps = (IEnumerable<MarvelousPropServiceModel>)ViewData["AllMarvelous"];
+}
+
 
 @if (this.User.Identity.IsAuthenticated == false)
 {
@@ -61,7 +65,7 @@ else
                 }
             }
 
-            @if(this.User.IsInRole(GlobalConstants.AdminRoleName))
+            @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
             {
                 <img class="masthead-avatar mb-5" src="@GlobalConstants.adminAvatar" alt="">
             }
@@ -101,69 +105,40 @@ else
 
             <div class="row">
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="prop-item no-underline">
-                        <img src="img/props/1.jpg" alt="prop-1" class="img-fluid">
-                        <div class="details">
-                            <h3><a asp-controller="Props" asp-action="Details">Hoodie LS Cango PKT</a></h3>
-                            <hr class="hr-2 bg-white">
-                            <p>#3d #clothes #fabrics #what # the #fuck #will #happend #if #that</p>
-                            <div class="container-fluid fa fab fas far">
-                                <a class="js-scroll-trigger" href="#3dProps" style="padding-right: 5px"><i class="fa fa-expand"></i></a>
-                                <a href="#3dProps" style="padding-right: 5px"><i class="fa fa-share-alt"></i></a>
-                                <a><img class="prop-user-thumb" src="img/avataaars.svg" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @foreach (var prop in allProps)
+                {
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="prop-item no-underline">
-                        <img src="img/props/1.jpg" alt="prop-1" class="img-fluid">
-                        <div class="details">
-                            <h3><a href="details.html">Short Pants with pockets outside</a></h3>
-                            <hr class="hr-2 bg-white">
-                            <p>#3d #clothes #fabrics</p>
-                            <div class="container-fluid fa fab fas far">
-                                <a class="js-scroll-trigger" href="#3dProps" style="padding-right: 5px"><i class="fa fa-expand"></i></a>
-                                <a href="#3dProps" style="padding-right: 5px"><i class="fa fa-share-alt"></i></a>
-                                <a><img class="prop-user-thumb" src="img/avataaars.svg" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    var avatarImg = "";
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="prop-item">
-                        <img src="img/props/1.jpg" alt="prop-1" class="img-fluid">
-                        <div class="details">
-                            <h3><a href="details.html">LS Crew</a></h3>
-                            <hr class="hr-2 bg-white">
-                            <p>#3d #clothes #fabrics</p>
-                            <div class="container-fluid fa fab fas far">
-                                <a class="js-scroll-trigger" href="#3dProps" style="padding-right: 5px"><i class="fa fa-expand"></i></a>
-                                <a href="#3dProps" style="padding-right: 5px"><i class="fa fa-share-alt"></i></a>
-                                <a><img class="prop-user-thumb" src="img/avataaars.svg" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    @if (prop.PropCreator.Gender == GenderType.Male)
+                    {
+                        avatarImg = GlobalConstants.maleAvatar;
+                    }
+                    else if (prop.PropCreator.Gender == GenderType.Female)
+                    {
+                        avatarImg = GlobalConstants.femaleAvatar;
+                    }
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="prop-item">
-                        <img src="img/props/1.jpg" alt="prop-1" class="img-fluid">
-                        <div class="details">
-                            <h3><a href="details.html">Polo Shirt FPKT</a></h3>
-                            <hr class="hr-2 bg-white">
-                            <p>#3d #clothes #fabrics</p>
-                            <div class="container-fluid fa fab fas far">
-                                <a class="js-scroll-trigger" href="#3dProps" style="padding-right: 5px"><i class="fa fa-expand"></i></a>
-                                <a href="#3dProps" style="padding-right: 5px"><i class="fa fa-share-alt"></i></a>
-                                <a><img class="prop-user-thumb" src="img/avataaars.svg" alt=""></a>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="prop-item no-underline text-decoration-none">
+                            <img src=@prop.ImageUrl alt="" class="img-fluid">
+                            <div class="details">
+                                <h3><a asp-controller="Props" asp-action="Details" asp-route-id="@prop.Id">@prop.Name</a></h3>
+                                <hr class="hr-2 bg-white">
+                                <p>@prop.Hashtags</p>
+                                <div class="container-fluid fa fab fas far">
+                                    <a class="js-scroll-trigger" style="padding-right: 5px" asp-controller="Props" asp-action="Details" asp-route-id="@prop.Id"><i class="fa fa-expand"></i></a>
+                                    <a href="#3dProps" style="padding-right: 5px"><i class="fa fa-share-alt"></i></a>
+                                    <a><img class="prop-user-thumb" src="@avatarImg" alt=""></a>
+                                    <br />
+                                    <a class="prop-left-dist prop-username text-secondary">creator:</a>
+                                    <a class="prop-username text-primary">@prop.PropCreator.UserName.ToUpper()</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
 
             </div>
 
@@ -196,69 +171,29 @@ else
 
             <div class="row">
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="prop-item">
-                        <img src="img/props/1.jpg" alt="prop-1" class="img-fluid">
-                        <div class="details">
-                            <h3><a href="details.html">Hoodies Collection</a></h3>
-                            <hr class="hr-2 bg-white">
-                            <p>#3d #clothes #fabrics #collections</p>
-                            <div class="container-fluid fa fab fas far">
-                                <a class="js-scroll-trigger" href="#MarvProps" style="padding-right: 5px"><i class="fa fa-expand"></i></a>
-                                <a href="#3dProps" style="padding-right: 5px"><i class="fa fa-share-alt"></i></a>
-                                <a><img class="prop-user-thumb" src="img/avataaars.svg" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                @foreach (var marvelousProp in allMarvelousProps)
+                {
+                    var avatarImg = GlobalConstants.adminAvatar;
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="prop-item">
-                        <img src="img/props/1.jpg" alt="prop-1" class="img-fluid">
-                        <div class="details">
-                            <h3><a href="details.html">Pants Collection</a></h3>
-                            <hr class="hr-2 bg-white">
-                            <p>#3d #clothes #fabrics</p>
-                            <div class="container-fluid fa fab fas far">
-                                <a class="js-scroll-trigger" href="#MarvProps" style="padding-right: 5px"><i class="fa fa-expand"></i></a>
-                                <a href="#3dProps" style="padding-right: 5px"><i class="fa fa-share-alt"></i></a>
-                                <a><img class="prop-user-thumb" src="img/avataaars.svg" alt=""></a>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="prop-item text-decoration-none no-underline">
+                            <img src=@marvelousProp.ImageUrl alt="" class="img-fluid">
+                            <div class="details">
+                                <h3><a asp-controller="MarvelousProps" asp-action="Details" asp-route-id="@marvelousProp.Id">@marvelousProp.Name</a></h3>
+                                <hr class="hr-2 bg-white">
+                                <p>@marvelousProp.Hashtags</p>
+                                <div class="container-fluid fa fab fas far">
+                                    <a class="js-scroll-trigger" style="padding-right: 5px" asp-controller="MarvelousProps" asp-action="Details" asp-route-id="@marvelousProp.Id"><i class="fa fa-expand"></i></a>
+                                    <a href="#3dProps" style="padding-right: 5px"><i class="fa fa-share-alt"></i></a>
+                                    <a><img class="prop-user-thumb" src="@avatarImg" alt=""></a>
+                                    <br />
+                                    <a class="prop-left-dist prop-username text-secondary">creator:</a>
+                                    <a class="prop-username text-primary">@marvelousProp.MarvelousCreator.UserName.ToUpper()</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="prop-item">
-                        <img src="img/props/1.jpg" alt="prop-1" class="img-fluid">
-                        <div class="details">
-                            <h3><a href="details.html">LS Collection</a></h3>
-                            <hr class="hr-2 bg-white">
-                            <p>#3d #clothes #fabrics</p>
-                            <div class="container-fluid fa fab fas far">
-                                <a class="js-scroll-trigger" href="#MarvProps" style="padding-right: 5px"><i class="fa fa-expand"></i></a>
-                                <a href="#3dProps" style="padding-right: 5px"><i class="fa fa-share-alt"></i></a>
-                                <a><img class="prop-user-thumb" src="img/avataaars.svg" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="prop-item">
-                        <img src="img/props/1.jpg" alt="prop-1" class="img-fluid">
-                        <div class="details">
-                            <h3><a href="details.html">Mix collection</a></h3>
-                            <hr class="hr-2 bg-white">
-                            <p>#3d #clothes #fabrics</p>
-                            <div class="container-fluid fa fab fas far">
-                                <a class="js-scroll-trigger" href="#MarvProps" style="padding-right: 5px"><i class="fa fa-expand"></i></a>
-                                <a href="#3dProps" style="padding-right: 5px"><i class="fa fa-share-alt"></i></a>
-                                <a><img class="prop-user-thumb" src="img/avataaars.svg" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                }
 
             </div>
 

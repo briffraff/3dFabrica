@@ -244,7 +244,7 @@
                 {
                     Name = "LS Crewneck",
                     Description = "Long Sleeve Pullover. 90% Cotton, 10% Silk",
-                    Type = PropType.LS,
+                    propType = PropType.LS,
                     Hashtags = "#LS #Pullover #Cotton",
                     ImageUrl = GlobalConstants.LSCrewneck,
                     Price = 56.5,
@@ -254,7 +254,7 @@
                 {
                     Name = "SS Crewneck",
                     Description = "Short Sleeve Shirt. 50% Cotton, 50% Silk",
-                    Type = PropType.SS,
+                    propType = PropType.SS,
                     Hashtags = "#SS #T-shirt #50/50",
                     ImageUrl = GlobalConstants.SSCrewneck,
                     Price = 60,
@@ -264,7 +264,7 @@
                 {
                     Name = "Hoodie Front PKT",
                     Description = "Long Hoodie with Cangoroo Pocket in front. 100% Cotton",
-                    Type = PropType.Hoodies,
+                    propType = PropType.Hoodies,
                     Hashtags = "#Hoodie #Cool #Cangoroo #sport",
                     ImageUrl = GlobalConstants.Hoodie,
                     Price = 70,
@@ -274,7 +274,7 @@
                 {
                     Name = "Bra X-trail",
                     Description = "Sport Bra with a nice X form. 40% Cotton, 60% Silk",
-                    Type = PropType.Bras,
+                    propType = PropType.Bras,
                     Hashtags = "#BRA #Sport #Women",
                     ImageUrl = GlobalConstants.Bra,
                     Price = 40,
@@ -284,7 +284,7 @@
                 {
                     Name = "Winter Jogging Pants",
                     Description = "Long Pants for winter days. 60% Cotton, 30% Wool, 10% Silk",
-                    Type = PropType.Pants,
+                    propType = PropType.Pants,
                     Hashtags = "#Pantsforwinter #winter #warm #nice #longpants",
                     ImageUrl = GlobalConstants.winterPants,
                     Price = 67.4,
@@ -294,7 +294,7 @@
                 {
                     Name = "Vest",
                     Description = "Winter Vest for warm condition with side zippers. 80% Silk ,20% cotton",
-                    Type = PropType.Vests,
+                    propType = PropType.Vests,
                     Hashtags = "#Vest #niceAndWarmCoooool #zippers #double sided",
                     ImageUrl = GlobalConstants.Vest,
                     Price = 80,
@@ -317,7 +317,7 @@
                 {
                     Name = "Space collection - Mars",
                     Description = "Collection of space suits models from Mars Expedition. Parachutes and landing balls.",
-                    Type = MarvelousType.Astronauts,
+                    propType = MarvelousType.Astronauts,
                     Hashtags = "#Mars #expedition #Suits #parachutes #balls",
                     ImageUrl = GlobalConstants.noimage,
                     Points = 1200,
@@ -327,7 +327,7 @@
                 {
                     Name = "Park and chill",
                     Description = "Holiday equipment for lazy days. Ropes,hammocks,inflatable pillows.",
-                    Type = MarvelousType.Holiday,
+                    propType = MarvelousType.Holiday,
                     Hashtags = "#holiday #lazy #hammocks",
                     ImageUrl = GlobalConstants.noimage,
                     Points = 1000,
@@ -337,7 +337,7 @@
                 {
                     Name = "Divers suits",
                     Description = "Suits for diving expirience ,soft and waterproof! Keeps your body warm!",
-                    Type = MarvelousType.Divers,
+                    propType = MarvelousType.Divers,
                     Hashtags = "#Hoodie #Cool #Cangoroo #sport",
                     ImageUrl = GlobalConstants.noimage,
                     Points = 800,
@@ -347,7 +347,7 @@
                 {
                     Name = "Landing on the moon suits",
                     Description = "First time landing on the moon! Neil Armstrong and Buzz Aldrin space suits!",
-                    Type = MarvelousType.Astronauts,
+                    propType = MarvelousType.Astronauts,
                     Hashtags = "#Moon #firsttime $Neil Armstrong #suits #Aldrin #Buzz",
                     ImageUrl = GlobalConstants.noimage,
                     Points = 1500,

@@ -27,8 +27,8 @@
                         <span asp-validation-for="@Model.Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.Type"></label>
-                        <select class="form-control" asp-for="@Model.Type" placeholder="Select Type ...">
+                        <label asp-for="@Model.propType"></label>
+                        <select class="form-control" asp-for="@Model.propType" placeholder="Select Type ...">
                             <option selected disabled>Select Type...</option>
                             <option value="Pants">Pants</option>
                             <option value="Shorts">Shorts</option>
@@ -44,7 +44,7 @@
                             <option value="Bras">Bra</option>
                             <option value="Equipment">Equipment</option>
                         </select>
-                        <span asp-validation-for="@Model.Type" class="text-danger"></span>
+                        <span asp-validation-for="@Model.propType" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="@Model.Price"></label>

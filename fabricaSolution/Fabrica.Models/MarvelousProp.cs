@@ -15,7 +15,7 @@
 
         public string Name { get; set; }
 
-        public MarvelousType Type { get; set; }
+        public MarvelousType propType { get; set; }
 
         public int Points { get; set; }
 

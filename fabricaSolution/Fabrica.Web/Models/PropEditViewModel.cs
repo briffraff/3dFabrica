@@ -16,7 +16,7 @@ namespace Fabrica.Web.Models
         public string Name { get; set; }
 
         [Required]
-        public string Type { get; set; }
+        public string propType { get; set; }
 
         [Required]
         [Range(1.0, 5000, ErrorMessage = GlobalConstants.PriceErr)]
