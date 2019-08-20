@@ -28,13 +28,13 @@
     {
         ImageUrl = prop.ImageUrl;
         Name = prop.Name;
-        propType = (PropType)prop.propType;
+        propType = Enum.Parse<PropType>(prop.propType.ToString());
         Description = prop.Description;
         Price = prop.Price;
         Hashtags = prop.Hashtags;
         Id = prop.Id;
         Creator = prop.PropCreator.UserName;
-        Gender = (GenderType)prop.PropCreator.Gender;
+        Gender = Enum.Parse<GenderType>(prop.PropCreator.Gender.ToString());
     }
 
     @if (Gender == GenderType.Male)
@@ -121,7 +121,7 @@
                                     <div class="container-fluid fa fab fas far">
                                         <a @*href=""*@ style="padding-right: 5px"><i class="fa fa-share-alt"></i></a>
                                         <a><img class="prop-user-thumb" src="@avatarImg" alt=""></a>
-                                        <br />    
+                                        <br />
                                         <br />
                                         <a class="prop-left-dist prop-username text-secondary">creator:</a>
                                         <a class="prop-username text-primary">@Creator.ToUpper()</a>

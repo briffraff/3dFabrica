@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Fabrica.Web.Controllers
+﻿namespace Fabrica.Web.Controllers
 {
     using AutoMapper;
     using Fabrica.Infrastructure;
@@ -72,12 +70,7 @@ namespace Fabrica.Web.Controllers
             {
                 return this.RedirectToAction("My", "Props");
             }
-
-            while (Task.CompletedTask.IsCompletedSuccessfully)
-            {
-                break;
-            }
-
+            
             return this.View(prop);
         }
 
@@ -91,13 +84,7 @@ namespace Fabrica.Web.Controllers
             serviceModel.Id = id;
             
             await this.propsService.Edit(serviceModel);
-
-
-            while (Task.CompletedTask.IsCompletedSuccessfully)
-            {
-                break;
-            }
-
+            
             return this.RedirectToAction("My", "Props", id);
         }
 
@@ -106,8 +93,6 @@ namespace Fabrica.Web.Controllers
         [Authorize(Roles = GlobalConstants.UserRoleName)]
         public async Task<IActionResult> Delete(string id)
         {
-            this.ViewData["CurrentUser"] = this.usersService.GetUser(this.User.Identity.Name);
-
             var prop = await this.propsService.GetProp<PropServiceModel>(id);
 
             if (prop == null)
@@ -148,11 +133,6 @@ namespace Fabrica.Web.Controllers
         {
             var prop = await this.propsService.GetProp<PropServiceModel>(id);
 
-            while (Task.CompletedTask.IsCompletedSuccessfully)
-            {
-                break;
-            }
-
             return this.View(prop);
         }
 
@@ -188,13 +168,7 @@ namespace Fabrica.Web.Controllers
             this.ViewData["DeletedProps"] = this.propsService.GetDeletedProps<PropEditViewModel>(userId);
 
             var props = await this.propsService.GetUserProps<PropEditViewModel>(userId);
-
-
-            while (Task.CompletedTask.IsCompletedSuccessfully)
-            {
-                break;
-            }
-
+            
             return this.View(props);
         }
 
@@ -207,8 +181,6 @@ namespace Fabrica.Web.Controllers
             var props = await this.propsService.GetUserProps<PropEditViewModel>(userId);
             return this.RedirectToAction("Index", "Home", props);
         }
-
- 
 
     }
 }

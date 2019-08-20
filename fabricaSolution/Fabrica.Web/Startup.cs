@@ -59,6 +59,7 @@ namespace Fabrica.Web
                 .AddEntityFrameworkStores<FabricaDBContext>();
 
             //TODO Register services
+            services.AddTransient<FabricaDBContext>();
             //services.AddTransient<FabricaDbSeedData>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IPropsService, PropsService>();

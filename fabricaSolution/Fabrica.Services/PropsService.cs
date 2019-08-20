@@ -57,7 +57,7 @@
             {
                 return;
             }
-
+            
             product.IsDeleted = true;
 
             this.context.Props.Update(product);
@@ -92,7 +92,6 @@
         {
             var prop = this.context.Props.Where(p => p.Id == id && p.IsDeleted == false).ProjectTo<T>();
 
-            Task.WaitAll();
             return prop;
         }
 

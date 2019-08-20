@@ -13,7 +13,7 @@
     var avatarImg = "";
     var ImageUrl = "";
     var Name = "";
-    var propType = (PropType)0;
+    var propType = (MarvelousType)0;
     var Description = "";
     int Points = 0;
     var Hashtags = "";
@@ -25,13 +25,13 @@
     {
         ImageUrl = prop.ImageUrl;
         Name = prop.Name;
-        propType = (PropType)prop.propType;
+        propType = Enum.Parse<MarvelousType>(prop.propType.ToString());
         Description = prop.Description;
         Points = prop.Points;
         Hashtags = prop.Hashtags;
         Id = prop.Id;
         Creator = prop.MarvelousCreator.UserName;
-        Gender = (GenderType)prop.MarvelousCreator.Gender;
+        Gender = Enum.Parse<GenderType>(prop.MarvelousCreator.Gender.ToString());
     }
 
     avatarImg = GlobalConstants.adminAvatar;

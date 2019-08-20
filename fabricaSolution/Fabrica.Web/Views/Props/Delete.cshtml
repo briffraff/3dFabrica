@@ -1,14 +1,12 @@
-﻿@using Fabrica.Infrastructure
-@using Fabrica.Models
+﻿@using System.Linq
+@using System.Reflection
+@using Fabrica.Infrastructure
 @using Fabrica.Models.Enums
-@using Fabrica.Web.Models
 @using Fabrica.Services.Models;
 @model IEnumerable<PropServiceModel>
 
 @{
     ViewData["Title"] = "Details";
-    var propModel = @Model;
-
 }
 
 @{
@@ -23,27 +21,27 @@
     var Creator = "";
     var Gender = (GenderType)0;
 
-    @foreach (var prop in propModel)
-     {
-         ImageUrl = prop.ImageUrl;
-         Name = prop.Name;
-         propType = (PropType)prop.propType;
-         Description = prop.Description;
-         Price = prop.Price;
-         Hashtags = prop.Hashtags;
-         Id = prop.Id;
-         Creator = prop.PropCreator.UserName;
-         Gender = (GenderType)prop.PropCreator.Gender;
-     }
+    @foreach (var prop in @Model)
+    {
+        ImageUrl = prop.ImageUrl;
+        Name = prop.Name;
+        propType = Enum.Parse<PropType>(prop.propType.ToString());
+        Description = prop.Description;
+        Price = prop.Price;
+        Hashtags = prop.Hashtags;
+        Id = prop.Id;
+        Creator = prop.PropCreator.UserName;
+        Gender = Enum.Parse<GenderType>(prop.PropCreator.Gender.ToString());
+    }
 
     @if (Gender == GenderType.Male)
-     {
-         avatarImg = GlobalConstants.maleAvatar;
-     }
-     else if (Gender == GenderType.Female)
-     {
-         avatarImg = GlobalConstants.femaleAvatar;
-     }
+    {
+        avatarImg = GlobalConstants.maleAvatar;
+    }
+    else if (Gender == GenderType.Female)
+    {
+        avatarImg = GlobalConstants.femaleAvatar;
+    }
 
 }
 
