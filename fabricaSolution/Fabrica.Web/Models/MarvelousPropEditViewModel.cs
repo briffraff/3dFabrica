@@ -34,6 +34,7 @@ namespace Fabrica.Web.Models
         [MaxLength(450, ErrorMessage = GlobalConstants.DescriptionErr)]
         public string Description { get; set; }
 
+        public string MarvelousCreatorId { get; set; }
         public FabricaUser MarvelousCreator { get; set; }
     }
 }

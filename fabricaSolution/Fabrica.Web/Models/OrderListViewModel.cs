@@ -1,36 +1,28 @@
-﻿namespace Fabrica.Web.Models
+﻿
+namespace Fabrica.Web.Models
 {
-    using AutoMapper;
+    using Fabrica.Infrastructure.Mapping;
+    using Fabrica.Models;
     using Fabrica.Services.Models;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
-    public class OrderListViewModel
+    public class OrderListViewModel : IMapWith<OrderServiceModel>
     {
+        [Key]
         public string Id { get; set; }
 
-        public string Prop { get; set; }
+        public string ClientId { get; set; }
+        public FabricaUser Client { get; set; }
 
-        public string MarvelousProp { get; set; }
+        public bool IsDeleted { get; set; }
+
+        public bool IsActive { get; set; }
 
         public string OrderedOn { get; set; }
 
-        public string Price { get; set; }
+        public ICollection<MarvelousPropOrder> MarvelousProps { get; set; }
+        public ICollection<PropOrder> Props { get; set; }
 
-        public string Points { get; set; }
-
-        public string PropOwner { get; set; }
-
-        public string MarvelousOwner { get; set; }
-
-        public void ConfigureMapping(Profile mapper)
-        {
-            mapper.CreateMap<OrderServiceModel, OrderListViewModel>()
-                .ForMember(dest => dest.Prop, opt => opt.MapFrom(src => src.Prop.Name))
-                .ForMember(dest => dest.MarvelousProp, opt => opt.MapFrom(src => src.MarvelousProp.Name))
-                .ForMember(dest => dest.OrderedOn,opt => opt.MapFrom(src => src.OrderedOn.ToString("hh:mm dd/MM/yyyy")))
-                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Prop.Price))
-                .ForMember(dest => dest.Points, opt => opt.MapFrom(src => src.MarvelousProp.Points))
-                .ForMember(dest => dest.PropOwner, opt => opt.MapFrom(src => src.Client.UserName))
-                .ForMember(dest => dest.MarvelousOwner, opt => opt.MapFrom(src => src.Client.UserName));
-        }
     }
 }

@@ -127,12 +127,12 @@
                                     <br>
                                     <div class="row">
                                         <div class="col-md-9" style="padding-left: 18%">
-                                            <a class="py-3 px-0 px-lg-2 btn btn-outline-light bg-primary text-white">Add to basket</a>
+                                            <a asp-controller="Orders" asp-action="AddToBasket" asp-route-productId="@Id" class="py-3 px-0 px-lg-2 btn btn-outline-light bg-primary text-white">Add to basket</a>
                                         </div>
                                         @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
                                         {
                                             <div class="col-md-3">
-                                                <button class="btn btn-outline-light bg-danger">Delete</button>
+                                                <a class="btn btn-outline-light bg-danger">Delete</a>
                                             </div>
                                         }
                                     </div>

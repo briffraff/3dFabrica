@@ -33,6 +33,7 @@ namespace Fabrica.Web.Models
         [MaxLength(450, ErrorMessage = GlobalConstants.DescriptionErr)]
         public string Description { get; set; }
 
+        public string PropCreatorId { get; set; }
         public FabricaUser PropCreator { get; set; }
 
     }

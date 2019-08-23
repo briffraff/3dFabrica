@@ -59,13 +59,13 @@ namespace Fabrica.Web
                 .AddEntityFrameworkStores<FabricaDBContext>();
 
             //TODO Register services
-            services.AddTransient<FabricaDBContext>();
             //services.AddTransient<FabricaDbSeedData>();
+            services.AddTransient<FabricaDBContext>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IPropsService, PropsService>();
             services.AddTransient<IMarvelousPropsService, MarvelousPropsService>();
             services.AddTransient<ICreditAccountsService, CreditAccountsService>();
-            //services.AddTransient<IOrdersService, OrdersService>();
+            services.AddTransient<IOrdersService, OrdersService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

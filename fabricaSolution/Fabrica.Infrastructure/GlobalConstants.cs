@@ -33,11 +33,13 @@
         public const int firstBonusPointsWhenRegisterAccount = 30;
         public const string CreditCardErr = "Card number pattern : `0000-0000-0000-0000`";
         public const string CreditAccountNotRegistered = "NOT REGISTERED CREDIT CARD";
-        public const string InitialCash = "0.0";
-        public const string InitialPoints = "0";
+        public const double InitialCash = 0.0;
+        public const int InitialPoints = 0;
         public const string authNumberTemplate = "****-****-****-";
 
         //Create Prop and Marvelous Prop
+        public const string PropType = "InternalDbSet<Prop>";
+        public const string MarvType = "InternalDbSet<MarvelousProp>";
         public const string NameErr = "Name must be between 5 and 40";
         public const string PriceErr = "Price must be between 1 and 5000";
         public const string PointsErr = "Points must be between 75 and 2500";
@@ -45,6 +47,10 @@
         public const string DescriptionErr = "Description has a limit of 450 symbols";
         public const bool ShowDeletedItems = true;
         public const int winPoints = 300;
+        public const int halfDivider = 2;
+        public const int quarterDivider = 4;
+        public const double halfPercent = 0.50;
+        public const double plus = 1;
 
         //Identity options
         public const string AllowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";

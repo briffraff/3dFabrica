@@ -1,48 +1,57 @@
 ﻿namespace Fabrica.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
+    using Fabrica.Infrastructure;
+    using Fabrica.Models;
+    using Fabrica.Services.Contracts;
+    using Fabrica.Services.Models;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Mvc;
-    using Fabrica.Services.Contracts;
-    using Microsoft.AspNetCore.Authorization;
-    using AutoMapper;
-    using Fabrica.Infrastructure;
-    using Fabrica.Web.Models;
 
     public class OrdersController : Controller
     {
-        //private readonly IOrdersService ordersService;
+        private readonly IOrdersService ordersService;
+        private readonly IPropsService propsService;
+        private readonly ICreditAccountsService accountsService;
+        private readonly UserManager<FabricaUser> userManager;
 
-        //public OrdersController(IOrdersService ordersService)
-        //{
-        //    this.ordersService = ordersService;
-        //}
-
-        //[Authorize]
-        //public async Task<IActionResult> Create(string propId,string marvPropId)
-        //{
-        //    await this.ordersService.Create(propId, marvPropId, this.User.Identity.Name);
-
-        //    return this.RedirectToAction("Index", "Home");
-        //}
-
-        //[Authorize(Roles = GlobalConstants.UserRoleName)]
-        public IActionResult My()
+        public OrdersController(IOrdersService ordersService, IPropsService propsService, ICreditAccountsService accountsService, UserManager<FabricaUser> userManager)
         {
-            return this.View();
+            this.ordersService = ordersService;
+            this.propsService = propsService;
+            this.accountsService = accountsService;
+            this.userManager = userManager;
         }
 
-        //[Authorize(Roles = GlobalConstants.AdminRoleName)]
-        //public async Task<IActionResult> All()
-        //{
-        //    var orders = (await this.ordersService.GetAll())
-        //        .Select(Mapper.Map<OrderListViewModel>)
-        //        .ToArray();
+        public async Task<IActionResult> AddToBasket(string productId)
+        {
+            var userId = this.userManager.GetUserId(this.User);
+            await this.ordersService.AddToBasket(productId, userId);
 
-        //    return this.View(orders);
-        //}
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize(Roles = GlobalConstants.UserRoleName)]
+        public async Task<IActionResult> My()
+        {
+            var userId = this.userManager.GetUserId(this.User);
+
+            var orders = (await this.ordersService
+                .GetAll<OrderServiceModel>())
+                .Where(x => x.ClientId == userId);
+
+            return this.View(orders);
+        }
+
+        [Authorize(Roles = GlobalConstants.AdminRoleName)]
+        public async Task<IActionResult> All()
+        {
+            var orders = await this.ordersService.GetAll<OrderServiceModel>();
+
+            return this.View(orders);
+        }
 
     }
 }

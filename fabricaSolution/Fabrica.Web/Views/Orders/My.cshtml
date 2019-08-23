@@ -1,19 +1,24 @@
 ﻿@using Fabrica.Web.Models
-@model OrderListViewModel
+@using Fabrica.Services.Models
+
+@model IEnumerable<OrderServiceModel>
 
 @{
     ViewData["Title"] = "My";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <header class="masthead bg-primary text-white text-center">
     <h1 class="masthead-heading text-uppercase text-center text-secondary">My Orders :</h1>
     <br>
     <br>
     <div class="row" style="margin-right: 0px">
+
         <div class="column masthead-heading text-uppercase text-secondary">
             <h1>[ 3d Props ]</h1>
         </div>
+
         <div class="column">
             <table class="table-content">
 
@@ -22,48 +27,24 @@
                     <th>Purchased on</th>
                     <th>Price</th>
                     <th>Owner</th>
-                    <th>Status</th>
+                    @*<th>Details</th>*@
                 </tr>
 
-                <tr>
-                    <td>Peter</td>
-                    <td>11.06.2019</td>
-                    <td>$100</td>
-                    <td>Swanson</td>
-                    <td>
-                        <button type="submit" class="btn btn-danger">Cancel</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Lois</td>
-                    <td>09.06.2019</td>
-                    <td>$150</td>
-                    <td>Swanson</td>
-                    <td>
-                        <button type="submit" class="btn btn-danger">Cancel</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Joe</td>
-                    <td>08.06.2019</td>
-                    <td>$300</td>
-                    <td>Swanson</td>
-                    <td>
-                        <button type="submit" class="btn btn-danger">Cancel</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Cleveland</td>
-                    <td>15.06.2019</td>
-                    <td>$250</td>
-                    <td>Swanson</td>
-                    <td>
-                        <button type="submit" class="btn btn-danger">Cancel</button>
-                    </td>
-                </tr>
+                @foreach (var order in @Model)
+                {
+                    @foreach (var p in order.Props)
+                    {
+                        <tr>
+                            <td>@p.Prop.Name</td>
+                            <td>@p.Order.OrderedOn</td>
+                            <td>@p.Prop.Price</td>
+                            <td>@p.Prop.PropCreator.UserName</td>
+                            @*<td>
+                                <a class="btn btn-danger">Details</a>
+                            </td>*@
+                        </tr>
+                    }
+                }
 
             </table>
         </div>
@@ -74,67 +55,50 @@
     <br>
 
     <div class="row" style="margin-right: 0px">
+
         <div class="column masthead-heading text-uppercase text-secondary">
             <h1>[ Marvelous Props ]</h1>
         </div>
+
         <div class="column">
             <table class="table-content">
+
                 <tr class="masthead-subheading bg-secondary text-uppercase text-md-right text-white">
                     <th>Name</th>
                     <th>Purchased on</th>
                     <th>Points</th>
                     <th>Owner</th>
-                    <th>Status</th>
+                    @*<th>Details</th>*@
                 </tr>
-                <tr>
-                    <td>Peter</td>
-                    <td>18.05.2019</td>
-                    <td>100</td>
-                    <td>Joe</td>
-                    <td>
-                        <button type="submit" class="btn btn-danger">Cancel</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Lois</td>
-                    <td>20.06.2019</td>
-                    <td>150</td>
-                    <td>Joe</td>
 
-                    <td>
-                        <button type="submit" class="btn btn-danger">Cancel</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Joe</td>
-                    <td>10.07.2019</td>
-                    <td>300</td>
-                    <td>Joe</td>
+                @foreach (var order in @Model)
+                {
+                    @foreach (var mp in order.MarvelousProps)
+                    {
+                        <tr>
+                            <td>@mp.MarvelousProp.Name</td>
+                            <td>@mp.Order.OrderedOn</td>
+                            <td>@mp.MarvelousProp.Points</td>
+                            <td>@mp.MarvelousProp.MarvelousCreator.UserName</td>
+                            @*<td>
+                                <a class="btn btn-danger">Details</a>
+                            </td>*@
+                        </tr>
+                    }
+                }
 
-                    <td>
-                        <button type="submit" class="btn btn-danger">Cancel</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Cleveland</td>
-                    <td>08.09.2019</td>
-                    <td>250</td>
-                    <td>Joe</td>
-                    <td>
-                        <button type="submit" class="btn btn-danger">Cancel</button>
-                    </td>
-                </tr>
             </table>
         </div>
     </div>
+
     <br>
     <br>
 
-    <div class="container-fluid row">
+    @*<div class="container-fluid row">
         <div class="col-md-12" style="padding-left: 75%">
-            <button type="submit" class="btn btn-warning py-lg-4">CONFIRM ALL</button>
+            <a class="btn btn-warning py-lg-4">CONFIRM ALL</a>
         </div>
-    </div>
+    </div>*@
 
     <!-- Icon Divider -->
     <div class="divider-custom divider-light">

@@ -22,7 +22,7 @@
 
         public DateTime OrderedOn { get; set; }
 
-        public ICollection<MarvelousPropOrder> MarvelousProps { get; set; }
         public ICollection<PropOrder> Props { get; set; }
+        public ICollection<MarvelousPropOrder> MarvelousProps { get; set; }
     }
 }

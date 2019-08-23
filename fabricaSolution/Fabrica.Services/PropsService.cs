@@ -83,7 +83,11 @@
         // GET USER PROPS
         public async Task<IEnumerable<T>> GetUserProps<T>(string id)
         {
-            var props = this.context.Props.Where(u => u.PropCreatorId == id && u.IsDeleted == false).ProjectTo<T>();
+            var props = await this.context.Props
+                .Where(u => u.PropCreatorId == id && u.IsDeleted == false)
+                .ProjectTo<T>()
+                .ToArrayAsync();
+
             return props;
         }
 
