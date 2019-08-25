@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="@GlobalConstants.ProjectDescription" content="">
     <meta name="@GlobalConstants.ProjectAuthor" content="">
-    
+
 
     <title>@GlobalConstants.ProjectName</title>
 
@@ -15,7 +15,7 @@
     <link href="~/lib/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="@GlobalConstants.montserrat" rel="stylesheet" type="text/css">
     <link href="@GlobalConstants.lato" rel="stylesheet" type="text/css">
-    
+
     <!-- Theme CSS -->
     <link href="@GlobalConstants.freelancerMinCss" rel="stylesheet">
     <link href="@GlobalConstants.styleCss" rel="stylesheet">
@@ -79,8 +79,8 @@
                                         </a>
                                     </li>
                                 }
-                                
-                                @if(this.User.IsInRole(GlobalConstants.UserRoleName))
+
+                                @if (this.User.IsInRole(GlobalConstants.UserRoleName))
                                 {
                                     <li class="nav-item mx-0 mx-lg-1">
                                         <a class="nav-create py-3 px-5 px-lg-3 rounded js-scroll-trigger" asp-controller="Props" asp-action="Create">
@@ -94,9 +94,18 @@
                         </div>
 
                         <ul class="navbar-nav ml-auto">
+                            @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
+                            {
+                                <li class="mx-0 mx-lg-1">
+                                    <a class="nav-link py-3 px-0 px-lg-2 btn btn-outline-light btn-social mx-1" asp-controller="Orders" asp-action="All">
+                                        <i class="fas fa-fw fa-box"></i>
+                                    </a>
+                                </li>
+                            }
+
                             <li class="mx-0 mx-lg-1">
                                 <a class="nav-link py-3 px-0 px-lg-2 btn btn-outline-light btn-social mx-1" asp-controller="Orders" asp-action="My">
-                                    <i class="fas fa-fw fa-shopping-cart"></i>
+                                    <i class="fas fa-fw fa-cart-arrow-down"></i>
                                 </a>
                             </li>
                             <li class="mx-0 mx-lg-1">

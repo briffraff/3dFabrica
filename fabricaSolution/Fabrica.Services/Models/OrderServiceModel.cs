@@ -2,11 +2,12 @@
 {
     using Fabrica.Infrastructure.Mapping;
     using Fabrica.Models;
-    using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     public class OrderServiceModel : IMapWith<Order>
     {
+        [Key]
         public string Id { get; set; }
 
         public string ClientId { get; set; }
@@ -16,9 +17,9 @@
 
         public bool IsActive { get; set; }
 
-        public DateTime OrderedOn { get; set; }
+        public string OrderedOn { get; set; }
 
-        public ICollection<MarvelousPropOrder> MarvelousProps { get; set; }
-        public ICollection<PropOrder> Props { get; set; }
+        public List<MarvelousPropOrder> MarvelousProps { get; set; }
+        public List<PropOrder> Props { get; set; }
     }
 }

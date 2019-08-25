@@ -15,17 +15,20 @@
 {
     @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
     {
-        <header class="masthead bg-primary text-white text-center">
-
-            <h1 class="masthead-heading text-uppercase text-center text-secondary">All users&ensp;:</h1>
-            <br>
-            <br>
-
-            <div class="row" style="padding-left: 15px; margin-right: 0px;">
+        <header class="bg-white text-white text-center">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <h1 id="allusers" class="masthead-heading text-uppercase text-center text-secondary" style="font-size: 55px">ALL USERS:</h1>
+            <p class="masthead-heading text-uppercase">All registered user in 3dFabrica!</p>
+            
+            <div class="row" style="padding-left: 15px; padding-right: 0px; margin-right: 0px;">
 
                 <div class="col-md-12">
                     <table class="container">
-                        <tr class="masthead-subheading bg-secondary text-uppercase text-md-center text-white">
+                        <tr class="masthead-subheading bg-primary text-uppercase text-md-center text-white">
                             <th>#</th>
                             <th>Username</th>
                             <th>Full name</th>
@@ -61,6 +64,9 @@
                         }
 
                     </table>
+                    <div class="container prop-item d-flex align-items-center flex-column text-secondary">
+                        <a class="js-scroll-trigger" href="#allusers"><i class="fa fa-2x fa-arrow-circle-up"></i></a>
+                    </div>
                 </div>
 
             </div>

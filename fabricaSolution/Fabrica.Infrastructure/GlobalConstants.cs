@@ -38,8 +38,8 @@
         public const string authNumberTemplate = "****-****-****-";
 
         //Create Prop and Marvelous Prop
-        public const string PropType = "InternalDbSet<Prop>";
-        public const string MarvType = "InternalDbSet<MarvelousProp>";
+        public const string PropType = "Prop";
+        public const string MarvType = "MarvelousProp";
         public const string NameErr = "Name must be between 5 and 40";
         public const string PriceErr = "Price must be between 1 and 5000";
         public const string PointsErr = "Points must be between 75 and 2500";
@@ -51,6 +51,11 @@
         public const int quarterDivider = 4;
         public const double halfPercent = 0.50;
         public const double plus = 1;
+        public const string nonPurchased = "There is no purchased products yet!";
+
+        //condition msgs
+        public const string confirmStatus = "Confirmed";
+        public const string waitingStatus = "Waiting..";
 
         //Identity options
         public const string AllowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";

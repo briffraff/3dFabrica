@@ -1,4 +1,8 @@
-﻿namespace Fabrica.Web.Controllers
+﻿using System.Security.Cryptography.X509Certificates;
+using AutoMapper;
+using Fabrica.Web.Models;
+
+namespace Fabrica.Web.Controllers
 {
     using Fabrica.Infrastructure;
     using Fabrica.Models;
@@ -12,17 +16,19 @@
 
     public class OrdersController : Controller
     {
+        private readonly IUsersService usersService;
         private readonly IOrdersService ordersService;
         private readonly IPropsService propsService;
         private readonly ICreditAccountsService accountsService;
         private readonly UserManager<FabricaUser> userManager;
 
-        public OrdersController(IOrdersService ordersService, IPropsService propsService, ICreditAccountsService accountsService, UserManager<FabricaUser> userManager)
+        public OrdersController(IUsersService usersService, IOrdersService ordersService, IPropsService propsService, ICreditAccountsService accountsService, UserManager<FabricaUser> userManager)
         {
             this.ordersService = ordersService;
             this.propsService = propsService;
             this.accountsService = accountsService;
             this.userManager = userManager;
+            this.usersService = usersService;
         }
 
         public async Task<IActionResult> AddToBasket(string productId)
@@ -33,24 +39,46 @@
             return RedirectToAction("Index", "Home");
         }
 
-        [Authorize(Roles = GlobalConstants.UserRoleName)]
+        [Authorize]
         public async Task<IActionResult> My()
         {
             var userId = this.userManager.GetUserId(this.User);
+            this.ViewData["CurrentUser"] = this.usersService.GetUser(this.User.Identity.Name);
 
-            var orders = (await this.ordersService
-                .GetAll<OrderServiceModel>())
-                .Where(x => x.ClientId == userId);
+            this.ViewData["props"] = this.ordersService
+                .PropsForUser<PropOrderServiceModel>(userId)
+                .Result;
+            //.Where(x=>x.Order.ClientId == userId && x.Order.IsActive)
+            //.ToList();
 
-            return this.View(orders);
+            this.ViewData["marvs"] = this.ordersService
+                .MarvsForUser<MarvelousPropOrderServiceModel>(userId)
+                .Result;
+            //.Where(x => x.Order.ClientId == userId && x.Order.IsActive)
+            //.ToList();
+
+            return this.View();
         }
 
         [Authorize(Roles = GlobalConstants.AdminRoleName)]
         public async Task<IActionResult> All()
         {
-            var orders = await this.ordersService.GetAll<OrderServiceModel>();
+            var propOrders = this.ordersService
+                .All<OrderServiceModel>()
+                .Result
+                .ToList();
 
-            return this.View(orders);
+            this.ViewData["props"] = this.ordersService
+                .propsAll<PropOrderServiceModel>()
+                .Result
+                .ToList();
+
+            this.ViewData["marvs"] = this.ordersService
+                .marvsAll<MarvelousPropOrderServiceModel>()
+                .Result
+                .ToList();
+
+            return this.View(propOrders);
         }
 
     }

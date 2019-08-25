@@ -102,7 +102,7 @@
         // GET USER DELETED PROPS
         public async Task<IEnumerable<T>> GetDeletedProps<T>(string id)
         {
-            var props = this.context.Props.Where(u => u.PropCreatorId == id && u.IsDeleted == true).ProjectTo<T>();
+            var props = await this.context.Props.Where(u => u.PropCreatorId == id && u.IsDeleted == true).ProjectTo<T>().ToArrayAsync();
 
             return props;
         }
@@ -116,7 +116,7 @@
 
         public async Task<IEnumerable<T>> GetAll<T>(bool isDeleted)
         {
-            var props = this.context.Props.Where(p => p.IsDeleted == isDeleted).ProjectTo<T>();
+            var props = await this.context.Props.Where(p => p.IsDeleted == isDeleted).ProjectTo<T>().ToArrayAsync();
             return props;
         }
         

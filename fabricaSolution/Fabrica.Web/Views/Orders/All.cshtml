@@ -1,69 +1,96 @@
-﻿@using Fabrica.Services.Models
-@model IEnumerable<OrderServiceModel>
+﻿@using Fabrica.Infrastructure
+@using Fabrica.Models
+@using Fabrica.Services.Models
+@model List<OrderServiceModel>
 
 @{
-    ViewData["Title"] = "All";
+
+    var propsOrder = (IEnumerable<PropOrderServiceModel>)ViewData["props"];
+    var marvsOrder = (IEnumerable<MarvelousPropOrderServiceModel>)ViewData["marvs"];
+
+    var orders = @Model;
+    FabricaUser buyer = null;
+
+    var propsCounter = 1;
+    var marvsCounter = 1;
+
+    var confirmStatus = GlobalConstants.confirmStatus;
+    var waitingStatus = GlobalConstants.waitingStatus;
+
+    ViewData["Title"] = "All Orders";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<header class="masthead bg-primary text-white text-center">
-    <h1 class="masthead-heading text-uppercase text-center text-secondary">My Orders :</h1>
-    <br>
-    <br>
-    <div class="row" style="margin-right: 0px">
-        <div class="column masthead-heading text-uppercase text-secondary">
-            <h1>[ 3d Props ]</h1>
-        </div>
-        <div class="column">
-            <table class="table-content">
 
-                <tr class="masthead-subheading bg-secondary text-uppercase text-md-right text-white">
-                    <th>Name</th>
-                    <th>Purchased on</th>
-                    <th>Price</th>
-                    <th>Owner</th>
-                    <th>Status</th>
-                </tr>
+<header class="bg-white text-white text-center">
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <h1 class="masthead-heading text-uppercase text-center text-secondary" style="font-size: 55px">ALL ORDERS :</h1>
+    <div class="row" style="padding-left: 15px; padding-right: 0px; margin-right: 0px;">
 
-                <tr>
-                    <td>Peter</td>
-                    <td>11.06.2019</td>
-                    <td>$100</td>
-                    <td>Swanson</td>
-                    <td>Confirmed</td>
-                </tr>
+        <div id="props" class="container">
 
-                <tr>
-                    <td>Lois</td>
-                    <td>09.06.2019</td>
-                    <td>$150</td>
-                    <td>Swanson</td>
-                    <td>
-                        <button type="submit" class="btn btn-warning">Confirm</button>
-                    </td>
-                </tr>
+            <section class="col-md-12 masthead-heading text-uppercase text-secondary">
+                <br />
+                <br />
+                <h1>[ 3d Props ]</h1>
+                <p class="masthead-heading text-uppercase">Purchased props</p>
+            </section>
 
-                <tr>
-                    <td>Joe</td>
-                    <td>08.06.2019</td>
-                    <td>$300</td>
-                    <td>Swanson</td>
-                    <td>
-                        <button type="submit" class="btn btn-warning">Confirm</button>
-                    </td>
-                </tr>
+            <table class="container">
 
-                <tr>
-                    <td>Cleveland</td>
-                    <td>15.06.2019</td>
-                    <td>$250</td>
-                    <td>Swanson</td>
-                    <td>
-                        <button type="submit" class="btn btn-warning">Confirm</button>
-                    </td>
-                </tr>
+                @if (propsOrder.Select(x => x.Order.Props).Count() != 0)
+                {
+                    <tr class="masthead-subheading bg-primary text-uppercase text-md-right text-white">
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Purchased on</th>
+                        <th>Price</th>
+                        <th>Creator</th>
+                        <th>Buyer</th>
+                        <th>Status</th>
+                    </tr>
+
+                    @foreach (var ord in propsOrder.OrderByDescending(x=>x.Order.OrderedOn))
+                    {
+                        <tr>
+                            <td>@propsCounter</td>
+                            <td>@ord.Prop.Name</td>
+                            <td>@ord.Order.OrderedOn.ToString("dd/MM/yyyy")</td>
+                            <td>@ord.Prop.Price</td>
+                            @{
+                                //TODO Check prop creator instance
+                            }
+                            <td>@*@ord.Prop.PropCreator.UserName*@</td>
+                            <td>@ord.Order.Client.UserName</td>
+
+                            @if (ord.Order.IsActive)
+                            {
+                                <td class="text-warning">@waitingStatus</td>
+                            }
+                            else
+                            {
+                                <td class="text-primary">@confirmStatus</td>
+                            }
+                        </tr>
+                        propsCounter++;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td class="text-danger text-uppercase">@GlobalConstants.nonPurchased</td>
+                    </tr>
+                }
 
             </table>
+
+            <div class="container prop-item d-flex align-items-center flex-column text-secondary">
+                <a class="js-scroll-trigger" href="#props"><i class="fa fa-2x fa-arrow-circle-up"></i></a>
+            </div>
         </div>
     </div>
 
@@ -71,50 +98,61 @@
     <br>
     <br>
 
-    <div class="row" style="margin-right: 0px">
-        <div class="column masthead-heading text-uppercase text-secondary">
-            <h1>[ Marvelous Props ]</h1>
-        </div>
-        <div class="column">
-            <table class="table-content">
-                <tr class="masthead-subheading bg-secondary text-uppercase text-md-right text-white">
-                    <th>Name</th>
-                    <th>Purchased on</th>
-                    <th>Points</th>
-                    <th>Owner</th>
-                    <th>Status</th>
-                </tr>
-                <tr>
-                    <td>Peter</td>
-                    <td>18.05.2019</td>
-                    <td>100</td>
-                    <td>Joe</td>
-                    <td>Confirmed</td>
-                </tr>
-                <tr>
-                    <td>Lois</td>
-                    <td>20.06.2019</td>
-                    <td>150</td>
-                    <td>Joe</td>
-                    <td>Confirmed</td>
-                </tr>
-                <tr>
-                    <td>Joe</td>
-                    <td>10.07.2019</td>
-                    <td>300</td>
-                    <td>Joe</td>
-                    <td>Confirmed</td>
-                </tr>
-                <tr>
-                    <td>Cleveland</td>
-                    <td>08.09.2019</td>
-                    <td>250</td>
-                    <td>Joe</td>
-                    <td>
-                        <button type="submit" class="btn btn-warning">Confirm</button>
-                    </td>
-                </tr>
+    <div class="row" style="padding-left: 15px; padding-right: 0px; margin-right: 0px;">
+        <div id="marvs" class="container">
+
+            <section class="col-md-12 masthead-heading text-uppercase text-secondary">
+                <h1>[ Marvelous Props ]</h1>
+                <p class="masthead-heading text-uppercase">Purchased Marvelous props</p>
+            </section>
+
+            <table class="container">
+
+                @if (marvsOrder.Select(x => x.Order.MarvelousProps).Count() != 0)
+                {
+                    <tr class="masthead-subheading bg-primary text-uppercase text-md-right text-white">
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Purchased on</th>
+                        <th>Points</th>
+                        <th>Creator</th>
+                        <th>Buyer</th>
+                        <th>Status</th>
+                    </tr>
+
+                    @foreach (var ord in marvsOrder.OrderByDescending(x=>x.Order.OrderedOn))
+                    {
+                        <tr>
+                            <td>@marvsCounter</td>
+                            <td>@ord.MarvelousProp.Name</td>
+                            <td>@ord.Order.OrderedOn.ToString("dd/MM/yyyy")</td>
+                            <td>@ord.MarvelousProp.Points</td>
+                            <td>@ord.MarvelousProp.MarvelousCreator.UserName</td>
+                            <td>@ord.Order.Client.UserName</td>
+
+                            @if (ord.Order.IsActive)
+                            {
+                                <td class="text-warning">@waitingStatus</td>
+                            }
+                            else
+                            {
+                                <td class="text-primary">@confirmStatus</td>
+                            }
+                        </tr>
+                        marvsCounter++;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td class="text-danger text-uppercase">@GlobalConstants.nonPurchased</td>
+                    </tr>
+                }
             </table>
+
+            <div class="container prop-item d-flex align-items-center flex-column text-secondary">
+                <a class="js-scroll-trigger" href="#marvs"><i class="fa fa-2x fa-arrow-circle-up"></i></a>
+            </div>
         </div>
     </div>
     <br>
