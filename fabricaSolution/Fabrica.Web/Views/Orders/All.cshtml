@@ -9,7 +9,9 @@
     var marvsOrder = (IEnumerable<MarvelousPropOrderServiceModel>)ViewData["marvs"];
 
     var orders = @Model;
-    FabricaUser buyer = null;
+ 
+    var propCreators = propsOrder.Select(x => x.Prop.PropCreator);
+    var marvsCreators = marvsOrder.Select(x => x.MarvelousProp.MarvelousCreator);
 
     var propsCounter = 1;
     var marvsCounter = 1;
@@ -42,6 +44,7 @@
 
             <table class="container">
 
+
                 @if (propsOrder.Select(x => x.Order.Props).Count() != 0)
                 {
                     <tr class="masthead-subheading bg-primary text-uppercase text-md-right text-white">
@@ -54,8 +57,9 @@
                         <th>Status</th>
                     </tr>
 
-                    @foreach (var ord in propsOrder.OrderByDescending(x=>x.Order.OrderedOn))
+                    @foreach (var ord in propsOrder.OrderByDescending(x => x.Order.OrderedOn))
                     {
+
                         <tr>
                             <td>@propsCounter</td>
                             <td>@ord.Prop.Name</td>
@@ -64,7 +68,16 @@
                             @{
                                 //TODO Check prop creator instance
                             }
-                            <td>@*@ord.Prop.PropCreator.UserName*@</td>
+                            <td>
+                                @*@if (@ord.Prop.PropCreator.UserName != null)
+                                {
+                                    @ord.Prop.PropCreator.UserName
+                                }
+                                else
+                                {
+                                    continue;
+                                }*@
+                            </td>
                             <td>@ord.Order.Client.UserName</td>
 
                             @if (ord.Order.IsActive)
@@ -120,14 +133,19 @@
                         <th>Status</th>
                     </tr>
 
-                    @foreach (var ord in marvsOrder.OrderByDescending(x=>x.Order.OrderedOn))
+                    @foreach (var ord in marvsOrder.OrderByDescending(x => x.Order.OrderedOn))
                     {
                         <tr>
                             <td>@marvsCounter</td>
                             <td>@ord.MarvelousProp.Name</td>
                             <td>@ord.Order.OrderedOn.ToString("dd/MM/yyyy")</td>
                             <td>@ord.MarvelousProp.Points</td>
-                            <td>@ord.MarvelousProp.MarvelousCreator.UserName</td>
+                            <td>
+                                @*@if (@ord.MarvelousProp.MarvelousCreator.UserName != null)
+                                {
+                                    @ord.MarvelousProp.MarvelousCreator.UserName
+                                }*@
+                            </td>
                             <td>@ord.Order.Client.UserName</td>
 
                             @if (ord.Order.IsActive)

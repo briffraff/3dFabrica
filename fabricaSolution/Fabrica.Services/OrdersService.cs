@@ -1,6 +1,4 @@
-﻿using Fabrica.Services.Models;
-
-namespace Fabrica.Services
+﻿namespace Fabrica.Services
 {
     using AutoMapper.QueryableExtensions;
     using Contracts;
@@ -69,21 +67,40 @@ namespace Fabrica.Services
 
         public async Task AddToBasket(string productId, string userId)
         {
-            var admin = await this.context.Users
-                .FirstOrDefaultAsync(x => x.UserName == "bb"
-                                          && x.Gender.ToString() == "Male"
-                                          && !x.IsDeleted
-                                          && x.CreditAccount.CardNumber != null);
-
-            var adminCreditAccount = await this.context.CreditAccounts.FirstOrDefaultAsync(a => a.AccountOwnerId == admin.Id);
-
-            var client = await this.context.Users.FirstOrDefaultAsync(x => x.Id == userId);
-            var account = await this.context.CreditAccounts.FirstOrDefaultAsync(a => a.AccountOwnerId == userId);
             var prop = await this.context.Props.FirstOrDefaultAsync(x => x.Id == productId);
             var marvProp = await this.context.MarvelousProps.FirstOrDefaultAsync(x => x.Id == productId);
 
-            var creator = await this.context.Users.FirstOrDefaultAsync(x => x.CreatedProps.Contains(prop));
-            var creatorAccount = await this.context.CreditAccounts.FirstOrDefaultAsync(x => x.AccountOwnerId == creator.Id);
+            var admin = await this.context.Users
+                .FirstOrDefaultAsync(x => x.UserName == "bb"
+                                          && x.Gender.ToString() == "Male"
+                                          && !x.IsDeleted);
+            CreditAccount adminCreditAccount = null;
+            if (admin.CreditAccountId != null)
+            {
+                adminCreditAccount = await this.context.CreditAccounts.FirstOrDefaultAsync(a => a.AccountOwnerId == admin.Id);
+            }
+
+            var client = await this.context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            CreditAccount account = null;
+            if (client.CreditAccountId != null)
+            {
+                account = await this.context.CreditAccounts.FirstOrDefaultAsync(a => a.AccountOwnerId == userId);
+            }
+
+            FabricaUser creator = null;
+            if (prop != null)
+            {
+                creator = await this.context.Users.FirstOrDefaultAsync(x => x.CreatedProps.Contains(prop));
+            }
+            else
+            {
+                creator = await this.context.Users.FirstOrDefaultAsync(x => x.MarvelousProps.Contains(marvProp));
+            }
+            CreditAccount creatorAccount = null;
+            if (creator.CreditAccountId != null)
+            {
+                creatorAccount = await this.context.CreditAccounts.FirstOrDefaultAsync(x => x.AccountOwnerId == creator.Id);
+            }
 
             var totalCash = GlobalConstants.InitialCash;
             var cashPrice = GlobalConstants.InitialCash;
@@ -93,10 +110,9 @@ namespace Fabrica.Services
             var checkType = "";
 
             if (marvProp == null && prop == null ||
-                account == null ||
-                client == null ||
-                creator == null ||
-                creatorAccount == null)
+                adminCreditAccount == null ||
+                creatorAccount == null ||
+                account == null)
             {
                 return;
             }
@@ -195,34 +211,37 @@ namespace Fabrica.Services
                     return;
                 }
 
-                var marvOrder = new Order()
+                if (checkType == marvType)
                 {
-                    Id = Guid.NewGuid().ToString(),
-                    Client = client,
-                    ClientId = client.Id,
-                    IsActive = true,
-                    IsDeleted = false,
-                    OrderedOn = DateTime.Now,
-                };
+                    var marvOrder = new Order()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Client = client,
+                        ClientId = client.Id,
+                        IsActive = true,
+                        IsDeleted = false,
+                        OrderedOn = DateTime.Now,
+                    };
 
-                var marvPropOrder = new MarvelousPropOrder()
-                {
-                    MarvelousProp = await marvProps.FirstOrDefaultAsync(x => x.Id == productId),
-                    MarvelousPropId = (await marvProps.FirstOrDefaultAsync(x => x.Id == productId)).Id,
-                    Order = marvOrder,
-                    OrderId = marvOrder.Id,
-                };
+                    var marvPropOrder = new MarvelousPropOrder()
+                    {
+                        MarvelousProp = await marvProps.FirstOrDefaultAsync(x => x.Id == productId),
+                        MarvelousPropId = (await marvProps.FirstOrDefaultAsync(x => x.Id == productId)).Id,
+                        Order = marvOrder,
+                        OrderId = marvOrder.Id,
+                    };
 
-                //POINTS
-                //minus points for buyer
-                account.Points -= pointsPrice;
+                    //POINTS
+                    //minus points for buyer
+                    account.Points -= pointsPrice;
 
-                //plus points for buyer
-                account.Points += GlobalConstants.winPoints;
+                    //plus points for buyer
+                    account.Points += GlobalConstants.winPoints;
 
-                this.context.CreditAccounts.Update(account);
-                this.context.MarvelousPropOrders.Add(marvPropOrder);
-                await this.context.SaveChangesAsync();
+                    this.context.CreditAccounts.Update(account);
+                    this.context.MarvelousPropOrders.Add(marvPropOrder);
+                    await this.context.SaveChangesAsync();
+                }
             }
 
         }

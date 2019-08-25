@@ -1,5 +1,7 @@
 ﻿namespace Fabrica.Services.Models
 {
+    using System.ComponentModel.DataAnnotations;
+    using Microsoft.EntityFrameworkCore.Metadata.Internal;
     using Fabrica.Models;
     using Fabrica.Models.Enums;
     using Infrastructure.Mapping;
@@ -7,6 +9,7 @@
 
     public class PropServiceModel : IMapWith<Prop>
     {
+        [Key]
         public string Id { get; set; }
 
         public string Name { get; set; }

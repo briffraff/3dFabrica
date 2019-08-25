@@ -1,8 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using AutoMapper;
-using Fabrica.Web.Models;
-
-namespace Fabrica.Web.Controllers
+﻿namespace Fabrica.Web.Controllers
 {
     using Fabrica.Infrastructure;
     using Fabrica.Models;
@@ -63,7 +59,7 @@ namespace Fabrica.Web.Controllers
         [Authorize(Roles = GlobalConstants.AdminRoleName)]
         public async Task<IActionResult> All()
         {
-            var propOrders = this.ordersService
+            var orders = this.ordersService
                 .All<OrderServiceModel>()
                 .Result
                 .ToList();
@@ -78,7 +74,7 @@ namespace Fabrica.Web.Controllers
                 .Result
                 .ToList();
 
-            return this.View(propOrders);
+            return this.View(orders);
         }
 
     }

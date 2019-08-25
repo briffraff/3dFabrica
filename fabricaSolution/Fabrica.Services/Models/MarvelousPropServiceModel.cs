@@ -1,4 +1,7 @@
-﻿namespace Fabrica.Services.Models
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
+namespace Fabrica.Services.Models
 {
     using AutoMapper;
     using Fabrica.Infrastructure.Mapping;
@@ -8,6 +11,7 @@
 
     public class MarvelousPropServiceModel : IMapWith<MarvelousProp>
     {
+        [Key]
         public string Id { get; set; }
 
         public string Name { get; set; }
