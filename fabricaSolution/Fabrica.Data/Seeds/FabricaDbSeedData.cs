@@ -19,12 +19,17 @@
         private readonly FabricaDBContext context;
         private readonly IApplicationBuilder app;
         private readonly IHostingEnvironment env;
+        private readonly UserManager<FabricaUser> userManager;
 
-        public FabricaDbSeedData(FabricaDBContext context, IApplicationBuilder app, IHostingEnvironment env)
+        public FabricaDbSeedData(FabricaDBContext context,
+            IApplicationBuilder app,
+            IHostingEnvironment env,
+            UserManager<FabricaUser> userManager)
         {
             this.context = context;
             this.app = app;
             this.env = env;
+            this.userManager = userManager;
         }
 
         //  database
@@ -82,7 +87,7 @@
                     LockoutEnabled = true,
                     FullName = "Owner owner",
                     Gender = GenderType.Male,
-                    IsDeleted = false
+                    IsDeleted = false,
                 },
                 new FabricaUser
                 {
@@ -95,7 +100,7 @@
                     LockoutEnabled = true,
                     FullName = "Admin Adminchev",
                     Gender = GenderType.Male,
-                    IsDeleted = false
+                    IsDeleted = false,
                 },
                 new FabricaUser
                 {
@@ -108,14 +113,17 @@
                     LockoutEnabled = true,
                     FullName = "Boraka",
                     Gender = GenderType.Male,
-                    IsDeleted = false
+                    IsDeleted = false,
                 }
             };
 
             HashPaswword(admins, usersFromDb);
             CreateUserAddRole(admins, usersFromDb, adminRole).Wait();
             this.context.SaveChanges();
+
         }
+
+
 
         //  users
         private void SeedUsers()
@@ -177,31 +185,52 @@
         {
             if (this.context.CreditAccounts.Any()) return;
 
-            var accounts = new List<CreditAccount>()
+            var owner = this.context.Users.FirstOrDefault(x => x.UserName == "owner");
+            var mainAdmin = this.context.Users.FirstOrDefault(x => x.UserName == "bb");
+            var aa = this.context.Users.FirstOrDefault(x => x.UserName == "aa");
+
+            var ownerCA = new CreditAccount()
             {
-                new CreditAccount()
-                {
-                    CardNumber = "2334-3344-3345-2333",
-                    Points = 1700,
-                    Cash = 102,
-                    AccountOwner = this.context.Users.FirstOrDefault(u=>u.UserName == "owner")
-                },
-                new CreditAccount()
-                {
-                    CardNumber = "4444-5555-6666-7777",
-                    Points = 1500,
-                    Cash = 245,
-                    AccountOwner = this.context.Users.FirstOrDefault(u=>u.UserName == "bb")
-                }
+                AccountId = Guid.NewGuid().ToString(),
+                AccountOwnerId = owner.Id,
+                AccountOwner = owner,
+                CardNumber = "2334-3344-3345-2333",
+                AuthNumber = "2333",
+                Points = 2000,
+                Cash = 350,
             };
 
-            this.context.CreditAccounts.AddRange(accounts);
+            var adminCA = new CreditAccount()
+            {
+                AccountId = Guid.NewGuid().ToString(),
+                AccountOwnerId = mainAdmin.Id,
+                AccountOwner = mainAdmin,
+                CardNumber = "4444-5555-6666-7777",
+                AuthNumber = "7777",
+                Cash = 450,
+                Points = 3500,
+            };
+
+            var aaCA = new CreditAccount()
+            {
+                AccountId = Guid.NewGuid().ToString(),
+                AccountOwnerId = aa.Id,
+                AccountOwner = aa,
+                CardNumber = "2269-6969-6969-4525",
+                AuthNumber = "4525",
+                Cash = 500,
+                Points = 3000,
+            };
+
+            this.context.CreditAccounts.Add(ownerCA);
+            this.context.CreditAccounts.Add(adminCA);
+            this.context.CreditAccounts.Add(aaCA);
             this.context.SaveChanges();
         }
 
         private void SeedLicenzes()
         {
-            if(this.context.Licenzes.Any()) return;
+            if (this.context.Licenzes.Any()) return;
 
             var licenzes = new List<Licenze>()
             {
@@ -366,7 +395,8 @@
             Task.Run(SeedRoles).Wait();
             Task.Run(SeedAdmins).Wait();
             Task.Run(SeedUsers).Wait();
-            //Task.Run(SeedAccounts).Wait();
+            Task.Run(SeedAccounts).Wait();
+            Task.Run(UserAccountsChanges).Wait();
             Task.Run(SeedLicenzes).Wait();
             Task.Run(SeedProps).Wait();
             Task.Run(SeedMarvelousProps).Wait();
@@ -397,6 +427,47 @@
                     await userStore.AddToRoleAsync(currentUser, role);
                 }
             }
+        }
+
+        // set role , saveChanges
+        private void UserAccountsChanges()
+        {
+            var owner = this.context.Users.FirstOrDefault(x => x.UserName == "owner");
+            var mainAdmin = this.context.Users.FirstOrDefault(x => x.UserName == "bb");
+            var aa = this.context.Users.FirstOrDefault(x => x.UserName == "aa");
+
+            //owner
+            var ownerAccountId = this.context.CreditAccounts.FirstOrDefault(x => x.AccountOwnerId == owner.Id)?.AccountId;
+            var ownerAccount = this.context.CreditAccounts.FirstOrDefault(x => x.AccountOwner == owner);
+            //bb
+            var adminAccountId = this.context.CreditAccounts.FirstOrDefault(x => x.AccountOwnerId == mainAdmin.Id)?.AccountId;
+            var adminAccount = this.context.CreditAccounts.FirstOrDefault(x => x.AccountOwner == mainAdmin);
+            //aa
+            var aaAccountId = this.context.CreditAccounts.FirstOrDefault(x => x.AccountOwnerId == aa.Id)?.AccountId;
+            var aaAccount = this.context.CreditAccounts.FirstOrDefault(x => x.AccountOwner == aa);
+
+            if (owner != null)
+            {
+                owner.CreditAccountId = ownerAccountId;
+                owner.CreditAccount = ownerAccount;
+            }
+
+            if (mainAdmin != null)
+            {
+                mainAdmin.CreditAccountId = adminAccountId;
+                mainAdmin.CreditAccount = adminAccount;
+            }
+
+            if (aa != null)
+            {
+                aa.CreditAccountId = aaAccountId;
+                aa.CreditAccount = aaAccount;
+            }
+
+            if (owner != null) this.context.Users.Update(owner);
+            if (mainAdmin != null) this.context.Users.Update(mainAdmin);
+            if (aa != null) this.context.Users.Update(aa);
+            this.context.SaveChanges();
         }
     }
 }

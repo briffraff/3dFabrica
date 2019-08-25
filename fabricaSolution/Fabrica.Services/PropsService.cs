@@ -23,6 +23,9 @@
         {
             var prop = Mapper.Map<Prop>(model);
 
+            //var creator = await this.context.Users.FirstOrDefaultAsync(x => x.UserName == model.PropCreator.UserName);
+            //prop.PropCreator = creator;
+
             await this.context.Props.AddAsync(prop);
             await this.context.SaveChangesAsync();
         }
@@ -57,7 +60,7 @@
             {
                 return;
             }
-            
+
             product.IsDeleted = true;
 
             this.context.Props.Update(product);
@@ -119,6 +122,6 @@
             var props = await this.context.Props.Where(p => p.IsDeleted == isDeleted).ProjectTo<T>().ToArrayAsync();
             return props;
         }
-        
+
     }
 }

@@ -69,10 +69,10 @@ namespace Fabrica.Web
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, FabricaDBContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, FabricaDBContext context,UserManager<FabricaUser> userManager)
         {
             //seed database,roles,admins,users,props,marvelousprops
-            FabricaDbSeedData seeder = new FabricaDbSeedData(context,app,env);
+            FabricaDbSeedData seeder = new FabricaDbSeedData(context,app,env, userManager);
             seeder.SeedAllData().Wait();
 
             Mapper.Initialize(config => config.AddProfile<AutoMapperProfile>());

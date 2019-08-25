@@ -50,10 +50,10 @@
                 Price = model.Price,
                 ImageUrl = model.ImageUrl,
                 Hashtags = model.Hashtags,
-                Description = model.Description
+                Description = model.Description,
+                PropCreatorId = this.userManager.GetUserId(this.User),
+                //PropCreator = await this.usersService.GetUser(this.User.Identity.Name),
             };
-
-            prop.PropCreator = await this.usersService.GetUser(this.User.Identity.Name);
 
             await this.propsService.Create(prop);
 
@@ -70,7 +70,7 @@
             {
                 return this.RedirectToAction("My", "Props");
             }
-            
+
             return this.View(prop);
         }
 
@@ -82,9 +82,9 @@
             var serviceModel = Mapper.Map<PropServiceModel>(model);
 
             serviceModel.Id = id;
-            
+
             await this.propsService.Edit(serviceModel);
-            
+
             return this.RedirectToAction("My", "Props", id);
         }
 
@@ -168,7 +168,7 @@
             this.ViewData["DeletedProps"] = this.propsService.GetDeletedProps<PropEditViewModel>(userId);
 
             var props = await this.propsService.GetUserProps<PropEditViewModel>(userId);
-            
+
             return this.View(props);
         }
 

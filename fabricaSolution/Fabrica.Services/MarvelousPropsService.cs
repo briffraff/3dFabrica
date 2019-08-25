@@ -19,9 +19,9 @@
 
         public async Task Create(MarvelousPropServiceModel model)
         {
-            var marvelousprop = Mapper.Map<MarvelousProp>(model);
+            var marvelousProp = Mapper.Map<MarvelousProp>(model);
 
-            await this.context.MarvelousProps.AddAsync(marvelousprop);
+            await this.context.MarvelousProps.AddAsync(marvelousProp);
             await this.context.SaveChangesAsync();
         }
 

@@ -1,4 +1,7 @@
-﻿namespace Fabrica.Web.Controllers
+﻿using Fabrica.Models;
+using Microsoft.AspNetCore.Identity;
+
+namespace Fabrica.Web.Controllers
 {
     using Fabrica.Infrastructure;
     using Fabrica.Models.Enums;
@@ -14,11 +17,15 @@
     {
         private readonly IMarvelousPropsService marvelousPropsService;
         private readonly IUsersService usersService;
+        private readonly UserManager<FabricaUser> userManager;
 
-        public MarvelousPropsController(IMarvelousPropsService marvelousPropsService, IUsersService usersService)
+        public MarvelousPropsController(IMarvelousPropsService marvelousPropsService,
+                                        IUsersService usersService,
+                                         UserManager<FabricaUser> userManager)
         {
             this.marvelousPropsService = marvelousPropsService;
             this.usersService = usersService;
+            this.userManager = userManager;
         }
 
         [Authorize(Roles = GlobalConstants.AdminRoleName)]
@@ -44,9 +51,9 @@
                 ImageUrl = model.ImageUrl,
                 Hashtags = model.Hashtags,
                 Description = model.Description,
+                MarvelousCreatorId = this.userManager.GetUserId(this.User),
+                //MarvelousCreator = await this.usersService.GetUser(this.User.Identity.Name),
             };
-
-            marvelousProp.MarvelousCreator = await this.usersService.GetUser(this.User.Identity.Name);
 
             await this.marvelousPropsService.Create(marvelousProp);
 
