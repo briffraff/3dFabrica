@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using Fabrica.Models;
-
-namespace Fabrica.Services.Contracts
+﻿namespace Fabrica.Services.Contracts
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -15,5 +12,7 @@ namespace Fabrica.Services.Contracts
         Task<IEnumerable<T>> My<T>(string userId);
         Task<IEnumerable<T>> All<T>();
         Task AddToBasket(string productId, string userId);
+        Task Cancel(string orderId);
+        Task ConfirmAll(string userId);
     }
 }

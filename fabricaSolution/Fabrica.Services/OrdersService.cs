@@ -6,7 +6,6 @@
     using Fabrica.Infrastructure;
     using Fabrica.Models;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Internal;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -20,6 +19,7 @@
 
         }
 
+        // ALL ORDERS
         public async Task<IEnumerable<T>> propsAll<T>()
         {
             var orders = this.context.PropOrders.ProjectTo<T>();
@@ -42,6 +42,7 @@
             return orders;
         }
 
+        //MY ORDERS
         public async Task<IEnumerable<T>> PropsForUser<T>(string userId)
         {
             var orders = await this.context.PropOrders.Where(x => x.Order.ClientId == userId).ProjectTo<T>().ToArrayAsync();
@@ -56,6 +57,7 @@
             return orders;
         }
 
+        // not used method
         public async Task<IEnumerable<T>> My<T>(string userId)
         {
             var client = await this.context.Users.FirstOrDefaultAsync(x => x.Id == userId);
@@ -65,7 +67,61 @@
             return orders;
         }
 
-        public async Task AddToBasket(string productId, string userId)
+        //CANCEL ORDER
+        public async Task Cancel(string orderId)
+        {
+            //var propOrder = await this.context.PropOrders.FirstOrDefaultAsync(x=>x.Order.Id == orderId);
+            var order = await this.context.Orders.FirstOrDefaultAsync(x => x.Id == orderId);
+
+            if (order == null)
+            {
+                return;
+            }
+
+            order.IsActive = false;
+            order.IsDeleted = true;
+
+            this.context.Orders.Remove(order);
+            await this.context.SaveChangesAsync();
+        }
+
+        // CONFIRM ALL PRODUCTS IN ORDER
+        public async Task ConfirmAll(string Id)
+        {
+            var orders = await this.context.Orders.Where(x => x.ClientId == Id && x.IsActive && !x.IsDeleted).ToArrayAsync();
+            var userId = Id;
+
+            foreach (var order in orders)
+            {
+                order.IsActive = false;
+                order.IsDeleted = true;
+
+                string propId = this.context.PropOrders
+                    .FirstOrDefault(x => x.OrderId != null && x.OrderId == order.Id)?.PropId;
+
+                string marvId = this.context.MarvelousPropOrders
+                    .FirstOrDefault(x => x.OrderId != null && x.OrderId == order.Id)?.MarvelousPropId;
+
+                string productId;
+
+                if (propId != null)
+                {
+                    productId = propId;
+                }
+                else
+                {
+                    productId = marvId;
+                }
+
+                if (userId != null) Transaction(productId, userId).Wait();
+            }
+
+            this.context.Orders.UpdateRange(orders);
+            await this.context.SaveChangesAsync();
+        }
+
+        // TRANSACTION TO ADMIN,CREATOR AND BUYER
+        public async Task Transaction(string productId, string userId)
         {
             var prop = await this.context.Props.FirstOrDefaultAsync(x => x.Id == productId);
             var marvProp = await this.context.MarvelousProps.FirstOrDefaultAsync(x => x.Id == productId);
@@ -158,23 +214,7 @@
 
                 if (checkType == propType)
                 {
-                    var order = new Order()
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        Client = client,
-                        ClientId = client.Id,
-                        IsActive = true,
-                        IsDeleted = false,
-                        OrderedOn = DateTime.Now,
-                    };
-
-                    var propOrder = new PropOrder()
-                    {
-                        Prop = await props.FirstOrDefaultAsync(x => x.Id == productId),
-                        PropId = (await props.FirstOrDefaultAsync(x => x.Id == productId)).Id,
-                        Order = order,
-                        OrderId = order.Id
-                    };
+                    //
 
                     //CASH
                     //minus cash for buyer
@@ -205,7 +245,6 @@
                     this.context.CreditAccounts.Update(creatorAccount);
                     this.context.CreditAccounts.Update(adminCreditAccount);
                     this.context.CreditAccounts.Update(account);
-                    this.context.PropOrders.Add(propOrder);
                     await this.context.SaveChangesAsync();
 
                     return;
@@ -213,24 +252,6 @@
 
                 if (checkType == marvType)
                 {
-                    var marvOrder = new Order()
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        Client = client,
-                        ClientId = client.Id,
-                        IsActive = true,
-                        IsDeleted = false,
-                        OrderedOn = DateTime.Now,
-                    };
-
-                    var marvPropOrder = new MarvelousPropOrder()
-                    {
-                        MarvelousProp = await marvProps.FirstOrDefaultAsync(x => x.Id == productId),
-                        MarvelousPropId = (await marvProps.FirstOrDefaultAsync(x => x.Id == productId)).Id,
-                        Order = marvOrder,
-                        OrderId = marvOrder.Id,
-                    };
-
                     //POINTS
                     //minus points for buyer
                     account.Points -= pointsPrice;
@@ -239,11 +260,99 @@
                     account.Points += GlobalConstants.winPoints;
 
                     this.context.CreditAccounts.Update(account);
-                    this.context.MarvelousPropOrders.Add(marvPropOrder);
                     await this.context.SaveChangesAsync();
                 }
             }
-
         }
+
+        // ADD PRODUCT TO BASKET
+        public async Task AddToBasket(string productId, string userId)
+        {
+            var prop = await this.context.Props.FirstOrDefaultAsync(x => x.Id == productId);
+            var marvProp = await this.context.MarvelousProps.FirstOrDefaultAsync(x => x.Id == productId);
+
+            var client = await this.context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+
+            var checkType = "";
+
+            if (marvProp == null && prop == null ||
+                client == null)
+            {
+                return;
+            }
+
+            if (prop != null)
+            {
+                checkType = GlobalConstants.PropType;
+            }
+
+            if (marvProp != null)
+            {
+                checkType = GlobalConstants.MarvType;
+            }
+
+            var propType = GlobalConstants.PropType;
+            var marvType = GlobalConstants.MarvType;
+
+            var props = this.context.Props;
+            var marvProps = this.context.MarvelousProps;
+
+            if (!props.Any() && !marvProps.Any())
+            {
+                return;
+            }
+
+            if (checkType == propType)
+            {
+                var order = new Order()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Client = client,
+                    ClientId = client.Id,
+                    IsActive = true,
+                    IsDeleted = false,
+                    OrderedOn = DateTime.Now,
+                };
+
+                var propOrder = new PropOrder()
+                {
+                    Prop = await props.FirstOrDefaultAsync(x => x.Id == productId),
+                    PropId = (await props.FirstOrDefaultAsync(x => x.Id == productId)).Id,
+                    Order = order,
+                    OrderId = order.Id
+                };
+
+                this.context.PropOrders.Add(propOrder);
+                await this.context.SaveChangesAsync();
+
+                return;
+            }
+
+            if (checkType == marvType)
+            {
+                var marvOrder = new Order()
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Client = client,
+                    ClientId = client.Id,
+                    IsActive = true,
+                    IsDeleted = false,
+                    OrderedOn = DateTime.Now,
+                };
+
+                var marvPropOrder = new MarvelousPropOrder()
+                {
+                    MarvelousProp = await marvProps.FirstOrDefaultAsync(x => x.Id == productId),
+                    MarvelousPropId = (await marvProps.FirstOrDefaultAsync(x => x.Id == productId)).Id,
+                    Order = marvOrder,
+                    OrderId = marvOrder.Id,
+                };
+
+                this.context.MarvelousPropOrders.Add(marvPropOrder);
+                await this.context.SaveChangesAsync();
+            }
+        }
+
     }
 }
+

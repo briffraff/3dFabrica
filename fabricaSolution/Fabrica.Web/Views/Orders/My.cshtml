@@ -42,10 +42,10 @@
             <table class="container">
 
                 @{
-                    var propOrderServiceModels = propsOrder.ToList();
+                    var propOrderServiceModels = propsOrder.Where(x => x.Order.IsDeleted == false && x.Order.IsActive).ToList();
                 }
 
-                @if (propOrderServiceModels.Select(x => x.Order.Props).Count() != 0)
+                @if (propOrderServiceModels.Count() != 0)
                 {
                     <tr class="masthead-subheading bg-primary text-uppercase text-md-right text-white">
                         <th>#</th>
@@ -56,7 +56,7 @@
                         <th>Status</th>
                     </tr>
 
-                    @foreach (var ord in propOrderServiceModels.OrderByDescending(x=>x.Order.OrderedOn))
+                    @foreach (var ord in propOrderServiceModels.OrderByDescending(x => x.Order.OrderedOn))
                     {
                         <tr>
                             <td>@propsCounter</td>
@@ -64,12 +64,12 @@
                             <td>@ord.Order.OrderedOn.ToString("dd/MM/yyyy")</td>
                             <td>@ord.Prop.Price</td>
                             <td>@ord.Prop.PropCreatorId</td>
-                            
+
 
                             @if (ord.Order.IsActive)
                             {
                                 <td>
-                                    <a class="btn btn-danger">Cancel</a>
+                                    <a asp-controller="Orders" asp-action="Cancel" asp-route-id="@ord.Order.Id" class="btn btn-danger text-white">Cancel</a>
                                 </td>
                             }
                             else
@@ -110,10 +110,10 @@
             <table class="container">
 
                 @{
-                    var marvelousPropOrderServiceModels = marvsOrder.ToList();
+                    var marvelousPropOrderServiceModels = marvsOrder.Where(x => x.Order.IsDeleted == false && x.Order.IsActive).ToList();
                 }
 
-                @if (marvelousPropOrderServiceModels.Select(x => x.Order.Props).Count() != 0)
+                @if (marvelousPropOrderServiceModels.Count() != 0)
                 {
                     <tr class="masthead-subheading bg-primary text-uppercase text-md-right text-white">
                         <th>#</th>
@@ -124,7 +124,7 @@
                         <th>Status</th>
                     </tr>
 
-                    @foreach (var ord in marvelousPropOrderServiceModels.OrderByDescending(x=>x.Order.OrderedOn))
+                    @foreach (var ord in marvelousPropOrderServiceModels.OrderByDescending(x => x.Order.OrderedOn))
                     {
                         var a = ord.Order.ClientId == user.Result.Id;
                         <tr>
@@ -137,7 +137,7 @@
                             @if (ord.Order.IsActive)
                             {
                                 <td>
-                                    <a class="btn btn-danger">Cancel</a>
+                                    <a asp-controller="Orders" asp-action="Cancel" asp-route-id="@ord.MarvelousProp.Id" class="btn btn-danger text-white">Cancel</a>
                                 </td>
                             }
                             else
@@ -163,7 +163,7 @@
             <br />
             <div class="container-fluid row">
                 <div class="col-md-12" style="padding-left: 75%">
-                    <a class="btn btn-warning py-lg-4">CONFIRM ALL</a>
+                    <a asp-controller="Orders" asp-action="ConfirmAll" class="btn btn-warning py-lg-4">CONFIRM ALL</a>
                 </div>
             </div>
         </div>

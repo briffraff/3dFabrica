@@ -27,6 +27,7 @@
             this.usersService = usersService;
         }
 
+        [Authorize]
         public async Task<IActionResult> AddToBasket(string productId)
         {
             var userId = this.userManager.GetUserId(this.User);
@@ -44,14 +45,14 @@
             this.ViewData["props"] = this.ordersService
                 .PropsForUser<PropOrderServiceModel>(userId)
                 .Result;
-            //.Where(x=>x.Order.ClientId == userId && x.Order.IsActive)
-            //.ToList();
+                //.Where(x => x.Order.ClientId == userId && x.Order.IsActive)
+                //.ToList();
 
             this.ViewData["marvs"] = this.ordersService
                 .MarvsForUser<MarvelousPropOrderServiceModel>(userId)
                 .Result;
-            //.Where(x => x.Order.ClientId == userId && x.Order.IsActive)
-            //.ToList();
+                //.Where(x => x.Order.ClientId == userId && x.Order.IsActive)
+                //.ToList();
 
             return this.View();
         }
@@ -75,6 +76,26 @@
                 .ToList();
 
             return this.View(orders);
+        }
+
+        
+        [Authorize]
+        public async Task<IActionResult> Cancel(string id)
+        {
+            await this.ordersService.Cancel(id);
+
+            return this.RedirectToAction("My", "Orders");
+
+        }
+
+        [Authorize]
+        public async Task<IActionResult> ConfirmAll()
+        {
+            var userId = this.userManager.GetUserId(this.User);
+
+            await this.ordersService.ConfirmAll(userId);
+
+            return this.RedirectToAction("My", "Orders");
         }
 
     }
