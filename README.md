@@ -113,7 +113,7 @@
 	- collecting points of purchased props.
 	- user doesn't need to load a cash deposit,if he want just to selling props.
 	- user is able to cashout in everytime.
-	
+		
 ### License
 	- need to have a credit account registered. //credit card and cash deposit
 	- when purchase a licence :
@@ -124,15 +124,28 @@
 	- The licence gives points to a user that he can use to buy only "Marvelous collections" of props.
 	
 ### 3D Prop(product) 
-	- gives a points(+3) to a users who bought it. //the buyer win 3 point on each purchase
-	- add a cash (propPrice/2) to a user who sell this product. //half of the price goes to the seller
-	- add a cash (propPrice/2) to the Admin account. //half of the price goes to the site owner
-	
+	- get full cash price from buyer account
+	- gives a points to a users who bought it. 
+		formula :
+		pointhalf = (cashprice/2) 
+		bonuspoints = ((cashprice/2) + 1 * 0.50) 
+		points = pointshalf + bonuspoints
+	- add a cash (price * 0.70) - 70% to a user who sell this product. 
+	- add a cash (price * 0.30) - 30% to the Admin account. 
+	- if logged use is admin then the price is 90% off
+
 ### Marvelous collection of props
+	- get a full range of points from buyer account
+	- gives back 300 points to a buyer account
+	- if logged use is admin then the price is 90% off
 	- those collection will be in range of points(price) 500 - 2500.
 	- users can pay for "Marvelous collection" with collected points.
 	- if the user want to get some collection ,but doesn't have enough points he can buy a license.
 	- if user collect 5 "Marvelous collection",will unlock option in his profile to create a collections.Then if someone takes some of his collections ,he will get 300 points for each order.
 
 ### Order
-	- generate an order information for all orders
+	- user can add products to basket
+	- user can cancel those products
+	- when confirm order(all products from order at once) with a confirm button 
+	- transaction to admin,creator and buyer would be made
+	- generate an order information for all confirmed and unconfirmed products and orders
