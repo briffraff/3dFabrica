@@ -1,0 +1,56 @@
+﻿@using Fabrica.Models
+@model Task<FabricaUser>
+
+@{
+    var user = @Model.Result;
+    var userId = user.Id;
+    var username = user.UserName;
+    var fullname = user.FullName;
+    var email = user.Email;
+
+    ViewData["Title"] = "Delete user check";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<header class="bg-white text-white text-center">
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <h1 class="masthead-heading text-uppercase text-center text-danger" style="font-size: 55px">Delete profile</h1>
+    <div class="row" style="padding-left: 15px; padding-right: 0px; margin-right: 0px;">
+
+        <div class="container prop-item">
+            <section class="col-md-12 masthead-heading text-uppercase text-secondary">
+
+                <div class="row" style="padding-top: 25px; padding-bottom: 25px">
+
+                    <div class="col-md-5" style="padding-top: 15px;">
+                        <h1>Profile info</h1>
+                        <p class="masthead-heading text-uppercase"></p>
+                        <p>id:  <a class="font-weight-bold text-secondary">@userId</a></p>
+                        <p>username: <a class="font-weight-bold text-secondary">@username</a></p>
+                        <p>fullname: <a class="font-weight-bold text-secondary">@fullname</a></p>
+                        <p>email: <a class="font-weight-bold text-secondary"> @email</a></p>
+                    </div>
+
+                    <div class="col-md-7" style="padding-top: 45px;">
+                        <h1>Are you sure?</h1>
+                        <p class="masthead-heading text-uppercase">Hey @username, your profile is going to be deleted!</p>
+                        <div class="row">
+                            <div class="col-md-6" style="padding-bottom: 50px; padding-right: 35px">
+                                <a asp-controller="Home" asp-action="Index" class="btn btn-block btn-secondary text-white">No</a>
+                            </div>
+                            <div class="col-md-6" style="padding-right: 35px">
+                                <a asp-controller="Users" asp-action="DeleteProfile" asp-route-id="@userId" class="btn btn-block btn-danger text-white">Yes</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+</header>

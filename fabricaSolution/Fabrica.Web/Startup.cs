@@ -1,3 +1,5 @@
+using System;
+
 namespace Fabrica.Web
 {
     using AutoMapper;
@@ -33,7 +35,7 @@ namespace Fabrica.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            
             services.AddDbContext<FabricaDBContext>(options =>
                 options.UseSqlServer(this.Configuration.GetConnectionString(GlobalConstants.connectionName)));
 

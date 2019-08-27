@@ -1,4 +1,7 @@
-﻿namespace Fabrica.Data.Seeds
+﻿using System.Security.Cryptography;
+using System.Text;
+
+namespace Fabrica.Data.Seeds
 {
     using Fabrica.Infrastructure;
     using Fabrica.Models;
@@ -222,10 +225,27 @@
                 Points = 3000,
             };
 
+            //TODO Check if those next 3 rows works
+            ownerCA.CardNumber = HashCreditCardNumber(ownerCA.CardNumber).Result;
+            adminCA.CardNumber = HashCreditCardNumber(adminCA.CardNumber).Result;
+            aaCA.CardNumber = HashCreditCardNumber(aaCA.CardNumber).Result;
+
             this.context.CreditAccounts.Add(ownerCA);
             this.context.CreditAccounts.Add(adminCA);
             this.context.CreditAccounts.Add(aaCA);
             this.context.SaveChanges();
+        }
+
+
+        public async Task<string> HashCreditCardNumber(string cardNumber)
+        {
+            using (SHA512 sha512Hash = SHA512.Create())
+            {
+                var hashedCreditCardNumber =
+                    Encoding.UTF8.GetString(sha512Hash.ComputeHash(Encoding.UTF8.GetBytes(cardNumber)));
+
+                return hashedCreditCardNumber;
+            }
         }
 
         private void SeedLicenzes()

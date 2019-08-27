@@ -1,14 +1,19 @@
-﻿@using Fabrica.Infrastructure
+﻿@using Fabrica.Data
+@using Fabrica.Infrastructure
 @using Fabrica.Web.Models
 @using Fabrica.Services.Models
 @using Fabrica.Models
+@using Microsoft.EntityFrameworkCore
 @using Microsoft.EntityFrameworkCore.Internal
 @model string
+@inject FabricaDBContext DbContext
 
 @{
     var user = ((Task<FabricaUser>)ViewData["CurrentUser"]);
     var propsOrder = (IEnumerable<PropOrderServiceModel>)ViewData["props"];
     var marvsOrder = (IEnumerable<MarvelousPropOrderServiceModel>)ViewData["marvs"];
+
+    var users = this.DbContext.Users;
 
     var propsCounter = 1;
     var marvsCounter = 1;
@@ -58,14 +63,19 @@
 
                     @foreach (var ord in propOrderServiceModels.OrderByDescending(x => x.Order.OrderedOn))
                     {
+                        var creator = users.FirstOrDefaultAsync(x => x.Id == ord.Prop.PropCreatorId).Result;
+
                         <tr>
                             <td>@propsCounter</td>
                             <td>@ord.Prop.Name</td>
                             <td>@ord.Order.OrderedOn.ToString("dd/MM/yyyy")</td>
                             <td>@ord.Prop.Price</td>
-                            <td>@ord.Prop.PropCreatorId</td>
-
-
+                            <td>
+                                @if (creator.UserName != null)
+                                {
+                                    @creator.UserName
+                                }
+                            </td>
                             @if (ord.Order.IsActive)
                             {
                                 <td>
@@ -126,18 +136,23 @@
 
                     @foreach (var ord in marvelousPropOrderServiceModels.OrderByDescending(x => x.Order.OrderedOn))
                     {
-                        var a = ord.Order.ClientId == user.Result.Id;
+                        var creator = users.FirstOrDefaultAsync(x => x.Id == ord.MarvelousProp.MarvelousCreatorId).Result;
+
                         <tr>
                             <td>@marvsCounter</td>
                             <td>@ord.MarvelousProp.Name</td>
                             <td>@ord.Order.OrderedOn.ToString("dd/MM/yyyy")</td>
                             <td>@ord.MarvelousProp.Points</td>
-                            <td>@ord.MarvelousProp.MarvelousCreatorId</td>
-
+                            <td>
+                                @if (creator.UserName != null)
+                                {
+                                    @creator.UserName
+                                }
+                            </td>
                             @if (ord.Order.IsActive)
                             {
                                 <td>
-                                    <a asp-controller="Orders" asp-action="Cancel" asp-route-id="@ord.MarvelousProp.Id" class="btn btn-danger text-white">Cancel</a>
+                                    <a asp-controller="Orders" asp-action="Cancel" asp-route-id="@ord.Order.Id" class="btn btn-danger text-white">Cancel</a>
                                 </td>
                             }
                             else

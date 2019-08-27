@@ -115,7 +115,7 @@
                                         @if (this.User.IsInRole(GlobalConstants.AdminRoleName))
                                         {
                                             <div class="col-md-3">
-                                                <a class="btn btn-outline-light bg-danger">Delete</a>
+                                                <a asp-controller="MarvelousProps" asp-action="Delete" asp-route-id="@Id" class="btn btn-outline-light bg-danger">Delete</a>
                                             </div>
                                         }
                                     </div>

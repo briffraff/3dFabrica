@@ -1,7 +1,10 @@
-﻿@using Fabrica.Infrastructure
+﻿@using Fabrica.Data
+@using Fabrica.Infrastructure
 @using Fabrica.Models
 @using Fabrica.Services.Models
+@using Microsoft.EntityFrameworkCore
 @model List<OrderServiceModel>
+@inject FabricaDBContext DbContext
 
 @{
 
@@ -9,9 +12,8 @@
     var marvsOrder = (IEnumerable<MarvelousPropOrderServiceModel>)ViewData["marvs"];
 
     var orders = @Model;
- 
-    var propCreators = propsOrder.Select(x => x.Prop.PropCreator);
-    var marvsCreators = marvsOrder.Select(x => x.MarvelousProp.MarvelousCreator);
+
+    var users = this.DbContext.Users;
 
     var propsCounter = 1;
     var marvsCounter = 1;
@@ -59,24 +61,18 @@
 
                     @foreach (var ord in propsOrder.OrderByDescending(x => x.Order.OrderedOn))
                     {
+                        var creator = users.FirstOrDefaultAsync(x => x.Id == ord.Prop.PropCreatorId).Result;
 
                         <tr>
                             <td>@propsCounter</td>
                             <td>@ord.Prop.Name</td>
                             <td>@ord.Order.OrderedOn.ToString("dd/MM/yyyy")</td>
                             <td>@ord.Prop.Price</td>
-                            @{
-                                //TODO Check prop creator instance
-                            }
                             <td>
-                                @*@if (@ord.Prop.PropCreator.UserName != null)
+                                @if (creator.UserName != null)
                                 {
-                                    @ord.Prop.PropCreator.UserName
+                                    @creator.UserName
                                 }
-                                else
-                                {
-                                    continue;
-                                }*@
                             </td>
                             <td>@ord.Order.Client.UserName</td>
 
@@ -135,16 +131,18 @@
 
                     @foreach (var ord in marvsOrder.OrderByDescending(x => x.Order.OrderedOn))
                     {
+                        var creator = users.FirstOrDefaultAsync(x => x.Id == ord.MarvelousProp.MarvelousCreatorId).Result;
+
                         <tr>
                             <td>@marvsCounter</td>
                             <td>@ord.MarvelousProp.Name</td>
                             <td>@ord.Order.OrderedOn.ToString("dd/MM/yyyy")</td>
                             <td>@ord.MarvelousProp.Points</td>
                             <td>
-                                @*@if (@ord.MarvelousProp.MarvelousCreator.UserName != null)
+                                @if (creator.UserName != null)
                                 {
-                                    @ord.MarvelousProp.MarvelousCreator.UserName
-                                }*@
+                                    @creator.UserName
+                                }
                             </td>
                             <td>@ord.Order.Client.UserName</td>
 

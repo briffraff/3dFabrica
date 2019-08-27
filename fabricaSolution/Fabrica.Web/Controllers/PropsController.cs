@@ -90,7 +90,6 @@
 
         //Delete
         [Authorize]
-        [Authorize(Roles = GlobalConstants.UserRoleName)]
         public async Task<IActionResult> Delete(string id)
         {
             var prop = await this.propsService.GetProp<PropServiceModel>(id);
@@ -105,18 +104,24 @@
 
         // Delete
         [HttpPost]
-        [Authorize(Roles = GlobalConstants.UserRoleName)]
+        [Authorize]
         public async Task<IActionResult> Delete(PropEditViewModel model, string id)
         {
+            var userId = this.userManager.GetUserId(this.User);
+            var user = await this.userManager.FindByIdAsync(userId);
+
             await this.propsService.Delete(id);
+
+            if (await this.userManager.IsInRoleAsync(user, GlobalConstants.AdminRoleName))
+            {
+                return this.RedirectToAction("Index", "Home");
+            }
 
             return this.RedirectToAction("My", "Props");
         }
 
-
         // RESTORE
         //[HttpPost]
-        [Authorize]
         [Authorize(Roles = GlobalConstants.UserRoleName)]
 
         public async Task<IActionResult> RestoreProp(string id)

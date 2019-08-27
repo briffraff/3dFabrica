@@ -85,6 +85,7 @@
             await this.context.SaveChangesAsync();
         }
 
+        //2
         // CONFIRM ALL PRODUCTS IN ORDER
         public async Task ConfirmAll(string Id)
         {
@@ -93,9 +94,6 @@
 
             foreach (var order in orders)
             {
-                order.IsActive = false;
-                order.IsDeleted = true;
-
                 string propId = this.context.PropOrders
                     .FirstOrDefault(x => x.OrderId != null && x.OrderId == order.Id)?.PropId;
 
@@ -113,49 +111,70 @@
                     productId = marvId;
                 }
 
-                if (userId != null) Transaction(productId, userId).Wait();
+                if (userId != null)
+                {
+                    var checkTransaction = "";
+
+                    try
+                    {
+                        Transaction(productId, userId).Wait();
+                    }
+                    catch (Exception ex)
+                    {
+                        checkTransaction = ex.Message.ToLower();
+                    }
+
+                    if (checkTransaction.Contains("canceled"))
+                    {
+                        return;
+                    }
+                }
+
+                order.IsActive = false;
+                order.IsDeleted = true;
             }
 
             this.context.Orders.UpdateRange(orders);
             await this.context.SaveChangesAsync();
         }
 
+        //3
         // TRANSACTION TO ADMIN,CREATOR AND BUYER
         public async Task Transaction(string productId, string userId)
         {
-            var prop = await this.context.Props.FirstOrDefaultAsync(x => x.Id == productId);
-            var marvProp = await this.context.MarvelousProps.FirstOrDefaultAsync(x => x.Id == productId);
+            var prop = this.context.Props.FirstOrDefaultAsync(x => x.Id == productId)?.Result;
+            var marvProp = this.context.MarvelousProps.FirstOrDefaultAsync(x => x.Id == productId)?.Result;
 
-            var admin = await this.context.Users
+            var admin = this.context.Users
                 .FirstOrDefaultAsync(x => x.UserName == "bb"
                                           && x.Gender.ToString() == "Male"
-                                          && !x.IsDeleted);
+                                          && !x.IsDeleted)?.Result;
             CreditAccount adminCreditAccount = null;
-            if (admin.CreditAccountId != null)
+            if (admin?.CreditAccountId != null)
             {
-                adminCreditAccount = await this.context.CreditAccounts.FirstOrDefaultAsync(a => a.AccountOwnerId == admin.Id);
+                adminCreditAccount = this.context.CreditAccounts.FirstOrDefaultAsync(a => a.AccountOwnerId == admin.Id)?.Result;
             }
 
-            var client = await this.context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            var client = this.context.Users.FirstOrDefaultAsync(x => x.Id == userId)?.Result;
             CreditAccount account = null;
-            if (client.CreditAccountId != null)
+            if (client?.CreditAccountId != null)
             {
-                account = await this.context.CreditAccounts.FirstOrDefaultAsync(a => a.AccountOwnerId == userId);
+                account = this.context.CreditAccounts.FirstOrDefaultAsync(a => a.AccountOwnerId == userId)?.Result;
             }
 
             FabricaUser creator = null;
             if (prop != null)
             {
-                creator = await this.context.Users.FirstOrDefaultAsync(x => x.CreatedProps.Contains(prop));
+                creator = this.context.Users.FirstOrDefaultAsync(x => x.CreatedProps.Contains(prop))?.Result;
             }
             else
             {
-                creator = await this.context.Users.FirstOrDefaultAsync(x => x.MarvelousProps.Contains(marvProp));
+                creator = this.context.Users.FirstOrDefaultAsync(x => x.MarvelousProps.Contains(marvProp))?.Result;
             }
             CreditAccount creatorAccount = null;
-            if (creator.CreditAccountId != null)
+            if (creator?.CreditAccountId != null)
             {
-                creatorAccount = await this.context.CreditAccounts.FirstOrDefaultAsync(x => x.AccountOwnerId == creator.Id);
+                creatorAccount = this.context.CreditAccounts.FirstOrDefaultAsync(x => x.AccountOwnerId == creator.Id)?.Result;
             }
 
             var totalCash = GlobalConstants.InitialCash;
@@ -170,6 +189,8 @@
                 creatorAccount == null ||
                 account == null)
             {
+                var canceledException = new TaskCanceledException();
+                throw canceledException;
                 return;
             }
 
@@ -214,8 +235,6 @@
 
                 if (checkType == propType)
                 {
-                    //
-
                     //CASH
                     //minus cash for buyer
                     account.Cash -= cashPrice;
@@ -265,6 +284,7 @@
             }
         }
 
+        //1
         // ADD PRODUCT TO BASKET
         public async Task AddToBasket(string productId, string userId)
         {

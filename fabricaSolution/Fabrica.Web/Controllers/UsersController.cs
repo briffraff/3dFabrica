@@ -1,4 +1,8 @@
-﻿namespace Fabrica.Web.Controllers
+﻿using System;
+using System.Threading;
+using Microsoft.AspNetCore.Authentication;
+
+namespace Fabrica.Web.Controllers
 {
     using AutoMapper;
     using Fabrica.Infrastructure;
@@ -8,6 +12,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authentication;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -16,9 +21,11 @@
         private readonly IUsersService usersService;
         private readonly ICreditAccountsService accountsService;
         private readonly UserManager<FabricaUser> userManager;
+        private readonly SignInManager<FabricaUser> signInManager;
 
-        public UsersController(IUsersService usersService, ICreditAccountsService accountsService, UserManager<FabricaUser> userManager)
+        public UsersController(SignInManager<FabricaUser> signInManager, IUsersService usersService, ICreditAccountsService accountsService, UserManager<FabricaUser> userManager)
         {
+            this.signInManager = signInManager;
             this.usersService = usersService;
             this.accountsService = accountsService;
             this.userManager = userManager;
@@ -48,18 +55,55 @@
             return this.View(allUsers);
         }
 
-        //Delete user
+        //Delete profile route
+        [Authorize]
+        public async Task<IActionResult> Delete()
+        {
+            var userId = this.userManager.GetUserId(this.User);
+            var user = this.userManager.FindByIdAsync(userId);
+
+            return this.PartialView("_Delete",user);
+        }
+        
+        //delete profile
+        [Authorize]
+        public async Task<IActionResult> DeleteProfile(string id)
+        {
+            await this.usersService.DeactivateUser(id);
+            var check = this.signInManager.SignOutAsync();
+
+            if (check.IsCompleted)
+            {
+                return this.Redirect("~/Identity/Account/Logout");
+            }
+
+            return RedirectToAction("All", "Users");
+        }
+
+
+        //deactivate user
         [Authorize(Roles = GlobalConstants.AdminRoleName)]
         public async Task<IActionResult> Deactivate(string id)
         {
-            //var user = await userManager.FindByIdAsync(id);
-            var user = await this.usersService.Get(id);
-
-            //await userManager.DeleteAsync(user);
             await this.usersService.DeactivateUser(id);
 
-            return RedirectToAction("All", "Users");
+            //check if logged user is deactivated one then logout
+            var userId = this.userManager.GetUserId(this.User);
+            var user = await this.userManager.FindByIdAsync(userId);
+            var checkRole = await this.userManager.IsInRoleAsync(user, GlobalConstants.AdminRoleName);
+            var role = checkRole == true ? GlobalConstants.AdminRoleName : GlobalConstants.UserRoleName;
+            
+            if (userId == id && role == GlobalConstants.AdminRoleName)
+            {
+                var check = this.signInManager.SignOutAsync();
 
+                if (check.IsCompleted)
+                {
+                    return this.Redirect("~/Identity/Account/Logout");
+                }
+            }
+
+            return RedirectToAction("All", "Users");
         }
 
         //Activate user

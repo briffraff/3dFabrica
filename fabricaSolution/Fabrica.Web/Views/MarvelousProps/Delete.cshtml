@@ -1,0 +1,162 @@
+﻿@using System.Linq
+@using System.Reflection
+@using Fabrica.Infrastructure
+@using Fabrica.Models.Enums
+@using Fabrica.Services.Models;
+@model IEnumerable<MarvelousPropServiceModel>
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+@{
+    var avatarImg = "";
+    var ImageUrl = "";
+    var Name = "";
+    var propType = (MarvelousType)0;
+    var Description = "";
+    int Points = 0;
+    var Hashtags = "";
+    var Id = "";
+    var Creator = "";
+    var Gender = (GenderType)0;
+
+    @foreach (var prop in @Model)
+    {
+        ImageUrl = prop.ImageUrl;
+        Name = prop.Name;
+        propType = Enum.Parse<MarvelousType>(prop.propType.ToString());
+        Description = prop.Description;
+        Points = prop.Points;
+        Hashtags = prop.Hashtags;
+        Id = prop.Id;
+        Creator = prop.MarvelousCreator.UserName;
+        Gender = Enum.Parse<GenderType>(prop.MarvelousCreator.Gender.ToString());
+    }
+
+    @if (Gender == GenderType.Male)
+    {
+        avatarImg = GlobalConstants.maleAvatar;
+    }
+    else if (Gender == GenderType.Female)
+    {
+        avatarImg = GlobalConstants.femaleAvatar;
+    }
+
+}
+
+<section class="propsMarvelous wow fadeInUp">
+    <div class="container">
+        <div class="row">
+
+            <div id="marvs" class="container d-flex align-items-center flex-column text-secondary">
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <h2 class="masthead-heading text-uppercase">Details</h2>
+                <p class="masthead-heading text-uppercase">3d prop</p>
+                <div class="divider-custom" style="margin-top: 0px">
+                    <div class="divider-custom-line"></div>
+                </div>
+            </div>
+
+            <div class="container prop-item d-flex align-items-center flex-column text-secondary">
+
+                <div class="container text-secondary">
+                    <div class="row">
+                        <div class="col-lg-4">
+
+                            <div class="prop-item" style="width: 400px; height: auto">
+                                <img src="@ImageUrl" alt="prop-1" class="img-fluid">
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-8">
+
+                            <div class="no-underline">
+                                <form class="mx-auto half-width" method="post">
+                                    <div class="details">
+
+                                        <div class="form-group">
+                                            <label asp-for="@ImageUrl"></label>
+                                            <input type="url" class="form-control" asp-for="@ImageUrl" placeholder="ImageUrl..." disabled="disabled">
+                                            <span asp-validation-for="@ImageUrl" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="@Name"></label>
+                                            <input type="text" maxlength="40" class="form-control" asp-for="@Name"
+                                                   placeholder="3d Prop Name..." disabled="disabled">
+                                            <span asp-validation-for="@Name" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="@propType"></label>
+                                            <select class="form-control" asp-for="@propType" placeholder="Select Type ..." disabled="disabled">
+                                                <option selected disabled>Select Type...</option>
+                                                <option value="Magicians">Magicians equipment</option>
+                                                <option value="Astronauts">Astronauts equipment</option>
+                                                <option value="Divers">Divers equipment</option>
+                                                <option value="Holiday">Holiday equipment</option>
+                                            </select>
+                                            <span asp-validation-for="@propType" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label asp-for="@Description"></label>
+                                            <textarea type="text" maxlength="450" class="form-control" asp-for="@Description" placeholder="Description..." disabled="disabled"></textarea>
+                                            <span asp-validation-for="@Description" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label asp-for="@Points"></label>
+                                                    <input type="number" min="75" max="2500" step="1" class="form-control" asp-for="@Points" placeholder="Points price..." disabled="disabled">
+                                                    <span asp-validation-for="@Points" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <hr class="hr-2 bg-white">
+                                        <p>
+                                            <div class="form-group">
+                                                <label asp-for="@Hashtags"></label>
+                                                <input type="text" maxlength="50" class="form-control" asp-for="@Hashtags" placeholder="#Hashtags..." disabled="disabled">
+                                                <span asp-validation-for="@Hashtags" class="text-danger"></span>
+                                            </div>
+                                        </p>
+
+                                        <div class="container-fluid fa fab fas far">
+                                            <a style="padding-right: 5px"><i class="fa fa-share-alt"></i></a>
+                                            <a><img class="prop-user-thumb" src="@avatarImg" alt=""></a>
+                                        </div>
+                                        <br>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-2" style="padding-left: 18%">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <button type="submit" class="btn btn-outline-light bg-danger">DELETE IT!</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br>
+    <p></p>
+</section>
+

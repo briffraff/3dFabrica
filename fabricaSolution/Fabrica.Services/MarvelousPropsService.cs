@@ -43,5 +43,22 @@
 
             return prop;
         }
+
+
+        // DELETE
+        public async Task Delete(string id)
+        {
+            var product = await this.context.MarvelousProps.FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
+
+            if (product == null)
+            {
+                return;
+            }
+
+            product.IsDeleted = true;
+
+            this.context.MarvelousProps.Update(product);
+            await this.context.SaveChangesAsync();
+        }
     }
 }
