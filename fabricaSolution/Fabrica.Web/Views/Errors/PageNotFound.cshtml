@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Delete user check";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "My Error Page";
+}
+<header class="bg-white text-white text-center">
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="row" style="padding-left: 15px; padding-right: 0px; margin-right: 0px;">
+
+        <div class="container prop-item">
+            <section class="masthead-heading text-uppercase text-secondary">
+
+                <div class="row" style="padding-top: 25px; padding-bottom: 25px">
+                    
+                    <div class="col-md-8" style="padding-left: 30px">
+                        <h1 class="masthead-heading text-uppercase text-center text-info" style="font-size: 95px">Page not found!</h1>
+              
+                        <br/>
+                        <p class="masthead-heading text-uppercase text-secondary font-weight-bold">Something went wrong!Please refresh the page!</p>
+                        <br/>
+                        <div style="padding-bottom: 50px; padding-left: 140px; padding-right: 150px">
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-block btn-secondary text-white">Go Back To Home Page</a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2" style="padding-right: 50px;">
+                        <h1 style="font-size: 100px">CODE</h1>
+                        <h1 style="font-size: 50px">########</h1>
+                        <h1 class="text-info" style="font-size: 150px">404</h1>
+                    </div>
+
+                </div>
+
+            </section>
+        </div>
+    </div>
+
+</header>

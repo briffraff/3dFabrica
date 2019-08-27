@@ -18,7 +18,7 @@
             this.propsService = propsService;
             this.marvelousService = marvelousService;
         }
-
+        
         public async Task<IActionResult> Index()
         {
             const bool nonDeletedItems = !GlobalConstants.ShowDeletedItems;

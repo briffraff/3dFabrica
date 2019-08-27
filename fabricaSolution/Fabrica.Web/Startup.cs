@@ -77,6 +77,7 @@ namespace Fabrica.Web
             FabricaDbSeedData seeder = new FabricaDbSeedData(context,app,env, userManager);
             seeder.SeedAllData().Wait();
 
+            //TODO Update this approach with Eventures way of mapping
             Mapper.Initialize(config => config.AddProfile<AutoMapperProfile>());
 
             if (env.IsDevelopment())
@@ -93,8 +94,11 @@ namespace Fabrica.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+     
             app.UseAuthentication();
+            
+            //middleware for status codes ex:notFoundPage
+            app.UseStatusCodePagesWithReExecute(GlobalConstants.statusCodeReExecuteRounteTemplate);
 
             app.UseMvc(routes =>
             {

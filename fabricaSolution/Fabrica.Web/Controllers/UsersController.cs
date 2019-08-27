@@ -62,7 +62,7 @@ namespace Fabrica.Web.Controllers
             var userId = this.userManager.GetUserId(this.User);
             var user = this.userManager.FindByIdAsync(userId);
 
-            return this.PartialView("_Delete",user);
+            return this.PartialView("_DeletePartial", user);
         }
         
         //delete profile

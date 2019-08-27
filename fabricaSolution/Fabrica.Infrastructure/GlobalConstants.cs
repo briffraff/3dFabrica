@@ -68,6 +68,7 @@
         public const string exceptionHandlerPath = "/Home/Error";
         public const string mvcMapRouteName = "default";
         public const string mvcMapRouteTemplate = "{controller=Home}/{action=Index}/{id?}";
+        public const string statusCodeReExecuteRounteTemplate = "/Error/{0}";
 
         //Theme files
         //Custom fonts for this theme
