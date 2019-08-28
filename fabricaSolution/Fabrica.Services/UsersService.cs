@@ -1,4 +1,7 @@
-﻿namespace Fabrica.Services
+﻿using System;
+using Fabrica.Infrastructure.Exceptions;
+
+namespace Fabrica.Services
 {
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
@@ -64,46 +67,66 @@
 
         public async Task DeactivateUser(string id)
         {
-            var user = await this.context.Users.FirstOrDefaultAsync(u => u.Id == id && u.IsDeleted == false);
+            var exceptionMessage = "";
 
-            if (user == null)
+            try
             {
-                return;
+                var user = await this.context.Users.FirstOrDefaultAsync(u => u.Id == id && u.IsDeleted == false);
+
+                if (user == null)
+                {
+                    return;
+                }
+
+                //set password = string + last char of the username.toupper
+                var deactivationPassword = string.Format
+                    ($"{GlobalConstants.deactivationPass}", (user.UserName[user.UserName.Length - 1].ToString().ToUpper()));
+
+                var password = new PasswordHasher<FabricaUser>().HashPassword(user, deactivationPassword);
+
+                user.IsDeleted = true;
+                user.PasswordHash = password;
+
+                this.context.Users.Update(user);
+                await this.context.SaveChangesAsync();
             }
-
-            //set password = string + last char of the username.toupper
-            var deactivationPassword = string.Format
-                ($"{GlobalConstants.deactivationPass}", (user.UserName[user.UserName.Length - 1].ToString().ToUpper()));
-
-            var password = new PasswordHasher<FabricaUser>().HashPassword(user, deactivationPassword);
-
-            user.IsDeleted = true;
-            user.PasswordHash = password;
-
-            this.context.Users.Update(user);
-            await this.context.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                exceptionMessage = ex.Message;
+                throw new DeactivateUserException();
+            }
         }
 
         public async Task ActivateUser(string id)
         {
-            var user = await this.context.Users.FirstOrDefaultAsync(u => u.Id == id && u.IsDeleted == true);
+            var exceptionMessage = "";
 
-            if (user == null)
+            try
             {
-                return;
+                var user = await this.context.Users.FirstOrDefaultAsync(u => u.Id == id && u.IsDeleted == true);
+
+                if (user == null)
+                {
+                    return;
+                }
+
+                //set password = string + first char of the user + last char of the username.toupper
+                var activationPassword = string.Format
+                ($"{GlobalConstants.activationPass}", (user.UserName[0]), (user.UserName[user.UserName.Length - 1].ToString().ToUpper()));
+
+                var password = new PasswordHasher<FabricaUser>().HashPassword(user, activationPassword);
+
+                user.IsDeleted = false;
+                user.PasswordHash = password;
+
+                this.context.Users.Update(user);
+                await this.context.SaveChangesAsync();
             }
-
-            //set password = string + first char of the user + last char of the username.toupper
-            var activationPassword = string.Format
-            ($"{GlobalConstants.activationPass}", (user.UserName[0]), (user.UserName[user.UserName.Length - 1].ToString().ToUpper()));
-
-            var password = new PasswordHasher<FabricaUser>().HashPassword(user, activationPassword);
-
-            user.IsDeleted = false;
-            user.PasswordHash = password;
-
-            this.context.Users.Update(user);
-            await this.context.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                exceptionMessage = ex.Message;
+                throw new ActivateUserException();
+            }
         }
 
     }

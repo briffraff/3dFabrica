@@ -4,9 +4,12 @@
     using AutoMapper.QueryableExtensions;
     using Contracts;
     using Data;
+    using Fabrica.Infrastructure;
+    using Fabrica.Infrastructure.Exceptions;
     using Fabrica.Models;
     using Microsoft.EntityFrameworkCore;
     using Models;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -19,10 +22,20 @@
 
         public async Task Create(MarvelousPropServiceModel model)
         {
-            var marvelousProp = Mapper.Map<MarvelousProp>(model);
+            var exceptionMessage = "";
 
-            await this.context.MarvelousProps.AddAsync(marvelousProp);
-            await this.context.SaveChangesAsync();
+            try
+            {
+                var marvelousProp = Mapper.Map<MarvelousProp>(model);
+
+                await this.context.MarvelousProps.AddAsync(marvelousProp);
+                await this.context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                exceptionMessage = ex.Message;
+                throw new CreatePropException();
+            }
         }
 
         public async Task<IEnumerable<T>> GetAll<T>(bool isDeleted)
@@ -48,17 +61,27 @@
         // DELETE
         public async Task Delete(string id)
         {
-            var product = await this.context.MarvelousProps.FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
+            var exceptionMessage = "";
 
-            if (product == null)
+            try
             {
-                return;
+                var product = await this.context.MarvelousProps.FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
+
+                if (product == null)
+                {
+                    return;
+                }
+
+                product.IsDeleted = true;
+
+                this.context.MarvelousProps.Update(product);
+                await this.context.SaveChangesAsync();
             }
-
-            product.IsDeleted = true;
-
-            this.context.MarvelousProps.Update(product);
-            await this.context.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                exceptionMessage = ex.Message;
+                throw new DeletePropException();
+            }
         }
     }
 }

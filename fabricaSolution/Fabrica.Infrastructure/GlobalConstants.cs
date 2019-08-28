@@ -29,6 +29,21 @@
         public const string LoginRedirectTo = "~/";
         public const string LogoutRedirectTo = "~/Identity/Account/Logout";
 
+        //Exceptions messages
+        public const string FabricaBaseExceptionMessage = @"Something went wrong during the process! \n Please try again or contact to site admin!";
+        public const string CancelOrderExceptionMessage = @"Something went wrong during canceling order! \n Please try again or contact to site admin!";
+        public const string TransactionExceptionMessage = @"Something went wrong during Transaction! \n Please try again or contact to site admin!";
+        public const string AddToBasketExceptionMessage = @"Something went wrong when you try to add this product to basket! \n Please try again or contact to site admin!";
+        public const string BuyLicenseExceptionMessage = @"Something went wrong with license! \n Please try again or contact to site admin!";
+        public const string LoadCashExceptionMessage = @"Something went wrong with loading cash in your credit account! \n Please try again or contact to site admin!";
+        public const string AddCreditCardExceptionMessage = @"Something went wrong during your Credit card registration! \n Please try again or contact to site admin!";
+        public const string DeletePropExceptionMessage = @"Something went wrong while deleting this prop! \n Please try again or contact to site admin!";
+        public const string RestorePropExceptionMessage = @"Something went wrong while restoring this prop! \n Please try again or contact to site admin!";
+        public const string EditPropExceptionMessage = @"Something went wrong while editing this prop! \n Please try again or contact to site admin!";
+        public const string CreatePropExceptionMessage = @"Something went wrong while creating prop! \n Please try again or contact to site admin!";
+        public const string ActivatePropExceptionMessage = @"Something went wrong while activate user! \n Please try again or contact to site admin!";
+        public const string DeactivateUserExceptionMessage = @"Something went wrong while deactivate user! \n Please try again or contact to site admin!";
+
         //Register credit account
         public const int firstBonusPointsWhenRegisterAccount = 30;
         public const string CreditCardErr = "Card number pattern : `0000-0000-0000-0000`";

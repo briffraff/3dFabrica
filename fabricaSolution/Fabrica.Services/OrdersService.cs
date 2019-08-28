@@ -1,4 +1,6 @@
-﻿namespace Fabrica.Services
+﻿using Fabrica.Infrastructure.Exceptions;
+
+namespace Fabrica.Services
 {
     using AutoMapper.QueryableExtensions;
     using Contracts;
@@ -70,19 +72,29 @@
         //CANCEL ORDER
         public async Task Cancel(string orderId)
         {
-            //var propOrder = await this.context.PropOrders.FirstOrDefaultAsync(x=>x.Order.Id == orderId);
-            var order = await this.context.Orders.FirstOrDefaultAsync(x => x.Id == orderId);
+            var exceptionMessage = "";
 
-            if (order == null)
+            try
             {
-                return;
+                //var propOrder = await this.context.PropOrders.FirstOrDefaultAsync(x=>x.Order.Id == orderId);
+                var order = await this.context.Orders.FirstOrDefaultAsync(x => x.Id == orderId);
+
+                if (order == null)
+                {
+                    return;
+                }
+
+                order.IsActive = false;
+                order.IsDeleted = true;
+
+                this.context.Orders.Remove(order);
+                await this.context.SaveChangesAsync();
             }
-
-            order.IsActive = false;
-            order.IsDeleted = true;
-
-            this.context.Orders.Remove(order);
-            await this.context.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                exceptionMessage = ex.Message;
+                throw new CancelOrderException();
+            }
         }
 
         //2
@@ -142,86 +154,193 @@
         // TRANSACTION TO ADMIN,CREATOR AND BUYER
         public async Task Transaction(string productId, string userId)
         {
-            var prop = this.context.Props.FirstOrDefaultAsync(x => x.Id == productId)?.Result;
-            var marvProp = this.context.MarvelousProps.FirstOrDefaultAsync(x => x.Id == productId)?.Result;
+            var exceptionMessage = "";
 
-            var admin = this.context.Users
-                .FirstOrDefaultAsync(x => x.UserName == "bb"
-                                          && x.Gender.ToString() == "Male"
-                                          && !x.IsDeleted)?.Result;
-            CreditAccount adminCreditAccount = null;
-            if (admin?.CreditAccountId != null)
+            try
             {
-                adminCreditAccount = this.context.CreditAccounts.FirstOrDefaultAsync(a => a.AccountOwnerId == admin.Id)?.Result;
-            }
+                var prop = this.context.Props.FirstOrDefaultAsync(x => x.Id == productId)?.Result;
+                var marvProp = this.context.MarvelousProps.FirstOrDefaultAsync(x => x.Id == productId)?.Result;
 
-            var client = this.context.Users.FirstOrDefaultAsync(x => x.Id == userId)?.Result;
-            CreditAccount account = null;
-            if (client?.CreditAccountId != null)
-            {
-                account = this.context.CreditAccounts.FirstOrDefaultAsync(a => a.AccountOwnerId == userId)?.Result;
-            }
-
-            FabricaUser creator = null;
-            if (prop != null)
-            {
-                creator = this.context.Users.FirstOrDefaultAsync(x => x.CreatedProps.Contains(prop))?.Result;
-            }
-            else
-            {
-                creator = this.context.Users.FirstOrDefaultAsync(x => x.MarvelousProps.Contains(marvProp))?.Result;
-            }
-            CreditAccount creatorAccount = null;
-            if (creator?.CreditAccountId != null)
-            {
-                creatorAccount = this.context.CreditAccounts.FirstOrDefaultAsync(x => x.AccountOwnerId == creator.Id)?.Result;
-            }
-
-            var totalCash = GlobalConstants.InitialCash;
-            var cashPrice = GlobalConstants.InitialCash;
-            var totalPoints = GlobalConstants.InitialPoints;
-            var pointsPrice = GlobalConstants.InitialPoints;
-
-            var checkType = "";
-
-            if (marvProp == null && prop == null ||
-                adminCreditAccount == null ||
-                creatorAccount == null ||
-                account == null)
-            {
-                var canceledException = new TaskCanceledException();
-                throw canceledException;
-                return;
-            }
-
-            if (prop != null)
-            {
-                checkType = GlobalConstants.PropType;
-                totalCash = account.Cash;
-                cashPrice = prop.Price;
-
-                //price 90% off for admin
-                if (client.Id == admin.Id)
+                var admin = this.context.Users
+                    .FirstOrDefaultAsync(x => x.UserName == "bb"
+                                              && x.Gender.ToString() == "Male"
+                                              && !x.IsDeleted)?.Result;
+                CreditAccount adminCreditAccount = null;
+                if (admin?.CreditAccountId != null)
                 {
-                    cashPrice = (cashPrice * 0.10);
+                    adminCreditAccount = this.context.CreditAccounts
+                        .FirstOrDefaultAsync(a => a.AccountOwnerId == admin.Id)?.Result;
+                }
+
+                var client = this.context.Users.FirstOrDefaultAsync(x => x.Id == userId)?.Result;
+                CreditAccount account = null;
+                if (client?.CreditAccountId != null)
+                {
+                    account = this.context.CreditAccounts.FirstOrDefaultAsync(a => a.AccountOwnerId == userId)?.Result;
+                }
+
+                FabricaUser creator = null;
+                if (prop != null)
+                {
+                    creator = this.context.Users.FirstOrDefaultAsync(x => x.CreatedProps.Contains(prop))?.Result;
+                }
+                else
+                {
+                    creator = this.context.Users.FirstOrDefaultAsync(x => x.MarvelousProps.Contains(marvProp))?.Result;
+                }
+
+                CreditAccount creatorAccount = null;
+                if (creator?.CreditAccountId != null)
+                {
+                    creatorAccount = this.context.CreditAccounts
+                        .FirstOrDefaultAsync(x => x.AccountOwnerId == creator.Id)?.Result;
+                }
+
+                var totalCash = GlobalConstants.InitialCash;
+                var cashPrice = GlobalConstants.InitialCash;
+                var totalPoints = GlobalConstants.InitialPoints;
+                var pointsPrice = GlobalConstants.InitialPoints;
+
+                var checkType = "";
+
+                if (marvProp == null && prop == null ||
+                    adminCreditAccount == null ||
+                    creatorAccount == null ||
+                    account == null)
+                {
+                    var canceledException = new TaskCanceledException();
+                    throw canceledException;
+                }
+
+                if (prop != null)
+                {
+                    checkType = GlobalConstants.PropType;
+                    totalCash = account.Cash;
+                    cashPrice = prop.Price;
+
+                    //price 90% off for admin
+                    if (client.Id == admin.Id)
+                    {
+                        cashPrice = (cashPrice * 0.10);
+                    }
+                }
+
+                if (marvProp != null)
+                {
+                    checkType = GlobalConstants.MarvType;
+                    totalPoints = account.Points;
+                    pointsPrice = marvProp.Points;
+
+                    //points price 90% off for admin
+                    if (client.Id == admin.Id)
+                    {
+                        pointsPrice = (int) (pointsPrice * 0.10);
+                    }
+                }
+
+                if (totalCash > cashPrice || totalPoints > pointsPrice)
+                {
+                    var PropType = GlobalConstants.PropType;
+                    var marvType = GlobalConstants.MarvType;
+
+                    var props = this.context.Props;
+                    var marvProps = this.context.MarvelousProps;
+
+                    if (!props.Any() && !marvProps.Any())
+                    {
+                        return;
+                    }
+
+                    if (checkType == PropType)
+                    {
+                        //CASH
+                        //minus cash for buyer
+                        account.Cash -= cashPrice;
+
+                        //cash to admin account
+                        adminCreditAccount.Cash += (cashPrice * 0.30);
+
+                        //cash to prop creator
+                        creatorAccount.Cash += (cashPrice * 0.70);
+
+                        //POINTS
+                        //plus points for buyer 
+                        var pointsHalf = (int) (cashPrice / GlobalConstants.halfDivider);
+                        var bonusPoints = GlobalConstants.InitialPoints;
+
+                        if (cashPrice >= GlobalConstants.quarterDivider)
+                        {
+                            bonusPoints = (int) (((cashPrice / GlobalConstants.quarterDivider) + GlobalConstants.plus) *
+                                                 GlobalConstants.halfPercent);
+                        }
+                        else
+                        {
+                            bonusPoints = GlobalConstants.InitialPoints;
+                        }
+
+                        account.Points += (pointsHalf + bonusPoints);
+
+                        this.context.CreditAccounts.Update(creatorAccount);
+                        this.context.CreditAccounts.Update(adminCreditAccount);
+                        this.context.CreditAccounts.Update(account);
+                        await this.context.SaveChangesAsync();
+
+                        return;
+                    }
+
+                    if (checkType == marvType)
+                    {
+                        //POINTS
+                        //minus points for buyer
+                        account.Points -= pointsPrice;
+
+                        //plus points for buyer
+                        account.Points += GlobalConstants.winPoints;
+
+                        this.context.CreditAccounts.Update(account);
+                        await this.context.SaveChangesAsync();
+                    }
                 }
             }
-
-            if (marvProp != null)
+            catch (Exception ex)
             {
-                checkType = GlobalConstants.MarvType;
-                totalPoints = account.Points;
-                pointsPrice = marvProp.Points;
+                exceptionMessage = ex.Message;
+                throw new TransactionException();
 
-                //points price 90% off for admin
-                if (client.Id == admin.Id)
-                {
-                    pointsPrice = (int)(pointsPrice * 0.10);
-                }
             }
+        }
 
-            if (totalCash > cashPrice || totalPoints > pointsPrice)
+        //1
+        // ADD PRODUCT TO BASKET
+        public async Task AddToBasket(string productId, string userId)
+        {
+            var exceptionMessage = "";
+
+            try
             {
+                var prop = await this.context.Props.FirstOrDefaultAsync(x => x.Id == productId);
+                var marvProp = await this.context.MarvelousProps.FirstOrDefaultAsync(x => x.Id == productId);
+
+                var client = await this.context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+
+                var checkType = "";
+
+                if (marvProp == null && prop == null ||
+                    client == null)
+                {
+                    return;
+                }
+
+                if (prop != null)
+                {
+                    checkType = GlobalConstants.PropType;
+                }
+
+                if (marvProp != null)
+                {
+                    checkType = GlobalConstants.MarvType;
+                }
+
                 var PropType = GlobalConstants.PropType;
                 var marvType = GlobalConstants.MarvType;
 
@@ -235,35 +354,25 @@
 
                 if (checkType == PropType)
                 {
-                    //CASH
-                    //minus cash for buyer
-                    account.Cash -= cashPrice;
-
-                    //cash to admin account
-                    adminCreditAccount.Cash += (cashPrice * 0.30);
-
-                    //cash to prop creator
-                    creatorAccount.Cash += (cashPrice * 0.70);
-
-                    //POINTS
-                    //plus points for buyer 
-                    var pointsHalf = (int)(cashPrice / GlobalConstants.halfDivider);
-                    var bonusPoints = GlobalConstants.InitialPoints;
-
-                    if (cashPrice >= GlobalConstants.quarterDivider)
+                    var order = new Order()
                     {
-                        bonusPoints = (int)(((cashPrice / GlobalConstants.quarterDivider) + GlobalConstants.plus) * GlobalConstants.halfPercent);
-                    }
-                    else
+                        Id = Guid.NewGuid().ToString(),
+                        Client = client,
+                        ClientId = client.Id,
+                        IsActive = true,
+                        IsDeleted = false,
+                        OrderedOn = DateTime.Now,
+                    };
+
+                    var propOrder = new PropOrder()
                     {
-                        bonusPoints = GlobalConstants.InitialPoints;
-                    }
+                        Prop = await props.FirstOrDefaultAsync(x => x.Id == productId),
+                        PropId = (await props.FirstOrDefaultAsync(x => x.Id == productId)).Id,
+                        Order = order,
+                        OrderId = order.Id
+                    };
 
-                    account.Points += (pointsHalf + bonusPoints);
-
-                    this.context.CreditAccounts.Update(creatorAccount);
-                    this.context.CreditAccounts.Update(adminCreditAccount);
-                    this.context.CreditAccounts.Update(account);
+                    this.context.PropOrders.Add(propOrder);
                     await this.context.SaveChangesAsync();
 
                     return;
@@ -271,107 +380,35 @@
 
                 if (checkType == marvType)
                 {
-                    //POINTS
-                    //minus points for buyer
-                    account.Points -= pointsPrice;
+                    var marvOrder = new Order()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Client = client,
+                        ClientId = client.Id,
+                        IsActive = true,
+                        IsDeleted = false,
+                        OrderedOn = DateTime.Now,
+                    };
 
-                    //plus points for buyer
-                    account.Points += GlobalConstants.winPoints;
+                    var marvPropOrder = new MarvelousPropOrder()
+                    {
+                        MarvelousProp = await marvProps.FirstOrDefaultAsync(x => x.Id == productId),
+                        MarvelousPropId = (await marvProps.FirstOrDefaultAsync(x => x.Id == productId)).Id,
+                        Order = marvOrder,
+                        OrderId = marvOrder.Id,
+                    };
 
-                    this.context.CreditAccounts.Update(account);
+                    this.context.MarvelousPropOrders.Add(marvPropOrder);
                     await this.context.SaveChangesAsync();
                 }
             }
-        }
-
-        //1
-        // ADD PRODUCT TO BASKET
-        public async Task AddToBasket(string productId, string userId)
-        {
-            var prop = await this.context.Props.FirstOrDefaultAsync(x => x.Id == productId);
-            var marvProp = await this.context.MarvelousProps.FirstOrDefaultAsync(x => x.Id == productId);
-
-            var client = await this.context.Users.FirstOrDefaultAsync(x => x.Id == userId);
-
-            var checkType = "";
-
-            if (marvProp == null && prop == null ||
-                client == null)
+            catch (Exception ex)
             {
-                return;
-            }
-
-            if (prop != null)
-            {
-                checkType = GlobalConstants.PropType;
-            }
-
-            if (marvProp != null)
-            {
-                checkType = GlobalConstants.MarvType;
-            }
-
-            var PropType = GlobalConstants.PropType;
-            var marvType = GlobalConstants.MarvType;
-
-            var props = this.context.Props;
-            var marvProps = this.context.MarvelousProps;
-
-            if (!props.Any() && !marvProps.Any())
-            {
-                return;
-            }
-
-            if (checkType == PropType)
-            {
-                var order = new Order()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Client = client,
-                    ClientId = client.Id,
-                    IsActive = true,
-                    IsDeleted = false,
-                    OrderedOn = DateTime.Now,
-                };
-
-                var propOrder = new PropOrder()
-                {
-                    Prop = await props.FirstOrDefaultAsync(x => x.Id == productId),
-                    PropId = (await props.FirstOrDefaultAsync(x => x.Id == productId)).Id,
-                    Order = order,
-                    OrderId = order.Id
-                };
-
-                this.context.PropOrders.Add(propOrder);
-                await this.context.SaveChangesAsync();
-
-                return;
-            }
-
-            if (checkType == marvType)
-            {
-                var marvOrder = new Order()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    Client = client,
-                    ClientId = client.Id,
-                    IsActive = true,
-                    IsDeleted = false,
-                    OrderedOn = DateTime.Now,
-                };
-
-                var marvPropOrder = new MarvelousPropOrder()
-                {
-                    MarvelousProp = await marvProps.FirstOrDefaultAsync(x => x.Id == productId),
-                    MarvelousPropId = (await marvProps.FirstOrDefaultAsync(x => x.Id == productId)).Id,
-                    Order = marvOrder,
-                    OrderId = marvOrder.Id,
-                };
-
-                this.context.MarvelousPropOrders.Add(marvPropOrder);
-                await this.context.SaveChangesAsync();
+                exceptionMessage = ex.Message;
+                throw new AddToBasketException();
             }
         }
+
 
     }
 }
