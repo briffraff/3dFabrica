@@ -1,8 +1,7 @@
 ﻿namespace Fabrica.Services.Contracts
 {
-    using System.Collections.Generic;
-    using Fabrica.Models;
     using Models;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public interface IMarvelousPropsService

@@ -46,7 +46,7 @@
             PropServiceModel prop = new PropServiceModel()
             {
                 Name = model.Name,
-                propType = Enum.Parse<PropType>(model.propType),
+                PropType = Enum.Parse<PropType>(model.PropType),
                 Price = model.Price,
                 ImageUrl = model.ImageUrl,
                 Hashtags = model.Hashtags,

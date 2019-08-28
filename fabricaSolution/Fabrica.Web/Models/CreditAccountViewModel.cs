@@ -1,6 +1,4 @@
-﻿using Fabrica.Infrastructure;
-
-namespace Fabrica.Web.Models
+﻿namespace Fabrica.Web.Models
 {
     using Fabrica.Infrastructure.Mapping;
     using Fabrica.Models;

@@ -14,7 +14,7 @@
 
         public string Name { get; set; }
 
-        public PropType propType { get; set; }
+        public PropType PropType { get; set; }
 
         public double Price { get; set; }
 

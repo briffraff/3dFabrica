@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Fabrica.Data.Migrations
 {
     [DbContext(typeof(FabricaDBContext))]
-    [Migration("20190818235935_addpropType")]
-    partial class addpropType
+    [Migration("20190818235935_addPropType")]
+    partial class addPropType
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -141,7 +141,7 @@ namespace Fabrica.Data.Migrations
 
                     b.Property<int>("Points");
 
-                    b.Property<int>("propType");
+                    b.Property<int>("PropType");
 
                     b.HasKey("Id");
 
@@ -202,7 +202,7 @@ namespace Fabrica.Data.Migrations
 
                     b.Property<string>("PropCreatorId");
 
-                    b.Property<int>("propType");
+                    b.Property<int>("PropType");
 
                     b.HasKey("Id");
 

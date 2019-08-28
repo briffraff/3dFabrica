@@ -1,10 +1,9 @@
 ﻿namespace Fabrica.Services.Contracts
 {
-    using System.Linq;
-    using Fabrica.Services.Models;
-    using System.Threading.Tasks;
     using Fabrica.Models;
+    using Fabrica.Services.Models;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public interface IUsersService
     {

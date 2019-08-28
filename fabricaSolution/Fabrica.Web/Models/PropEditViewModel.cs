@@ -1,5 +1,4 @@
-﻿
-namespace Fabrica.Web.Models
+﻿namespace Fabrica.Web.Models
 {
     using Fabrica.Infrastructure;
     using Fabrica.Infrastructure.Mapping;
@@ -16,7 +15,8 @@ namespace Fabrica.Web.Models
         public string Name { get; set; }
 
         [Required]
-        public string propType { get; set; }
+        [Display(Name = "Type")]
+        public string PropType { get; set; }
 
         [Required]
         [Range(1.0, 5000, ErrorMessage = GlobalConstants.PriceErr)]

@@ -18,7 +18,7 @@
 
         <div class="column">
             <div class="container w-50 align-items-md-baseline flex-column">
-                <form class="mx-auto half-width" method="post">
+                <form class="mx-auto half-width" method="post" asp-antiforgery="true">
                     <div class="form-group">
                         <label asp-for="@Model.Name"></label>
                         <input type="text" maxlength="40" class="form-control" asp-for="@Model.Name"
@@ -26,15 +26,15 @@
                         <span asp-validation-for="@Model.Name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="@Model.propType"></label>
-                        <select class="form-control" asp-for="@Model.propType" placeholder="Select Type...">
+                        <label asp-for="@Model.PropType"></label>
+                        <select class="form-control" asp-for="@Model.PropType" placeholder="Select Type...">
                             <option selected disabled>Select Type...</option>
                             <option value="Magicians">Magicians equipment</option>
                             <option value="Astronauts">Astronauts equipment</option>
                             <option value="Divers">Divers equipment</option>
                             <option value="Holiday">Holiday equipment</option>
                         </select>
-                        <span asp-validation-for="@Model.propType" class="text-danger"></span>
+                        <span asp-validation-for="@Model.PropType" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="@Model.Points"></label>
@@ -59,7 +59,7 @@
                     <div class="button-holder d-flex justify-content-center">
                         <button type="submit" class="btn btn-outline-light">Create</button>
                     </div>
-                    <br>
+                    <br />
                 </form>
 
                 <!-- Icon Divider -->

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fabrica.Infrastructure.Mapping;
-using Fabrica.Models;
-
-namespace Fabrica.Services.Models
+﻿namespace Fabrica.Services.Models
 {
+    using Fabrica.Infrastructure.Mapping;
+    using Fabrica.Models;
+
     public class MarvelousPropOrderServiceModel : IMapWith<MarvelousPropOrder>
     {
         public string MarvelousPropId { get; set; }

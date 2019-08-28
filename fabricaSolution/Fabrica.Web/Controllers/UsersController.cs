@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading;
-using Microsoft.AspNetCore.Authentication;
-
-namespace Fabrica.Web.Controllers
+﻿namespace Fabrica.Web.Controllers
 {
     using AutoMapper;
     using Fabrica.Infrastructure;
@@ -12,7 +8,6 @@ namespace Fabrica.Web.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Authentication;
     using System.Linq;
     using System.Threading.Tasks;
 

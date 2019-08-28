@@ -139,7 +139,7 @@ namespace Fabrica.Data.Migrations
 
                     b.Property<int>("Points");
 
-                    b.Property<int>("propType");
+                    b.Property<int>("PropType");
 
                     b.HasKey("Id");
 
@@ -200,7 +200,7 @@ namespace Fabrica.Data.Migrations
 
                     b.Property<string>("PropCreatorId");
 
-                    b.Property<int>("propType");
+                    b.Property<int>("PropType");
 
                     b.HasKey("Id");
 

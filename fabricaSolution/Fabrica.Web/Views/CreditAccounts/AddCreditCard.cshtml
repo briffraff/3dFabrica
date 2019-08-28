@@ -18,7 +18,7 @@
 
         <div class="column">
             <div class="container w-50 align-items-md-baseline flex-column">
-                <form class="mx-auto half-width" method="post">
+                <form class="mx-auto half-width" method="post" asp-antiforgery="true">
                     <div class="form-group">
                         <label asp-for="@Model.CardNumber"></label>
                         <input type="text" class="form-control" asp-for="@Model.CardNumber" placeholder="Card Number...">
@@ -34,7 +34,7 @@
                     <div class="button-holder d-flex justify-content-center">
                         <button type="submit" class="btn btn-outline-light">Add</button>
                     </div>
-                    <br>
+                    <br/>
                 </form>
 
                 <!-- Icon Divider -->

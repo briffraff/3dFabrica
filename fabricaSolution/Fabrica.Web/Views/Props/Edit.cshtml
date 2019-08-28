@@ -13,7 +13,7 @@
     var avatarImg = "";
     var ImageUrl = "";
     var Name = "";
-    var propType = (PropType)0;
+    var PropType = (PropType)0;
     var Description = "";
     double Price = 0;
     var Hashtags = "";
@@ -25,7 +25,7 @@
      {
          ImageUrl = prop.ImageUrl;
          Name = prop.Name;
-         propType = Enum.Parse<PropType>(prop.propType.ToString());
+         PropType = Enum.Parse<PropType>(prop.PropType.ToString());
          Description = prop.Description;
          Price = prop.Price;
          Hashtags = prop.Hashtags;
@@ -50,12 +50,12 @@
         <div class="row">
 
             <div id="3dProps" class="container d-flex align-items-center flex-column text-secondary">
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
                 <h2 class="masthead-heading text-uppercase">Details</h2>
                 <p class="masthead-heading text-uppercase">3d prop</p>
                 <div class="divider-custom" style="margin-top: 0px">
@@ -78,7 +78,7 @@
                         <div class="col-lg-8">
 
                             <div class="no-underline">
-                                <form class="mx-auto half-width" method="post">
+                                <form class="mx-auto half-width" method="post" asp-antiforgery="true">
                                     <div class="details">
 
                                         <div class="form-group">
@@ -95,8 +95,8 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label asp-for="@propType"></label>
-                                            <select class="form-control" asp-for="@propType" placeholder="Select Type ...">
+                                            <label asp-for="@PropType"></label>
+                                            <select class="form-control" asp-for="@PropType" placeholder="Select Type ...">
                                                 <option selected disabled>Select Type...</option>
                                                 <option value="Pants">Pants</option>
                                                 <option value="Shorts">Shorts</option>
@@ -112,7 +112,7 @@
                                                 <option value="Bras">Bra</option>
                                                 <option value="Equipment">Equipment</option>
                                             </select>
-                                            <span asp-validation-for="@propType" class="text-danger"></span>
+                                            <span asp-validation-for="@PropType" class="text-danger"></span>
                                         </div>
 
                                         <div class="form-group">
@@ -144,8 +144,8 @@
                                             <a href="" style="padding-right: 5px"><i class="fa fa-share-alt"></i></a>
                                             <a><img class="prop-user-thumb" src="@avatarImg" alt=""></a>
                                         </div>
-                                        <br>
-                                        <br>
+                                        <br/>
+                                        <br/>
                                         <div class="row">
                                             <div class="col-md-2" style="padding-left: 18%">
                                             </div>
@@ -165,7 +165,7 @@
         </div>
 
     </div>
-    <br>
+    <br/>
     <p></p>
 </section>
 

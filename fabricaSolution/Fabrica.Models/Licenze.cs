@@ -1,5 +1,4 @@
-﻿
-namespace Fabrica.Models
+﻿namespace Fabrica.Models
 {
     using System.ComponentModel.DataAnnotations;
     using Fabrica.Models.Enums;

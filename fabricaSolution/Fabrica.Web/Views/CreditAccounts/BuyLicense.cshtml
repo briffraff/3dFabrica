@@ -10,9 +10,8 @@
 <header class="masthead bg-primary text-white text-center">
     <div class="container d-flex align-items-center flex-column">
         <h1 class="masthead-heading text-uppercase text-center text-secondary">Licenses</h1>
-        <br>
+        <br />
         <div class="row" style="margin-right: 0px">
-
             <div class="col-lg-4">
                 <div class="mb-5 mb-lg-0">
                     <div class="prop-item">
@@ -69,7 +68,7 @@
 
         </div>
 
-        <form class="mx-auto half-width" method="post">
+        <form class="mx-auto half-width" method="post" asp-antiforgery="true">
 
             <div class="form-group">
                 <label asp-for="@Model.Type"></label>

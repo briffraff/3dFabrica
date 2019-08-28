@@ -222,7 +222,7 @@
 
             if (totalCash > cashPrice || totalPoints > pointsPrice)
             {
-                var propType = GlobalConstants.PropType;
+                var PropType = GlobalConstants.PropType;
                 var marvType = GlobalConstants.MarvType;
 
                 var props = this.context.Props;
@@ -233,7 +233,7 @@
                     return;
                 }
 
-                if (checkType == propType)
+                if (checkType == PropType)
                 {
                     //CASH
                     //minus cash for buyer
@@ -311,7 +311,7 @@
                 checkType = GlobalConstants.MarvType;
             }
 
-            var propType = GlobalConstants.PropType;
+            var PropType = GlobalConstants.PropType;
             var marvType = GlobalConstants.MarvType;
 
             var props = this.context.Props;
@@ -322,7 +322,7 @@
                 return;
             }
 
-            if (checkType == propType)
+            if (checkType == PropType)
             {
                 var order = new Order()
                 {

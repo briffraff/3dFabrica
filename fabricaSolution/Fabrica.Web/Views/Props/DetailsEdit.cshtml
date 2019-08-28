@@ -16,7 +16,7 @@
     var avatarImg = "";
     var ImageUrl = "";
     var Name = "";
-    var propType = (PropType)0;
+    var PropType = (PropType)0;
     var Description = "";
     double Price = 0;
     var Hashtags = "";
@@ -28,7 +28,7 @@
     {
         ImageUrl = prop.ImageUrl;
         Name = prop.Name;
-        propType = Enum.Parse<PropType>(prop.propType.ToString());
+        PropType = Enum.Parse<PropType>(prop.PropType.ToString());
         Description = prop.Description;
         Price = prop.Price;
         Hashtags = prop.Hashtags;
@@ -53,12 +53,12 @@
         <div class="row">
 
             <div id="3dProps" class="container d-flex align-items-center flex-column text-secondary">
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
                 <h2 class="masthead-heading text-uppercase">Details</h2>
                 <p class="masthead-heading text-uppercase">3d prop</p>
                 <div class="divider-custom" style="margin-top: 0px">
@@ -84,12 +84,12 @@
 
                                 <div class="details">
                                     <h3 class="text-primary"><a>@Name</a></h3>
-                                    <h5 class="text-primary "><a>@propType</a></h5>
-                                    <br>
+                                    <h5 class="text-primary "><a>@PropType</a></h5>
+                                    <br/>
                                     <h6>
                                         @Description
                                     </h6>
-                                    <br>
+                                    <br/>
 
                                     <div class="row">
                                         <div class="col-md-6">
@@ -126,8 +126,8 @@
                                         <a class="prop-left-dist prop-username text-secondary">creator:</a>
                                         <a class="prop-username text-primary">@Creator.ToUpper()</a>
                                     </div>
-                                    <br>
-                                    <br>
+                                    <br/>
+                                    <br/>
                                     <div class="row">
                                         <div class="col-md-9" style="padding-left: 18%">
                                         </div>

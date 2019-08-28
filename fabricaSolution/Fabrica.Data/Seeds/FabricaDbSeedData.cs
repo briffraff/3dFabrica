@@ -1,7 +1,4 @@
-﻿using System.Security.Cryptography;
-using System.Text;
-
-namespace Fabrica.Data.Seeds
+﻿namespace Fabrica.Data.Seeds
 {
     using Fabrica.Infrastructure;
     using Fabrica.Models;
@@ -15,6 +12,8 @@ namespace Fabrica.Data.Seeds
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Cryptography;
+    using System.Text;
     using System.Threading.Tasks;
 
     public class FabricaDbSeedData
@@ -293,7 +292,7 @@ namespace Fabrica.Data.Seeds
                 {
                     Name = "LS Crewneck",
                     Description = "Long Sleeve Pullover. 90% Cotton, 10% Silk",
-                    propType = PropType.LS,
+                    PropType = PropType.LS,
                     Hashtags = "#LS #Pullover #Cotton",
                     ImageUrl = GlobalConstants.LSCrewneck,
                     Price = 56.5,
@@ -303,7 +302,7 @@ namespace Fabrica.Data.Seeds
                 {
                     Name = "SS Crewneck",
                     Description = "Short Sleeve Shirt. 50% Cotton, 50% Silk",
-                    propType = PropType.SS,
+                    PropType = PropType.SS,
                     Hashtags = "#SS #T-shirt #50/50",
                     ImageUrl = GlobalConstants.SSCrewneck,
                     Price = 60,
@@ -313,7 +312,7 @@ namespace Fabrica.Data.Seeds
                 {
                     Name = "Hoodie Front PKT",
                     Description = "Long Hoodie with Cangoroo Pocket in front. 100% Cotton",
-                    propType = PropType.Hoodies,
+                    PropType = PropType.Hoodies,
                     Hashtags = "#Hoodie #Cool #Cangoroo #sport",
                     ImageUrl = GlobalConstants.Hoodie,
                     Price = 70,
@@ -323,7 +322,7 @@ namespace Fabrica.Data.Seeds
                 {
                     Name = "Bra X-trail",
                     Description = "Sport Bra with a nice X form. 40% Cotton, 60% Silk",
-                    propType = PropType.Bras,
+                    PropType = PropType.Bras,
                     Hashtags = "#BRA #Sport #Women",
                     ImageUrl = GlobalConstants.Bra,
                     Price = 40,
@@ -333,7 +332,7 @@ namespace Fabrica.Data.Seeds
                 {
                     Name = "Winter Jogging Pants",
                     Description = "Long Pants for winter days. 60% Cotton, 30% Wool, 10% Silk",
-                    propType = PropType.Pants,
+                    PropType = PropType.Pants,
                     Hashtags = "#Pantsforwinter #winter #warm #nice #longpants",
                     ImageUrl = GlobalConstants.winterPants,
                     Price = 67.4,
@@ -343,7 +342,7 @@ namespace Fabrica.Data.Seeds
                 {
                     Name = "Vest",
                     Description = "Winter Vest for warm condition with side zippers. 80% Silk ,20% cotton",
-                    propType = PropType.Vests,
+                    PropType = PropType.Vests,
                     Hashtags = "#Vest #niceAndWarmCoooool #zippers #double sided",
                     ImageUrl = GlobalConstants.Vest,
                     Price = 80,
@@ -366,7 +365,7 @@ namespace Fabrica.Data.Seeds
                 {
                     Name = "Space collection - Mars",
                     Description = "Collection of space suits models from Mars Expedition. Parachutes and landing balls.",
-                    propType = MarvelousType.Astronauts,
+                    PropType = MarvelousType.Astronauts,
                     Hashtags = "#Mars #expedition #Suits #parachutes #balls",
                     ImageUrl = GlobalConstants.noimage,
                     Points = 1200,
@@ -376,7 +375,7 @@ namespace Fabrica.Data.Seeds
                 {
                     Name = "Park and chill",
                     Description = "Holiday equipment for lazy days. Ropes,hammocks,inflatable pillows.",
-                    propType = MarvelousType.Holiday,
+                    PropType = MarvelousType.Holiday,
                     Hashtags = "#holiday #lazy #hammocks",
                     ImageUrl = GlobalConstants.noimage,
                     Points = 1000,
@@ -386,7 +385,7 @@ namespace Fabrica.Data.Seeds
                 {
                     Name = "Divers suits",
                     Description = "Suits for diving expirience ,soft and waterproof! Keeps your body warm!",
-                    propType = MarvelousType.Divers,
+                    PropType = MarvelousType.Divers,
                     Hashtags = "#Hoodie #Cool #Cangoroo #sport",
                     ImageUrl = GlobalConstants.noimage,
                     Points = 800,
@@ -396,7 +395,7 @@ namespace Fabrica.Data.Seeds
                 {
                     Name = "Landing on the moon suits",
                     Description = "First time landing on the moon! Neil Armstrong and Buzz Aldrin space suits!",
-                    propType = MarvelousType.Astronauts,
+                    PropType = MarvelousType.Astronauts,
                     Hashtags = "#Moon #firsttime $Neil Armstrong #suits #Aldrin #Buzz",
                     ImageUrl = GlobalConstants.noimage,
                     Points = 1500,

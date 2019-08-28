@@ -1,10 +1,7 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using Fabrica.Models;
-
-namespace Fabrica.Web.Areas.Identity.Pages.Account
+﻿namespace Fabrica.Web.Areas.Identity.Pages.Account
 {
+    using Fabrica.Models;
     using Infrastructure;
-    using Models;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;

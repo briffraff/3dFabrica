@@ -1,9 +1,8 @@
 ﻿namespace Fabrica.Web.Models
 {
-    using System.ComponentModel.DataAnnotations;
     using Fabrica.Infrastructure.Mapping;
-    using Fabrica.Models.Enums;
     using Fabrica.Services.Models;
+    using System.ComponentModel.DataAnnotations;
 
     public class LicenzeViewModel : IMapWith<LicenzeServiceModel>
     {

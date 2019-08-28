@@ -45,7 +45,7 @@
             MarvelousPropServiceModel marvelousProp = new MarvelousPropServiceModel()
             {
                 Name = model.Name,
-                propType = Enum.Parse<MarvelousType>(model.propType),
+                PropType = Enum.Parse<MarvelousType>(model.PropType),
                 Points = model.Points,
                 ImageUrl = model.ImageUrl,
                 Hashtags = model.Hashtags,

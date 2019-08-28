@@ -1,5 +1,4 @@
-﻿
-namespace Fabrica.Services.Models
+﻿namespace Fabrica.Services.Models
 {
     using System.ComponentModel.DataAnnotations;
     using Fabrica.Infrastructure.Mapping;

@@ -1,15 +1,15 @@
 ﻿namespace Fabrica.Services
 {
     using AutoMapper;
-    using Microsoft.EntityFrameworkCore;
-    using System.Collections.Generic;
-    using System.Linq;
     using AutoMapper.QueryableExtensions;
+    using Contracts;
     using Data;
     using Fabrica.Models;
-    using System.Threading.Tasks;
-    using Contracts;
+    using Microsoft.EntityFrameworkCore;
     using Models;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     public class MarvelousPropsService : DataService, IMarvelousPropsService
     {

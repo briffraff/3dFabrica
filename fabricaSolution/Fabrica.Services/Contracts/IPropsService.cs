@@ -1,9 +1,8 @@
 ﻿namespace Fabrica.Services.Contracts
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using Fabrica.Models;
     using Models;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public interface IPropsService

@@ -1,6 +1,4 @@
-﻿using Fabrica.Models;
-
-namespace Fabrica.Web
+﻿namespace Fabrica.Web
 {
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;

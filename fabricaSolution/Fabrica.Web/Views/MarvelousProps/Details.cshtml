@@ -13,7 +13,7 @@
     var avatarImg = "";
     var ImageUrl = "";
     var Name = "";
-    var propType = (MarvelousType)0;
+    var PropType = (MarvelousType)0;
     var Description = "";
     int Points = 0;
     var Hashtags = "";
@@ -25,7 +25,7 @@
     {
         ImageUrl = prop.ImageUrl;
         Name = prop.Name;
-        propType = Enum.Parse<MarvelousType>(prop.propType.ToString());
+        PropType = Enum.Parse<MarvelousType>(prop.PropType.ToString());
         Description = prop.Description;
         Points = prop.Points;
         Hashtags = prop.Hashtags;
@@ -43,12 +43,12 @@
         <div class="row">
 
             <div id="MarvProps" class="container d-flex align-items-center flex-column text-secondary">
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
                 <h2 class="masthead-heading text-uppercase">Details</h2>
                 <p class="masthead-heading text-uppercase">Marvelous prop</p>
                 <div class="divider-custom" style="margin-top: 0px">
@@ -74,12 +74,12 @@
 
                                 <div class="details">
                                     <h3 class="text-primary"><a>@Name</a></h3>
-                                    <h5 class="text-primary "><a>@propType</a></h5>
-                                    <br>
+                                    <h5 class="text-primary "><a>@PropType</a></h5>
+                                    <br />
                                     <h6>
                                         @Description
                                     </h6>
-                                    <br>
+                                    <br/>
 
                                     <div class="row">
                                         <div class="col-md-6">
@@ -106,8 +106,8 @@
                                         <a class="prop-left-dist prop-username text-secondary">creator:</a>
                                         <a class="prop-username text-primary">@Creator.ToUpper()</a>
                                     </div>
-                                    <br>
-                                    <br>
+                                    <br />
+                                    <br />
                                     <div class="row">
                                         <div class="col-md-9" style="padding-left: 18%">
                                             <a asp-controller="Orders" asp-action="AddToBasket" asp-route-productId="@Id" class="py-3 px-0 px-lg-2 btn btn-outline-light bg-primary text-white">Add to basket</a>
@@ -132,7 +132,7 @@
         </div>
 
     </div>
-    <br>
+    <br />
     <p></p>
 </section>
 

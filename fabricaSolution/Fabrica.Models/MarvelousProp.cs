@@ -1,7 +1,6 @@
 ﻿namespace Fabrica.Models
 {
     using Enums;
-    using System.Collections;
     using System.Collections.Generic;
 
     public class MarvelousProp
@@ -15,7 +14,7 @@
 
         public string Name { get; set; }
 
-        public MarvelousType propType { get; set; }
+        public MarvelousType PropType { get; set; }
 
         public int Points { get; set; }
 

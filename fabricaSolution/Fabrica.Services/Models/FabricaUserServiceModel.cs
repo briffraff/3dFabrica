@@ -1,5 +1,4 @@
-﻿
-namespace Fabrica.Services.Models
+﻿namespace Fabrica.Services.Models
 {
     using Fabrica.Models.Enums;
     using Fabrica.Infrastructure.Mapping;

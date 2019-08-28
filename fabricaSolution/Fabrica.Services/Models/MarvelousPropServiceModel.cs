@@ -1,13 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
-namespace Fabrica.Services.Models
+﻿namespace Fabrica.Services.Models
 {
-    using AutoMapper;
     using Fabrica.Infrastructure.Mapping;
     using Fabrica.Models;
     using Fabrica.Models.Enums;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     public class MarvelousPropServiceModel : IMapWith<MarvelousProp>
     {
@@ -16,7 +13,8 @@ namespace Fabrica.Services.Models
 
         public string Name { get; set; }
 
-        public MarvelousType propType { get; set; }
+        [Display(Name = "Type")]
+        public MarvelousType PropType { get; set; }
 
         public int Points { get; set; }
 

@@ -42,7 +42,7 @@
 
             prop.ImageUrl = model.ImageUrl;
             prop.Name = model.Name;
-            prop.propType = Mapper.Map<PropType>(model.propType);
+            prop.PropType = Mapper.Map<PropType>(model.PropType);
             prop.Description = model.Description;
             prop.Price = model.Price;
             prop.Hashtags = model.Hashtags;

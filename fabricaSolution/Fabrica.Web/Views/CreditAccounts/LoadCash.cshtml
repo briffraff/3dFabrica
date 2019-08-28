@@ -17,7 +17,7 @@
 
         <div class="column">
             <div class="container w-50 align-items-md-baseline flex-column">
-                <form class="mx-auto half-width" method="post">
+                <form class="mx-auto half-width" method="post" asp-antiforgery="true">
                     <div class="form-group">
                         <label asp-for="@Model.Cash"></label>
                         <input type="number" min="0.1" step="0.1" class="form-control" asp-for="@Model.Cash" placeholder="Cash amount...">
@@ -26,7 +26,7 @@
                     <div class="button-holder d-flex justify-content-center">
                         <button type="submit" class="btn btn-outline-light">Load</button>
                     </div>
-                    <br>
+                    <br/>
                 </form>
 
                 <!-- Icon Divider -->

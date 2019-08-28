@@ -1,8 +1,7 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
-namespace Fabrica.Models
+﻿namespace Fabrica.Models
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class CreditAccount
     {
         [Key]

@@ -1,11 +1,10 @@
 ﻿namespace Fabrica.Services.Models
 {
-    using System.ComponentModel.DataAnnotations;
-    using Microsoft.EntityFrameworkCore.Metadata.Internal;
     using Fabrica.Models;
     using Fabrica.Models.Enums;
     using Infrastructure.Mapping;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     public class PropServiceModel : IMapWith<Prop>
     {
@@ -14,7 +13,8 @@
 
         public string Name { get; set; }
 
-        public PropType propType { get; set; }
+        [Display(Name = "Type")]
+        public PropType PropType { get; set; }
 
         public double Price { get; set; }
 
