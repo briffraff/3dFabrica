@@ -128,7 +128,7 @@
 
 
         //  users
-        private void SeedUsers()
+        public void SeedUsers()
         {
             var userRole = GlobalConstants.UserRoleName;
 
@@ -224,7 +224,6 @@
                 Points = 3000,
             };
 
-            //TODO Check if those next 3 rows works
             ownerCA.CardNumber = HashCreditCardNumber(ownerCA.CardNumber).Result;
             adminCA.CardNumber = HashCreditCardNumber(adminCA.CardNumber).Result;
             aaCA.CardNumber = HashCreditCardNumber(aaCA.CardNumber).Result;
@@ -274,7 +273,6 @@
                     Price = 500,
                     bonusPoints = 1250,
                 },
-
             };
 
             this.context.Licenzes.AddRange(licenzes);
@@ -422,7 +420,7 @@
         }
 
         //  hash password 
-        private void HashPaswword(List<FabricaUser> usersToDb, DbSet<FabricaUser> usersFromDb)
+        public void HashPaswword(List<FabricaUser> usersToDb, DbSet<FabricaUser> usersFromDb)
         {
             foreach (var currentUser in usersToDb)
             {

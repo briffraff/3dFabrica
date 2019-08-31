@@ -1,17 +1,16 @@
-﻿using System;
-using Fabrica.Infrastructure.Exceptions;
-
-namespace Fabrica.Services
+﻿namespace Fabrica.Services
 {
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
     using Fabrica.Data;
     using Fabrica.Infrastructure;
+    using Fabrica.Infrastructure.Exceptions;
     using Fabrica.Models;
     using Fabrica.Services.Contracts;
     using Fabrica.Services.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 

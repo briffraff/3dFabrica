@@ -89,8 +89,8 @@ namespace Fabrica.Web
             FabricaDbSeedData seeder = new FabricaDbSeedData(Dbcontext, app, env, userManager);
             seeder.SeedAllData().Wait();
 
-            //TODO Update this approach with Eventures way of mapping
-            Mapper.Initialize(config => config.AddProfile<AutoMapperProfile>());
+            //Mapper.Initialize(config => config.AddProfile<AutoMapperConfig>());
+            AutoMapperConfig.ConfigureMapping();
 
             if (env.IsDevelopment())
             {

@@ -23,6 +23,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{C4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{9525FA54-681A-4D59-B173-E0992006B31B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Testing", "_Testing", "{5CECAB65-827B-4CD3-8236-76ECB41BA479}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabrica.Tests", "Fabrica._Testing\Fabrica.Tests\Fabrica.Tests.csproj", "{63BA46EE-54CC-4AB8-8C59-0293B4F596BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +53,10 @@ Global
 		{70EB7628-C640-400F-8A21-9AE0AA32071D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70EB7628-C640-400F-8A21-9AE0AA32071D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70EB7628-C640-400F-8A21-9AE0AA32071D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63BA46EE-54CC-4AB8-8C59-0293B4F596BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63BA46EE-54CC-4AB8-8C59-0293B4F596BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63BA46EE-54CC-4AB8-8C59-0293B4F596BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63BA46EE-54CC-4AB8-8C59-0293B4F596BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +67,7 @@ Global
 		{9463EA8A-D193-4127-910D-D54AD279235A} = {9525FA54-681A-4D59-B173-E0992006B31B}
 		{40F5E488-022B-4CC8-88F8-0841365628D4} = {C4DCFE7F-913C-4B5A-A1C3-048848AB4260}
 		{70EB7628-C640-400F-8A21-9AE0AA32071D} = {45972860-C9B0-4075-9243-78235FA363FC}
+		{63BA46EE-54CC-4AB8-8C59-0293B4F596BD} = {5CECAB65-827B-4CD3-8236-76ECB41BA479}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A49856A6-9BBD-4668-8B19-2D0ABAD39EF4}

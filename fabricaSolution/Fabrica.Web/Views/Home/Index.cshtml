@@ -18,14 +18,13 @@
 @if (this.User.Identity.IsAuthenticated == false)
 {
     <!--Content-->
-    <header class="masthead bg-primary text-white text-center">
+    <header class="masthead bg-primary text-white text-center" style="padding-top: 180px; padding-bottom: 20px">
 
         <p><h1></h1></p>
 
         <div class="container d-flex align-items-center flex-column">
 
             <img class="masthead-avatar mb-5" src="@GlobalConstants.adminAvatar" alt="" />
-
             <h1 class="masthead-subheading text-uppercase mb-0">
                 Here you are !
                 <br />
@@ -48,10 +47,10 @@
 else
 {
     <!--Content-->
-    <header class="masthead bg-primary text-white text-center">
+    <header class="masthead bg-primary text-white text-center" style="padding-top: 180px; padding-bottom: 20px" >
         <p><h1></h1></p>
 
-        <div class="container d-flex align-items-center flex-column">
+        <div class="container d-flex align-items-center flex-column" >
 
             @if (this.User.IsInRole(GlobalConstants.UserRoleName))
             {

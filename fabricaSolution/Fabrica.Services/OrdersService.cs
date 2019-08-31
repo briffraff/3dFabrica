@@ -1,11 +1,10 @@
-﻿using Fabrica.Infrastructure.Exceptions;
-
-namespace Fabrica.Services
+﻿namespace Fabrica.Services
 {
     using AutoMapper.QueryableExtensions;
     using Contracts;
     using Data;
     using Fabrica.Infrastructure;
+    using Fabrica.Infrastructure.Exceptions;
     using Fabrica.Models;
     using Microsoft.EntityFrameworkCore;
     using System;
